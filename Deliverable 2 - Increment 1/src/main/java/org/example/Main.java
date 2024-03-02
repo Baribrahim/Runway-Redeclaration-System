@@ -18,6 +18,8 @@ public class Main extends Application {
     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/MainPage.fxml"));
     Parent root = fxmlLoader.load();
     Scene scene = new Scene(root);
+    // Add the CSS stylesheet
+    scene.getStylesheets().add(getClass().getResource("/CSS/MainPageStylesheet.css").toExternalForm());
     primaryStage.setTitle("Main");
     primaryStage.setScene(scene);
     primaryStage.show();
