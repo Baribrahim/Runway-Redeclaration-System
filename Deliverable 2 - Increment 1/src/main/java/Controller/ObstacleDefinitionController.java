@@ -46,14 +46,14 @@ public static ObstacleDefinitionController getInstance()
      */
     private void populateObstacleList()
     {
-        obstacles.add(new Obstacle("Broken Down Rover Vehicle",2,1));
-        obstacles.add(new Obstacle("Barricades",1,1));
-        obstacles.add(new Obstacle("Lighting Pole",5,1));
-        obstacles.add(new Obstacle("Broken Down Aircraft",19,1));
+        obstacles.add(new Obstacle("Cargo Containers",2,1));
+        obstacles.add(new Obstacle("Fallen Trees",3,1));
+        obstacles.add(new Obstacle("Runway Light Fixtures",1,1));
+        obstacles.add(new Obstacle("Ground Service Equipment ",4,1));
     }
 
     /**
-     * Reads the Textfields in ObstacleDefinition.fxml,
+     * Reads the Textfields in ObstacleDefinitionView.fxml,
      * creates a new Obstacle and adds it to a list
      * of Obstacles stored in this Controller
      */
