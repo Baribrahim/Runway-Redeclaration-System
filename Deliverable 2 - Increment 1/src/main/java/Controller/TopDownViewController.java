@@ -1,4 +1,4 @@
-package org.example;
+package Controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
