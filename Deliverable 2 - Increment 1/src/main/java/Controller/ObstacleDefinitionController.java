@@ -1,132 +1,92 @@
+
 package Controller;
 
-import Model.Obstacle;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import Model.DatabaseModel;
+import java.io.IOException;
+import java.sql.SQLException;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import Model.DatabaseModel;
-import java.sql.SQLException;
+import javafx.scene.control.TextFormatter;
+import javafx.stage.Stage;
+import java.net.URL;
+import java.util.ResourceBundle;
+import java.util.function.UnaryOperator;
 
-public class ObstacleDefinitionController {
+public class ObstacleDefinitionController implements Initializable {
 
-private static ObstacleDefinitionController SINGLE_INSTANCE = null;
-
-    // Injected Parameters for Obstacle Definition Window
     @FXML
-    private TextField obstacleName;
+    private TextField obstacleNameInput;
+
     @FXML
-    private TextField obstacleHeight;
+    private TextField obstacleHeightInput;
+
     @FXML
-    private Button obstacleDoneButton;
+    private TextField obstacleWidthInput;
 
-    private ObservableList<Obstacle> obstacles;
+    @FXML
+    private Button submitButton;
 
+    @FXML
+    private Button backButton;
 
-    private ObstacleDefinitionController()
-    {
-        obstacles = FXCollections.observableArrayList();
-        populateObstacleList();
+    private DatabaseModel database;
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        applyNumericInputFilter(obstacleHeightInput);
+        applyNumericInputFilter(obstacleWidthInput);
     }
 
-public static ObstacleDefinitionController getInstance()
-{
-    if (SINGLE_INSTANCE == null) {
-        synchronized (ObstacleDefinitionController.class)
-        {
-            SINGLE_INSTANCE = new ObstacleDefinitionController();
+    public void setDatabaseModel(DatabaseModel databaseModel) {
+        this.database = databaseModel;
+    }
+
+    @FXML
+    private void handleSubmitButtonClick() throws SQLException {
+        String obstacleName = obstacleNameInput.getText().trim();
+        String obstacleHeight = obstacleHeightInput.getText().trim();
+        String obstacleWidth = obstacleWidthInput.getText().trim();
+
+        // Check if any of the input fields are empty
+        if (obstacleName.isEmpty() || obstacleHeight.isEmpty() || obstacleWidth.isEmpty()) {
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Empty Input");
+            alert.setContentText("Please do not leave any empty inputs!");
+            alert.showAndWait();
+        } else {
+            // Convert height and width to float
+            Float height = Float.valueOf(obstacleHeight);
+            Float width = Float.valueOf(obstacleWidth);
+
+            // Insert data into the database
+            database.insertObstacle(obstacleName, height, width);
+
+            // Close the window
+            ((Stage) submitButton.getScene().getWindow()).close();
         }
     }
 
-    return SINGLE_INSTANCE;
-}
-
-    /**
-     * Fills in the obstacle list with a few predefined obstacles and their heights
-     */
-    private void populateObstacleList()
-    {
-        obstacles.add(new Obstacle("Cargo Containers",2,1));
-        obstacles.add(new Obstacle("Fallen Trees",3,1));
-        obstacles.add(new Obstacle("Runway Light Fixtures",1,1));
-        obstacles.add(new Obstacle("Ground Service Equipment ",4,1));
-    }
-
-    /**
-     * Reads the Textfields in ObstacleDefinitionView.fxml,
-     * creates a new Obstacle and adds it to a list
-     * of Obstacles stored in this Controller
-     */
-    private DatabaseModel databaseModel = new DatabaseModel();
-
     @FXML
-    private void defineObstacle() {
-        try {
-            String newObstacleName = obstacleName.getText().trim();
-            String obstacleHeightText = obstacleHeight.getText().trim();
-
-            // Check if the name and height fields are empty
-            if (newObstacleName.isEmpty() || obstacleHeightText.isEmpty()) {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Input field empty");
-                alert.setContentText("Please fill in all input fields");
-                alert.showAndWait();
-                return; // Exit early, do not continue executing
-            }
-
-            int newObstacleHeight = Integer.parseInt(obstacleHeightText);
-
-            // Validate the height value
-            if (newObstacleHeight < 1) {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setContentText("Please put a number greater than zero for Height");
-                alert.showAndWait();
-                return; // Exit early
-            } else if (newObstacleHeight > 100) {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setContentText("Please put a number less than one hundred for Height");
-                alert.showAndWait();
-                return; // Exit early
-            }
-
-            // Create and add a new obstacle
-            Obstacle newObstacle = new Obstacle(newObstacleName, newObstacleHeight, 1); // Assume width is 1
-            obstacles.add(newObstacle);
-
-            // Check for duplicate obstacles
-            for (Obstacle obs : obstacles) {
-                if (obs.getName().equalsIgnoreCase(newObstacleName) && obs.getHeight() == newObstacleHeight) {
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setContentText("Duplicate alert: Obstacle has not been added");
-                    alert.showAndWait();
-                    obstacles.remove(newObstacle); // Remove the just added duplicate obstacle
-                    return; // Exit early
-                }
-            }
-
-            // Insert the new obstacle into the database
-            databaseModel.insertObstacle(newObstacleName, newObstacleHeight, 1); // Assume width is 1
-
-        } catch (NumberFormatException e) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setContentText("Please input a valid number for height");
-            alert.showAndWait();
-        } catch (SQLException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("Database error: Unable to insert the obstacle");
-            alert.showAndWait();
-        }
+    private void handleBackButtonClick() {
+        // Close the current stage (ObstacleDefinitionController)
+        Stage stage = (Stage) backButton.getScene().getWindow();
+        stage.close();
     }
 
-
-    public ObservableList<Obstacle> getObstacles() {
-        return obstacles;
+    private void applyNumericInputFilter(TextField textField) { // Allows only numerical values to be inputted
+        UnaryOperator<TextFormatter.Change> filter = change -> {
+            String text = change.getText();
+            if (text.matches("[0-9]*") || text.matches("[.]")) {
+                return change;
+            }
+            return null;
+        };
+        TextFormatter<String> textFormatter = new TextFormatter<>(filter);
+        textField.setTextFormatter(textFormatter);
     }
-
-    /**
-     * Used for TestFX testing
-     */
-    public void cleanUp(){obstacles.clear(); populateObstacleList();}
 }

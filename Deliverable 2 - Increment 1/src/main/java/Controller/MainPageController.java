@@ -226,5 +226,40 @@ public class MainPageController implements Initializable {
       }
     }
   }
+  @FXML
+  private void handleAddObstacleButtonClick() {
+    try {
+      // Load the obstacle definition FXML file
+      FXMLLoader loader = new FXMLLoader(getClass().getResource("/ObstacleDefinition.fxml"));
+      Parent root = loader.load();
+
+      // Get the controller for the new page and set the database model
+      ObstacleDefinitionController obstacleDefinitionController = loader.getController();
+      obstacleDefinitionController.setDatabaseModel(database);
+
+      // Create a new stage (window) for the obstacle definition
+      // Create a new stage
+      Stage stage = new Stage();
+      Scene scene = new Scene(root);
+      scene.getStylesheets().add(getClass().getResource("/CSS/MainPageStylesheet.css").toExternalForm());
+      stage.setScene(scene);
+      stage.setTitle("New Obstacle");
+      stage.show();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
+  @FXML
+  public void refreshObstacles() throws SQLException {
+    ArrayList<String> allObstacles = database.getObstacles();
+    ObservableList<String> obstacleList = obstacleMenu.getItems();
+
+    for (String obstacle : allObstacles) {
+      if (!obstacleList.contains(obstacle)) {
+        obstacleList.add(obstacle);
+      }
+    }
+  }
+
 }
 
