@@ -9,7 +9,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="627.0" prefWidth="804.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.SideOnViewController">
+<AnchorPane prefHeight="627.0" prefWidth="804.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.SideOnViewController">
    <children>
       <Rectangle fx:id="stopwayColour" arcHeight="5.0" arcWidth="5.0" fill="#6964fa" height="12.0" layoutX="19.0" layoutY="41.0" stroke="BLACK" strokeType="INSIDE" width="12.0" />
       <Rectangle fx:id="clearwayColour" arcHeight="5.0" arcWidth="5.0" fill="#ffc13a" height="12.0" layoutX="19.0" layoutY="63.0" stroke="BLACK" strokeType="INSIDE" width="12.0" />
