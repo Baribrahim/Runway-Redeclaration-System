@@ -103,7 +103,7 @@ public class RunwayDefinition implements Initializable {
       Float rightLDA = Float.valueOf(rightLDAInput.getText().trim());
 
       // Insert data into the database
-      database.insertRunway(runwayName, airportName, leftTODA, leftTORA, leftASDA, leftLDA, rightTODA, rightTORA, rightASDA, rightLDA);
+      database.insertRunway(runwayName, airportName, leftTORA, leftTODA, leftASDA, leftLDA, rightTODA, rightTORA, rightASDA, rightLDA);
 
       // Close the window
       ((Stage) submitButton.getScene().getWindow()).close();
