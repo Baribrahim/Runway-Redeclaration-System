@@ -8,7 +8,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="627.0" prefWidth="804.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.SimultaneousView">
+<AnchorPane prefHeight="627.0" prefWidth="804.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.SimultaneousViewController">
    <children>
       <AnchorPane fx:id="topDownRunwayPane" layoutY="58.0" prefHeight="280.0" prefWidth="804.0" scaleX="0.95" scaleY="0.95">
          <children>

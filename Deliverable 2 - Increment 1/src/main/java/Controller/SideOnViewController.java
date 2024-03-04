@@ -1,7 +1,14 @@
 package Controller;
 
+import Model.LogicalRunway;
+import Model.PhysicalRunway;
+import Model.RunwayParameterSpan;
 import java.net.URL;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -210,5 +217,18 @@ public class SideOnViewController implements Initializable {
   @Override
   public void initialize(URL url, ResourceBundle resourceBundle) {
 
+  }
+
+  public void updateView(String runwayName, ArrayList<Float> parameters) throws SQLException {
+    leftDesignator.setText(runwayName.split("/")[0]);
+    rightDesignator.setText(runwayName.split("/")[1]);
+    ldaLabel.setText("LDA = " + parameters.get(3) + "m");
+    todaLabel.setText("TODA = " + parameters.get(1) + "m");
+    asdaLabel.setText("ASDA = " + parameters.get(2) + "m");
+    toraLabel.setText("TORA = " + parameters.get(0) + "m");
+    rToraLabel.setText("TORA = " + parameters.get(5) + "m");
+    rAsdaLabel.setText("ASDA = " + parameters.get(6) + "m");
+    rTodaLabel.setText("TODA = " + parameters.get(4) + "m");
+    rLdaLabel.setText("LDA = " + parameters.get(7) + "m");
   }
 }

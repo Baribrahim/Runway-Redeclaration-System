@@ -1,6 +1,8 @@
-package org.example;
+package Controller;
 
 import java.net.URL;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -9,7 +11,7 @@ import javafx.scene.shape.Line;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 
-public class SimultaneousView implements Initializable {
+public class SimultaneousViewController implements Initializable {
 
   public AnchorPane topDownRunwayPane;
   public Rectangle minCGArea1;
@@ -111,5 +113,20 @@ public class SimultaneousView implements Initializable {
   @Override
   public void initialize(URL url, ResourceBundle resourceBundle) {
 
+  }
+
+  public void updateView(String runwayName, ArrayList<Float> parameters) throws SQLException {
+    TDleftDesignator.setText(runwayName.split("/")[0]);
+    TDrightDesignator.setText(runwayName.split("/")[1]);
+    SOleftDesignator.setText(runwayName.split("/")[0]);
+    SOrightDesignator.setText(runwayName.split("/")[1]);
+    ldaLabel.setText("LDA = " + parameters.get(3) + "m");
+    todaLabel.setText("TODA = " + parameters.get(1) + "m");
+    asdaLabel.setText("ASDA = " + parameters.get(2) + "m");
+    toraLabel.setText("TORA = " + parameters.get(0) + "m");
+    toraLabel1.setText("TORA = " + parameters.get(5) + "m");
+    asdaLabel1.setText("ASDA = " + parameters.get(6) + "m");
+    todaLabel1.setText("TODA = " + parameters.get(4) + "m");
+    ldaLabel1.setText("LDA = " + parameters.get(7) + "m");
   }
 }
