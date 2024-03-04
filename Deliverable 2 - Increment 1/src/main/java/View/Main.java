@@ -1,4 +1,4 @@
-package Controller;
+package View;
 
 import Model.DatabaseModel;
 import java.io.IOException;
