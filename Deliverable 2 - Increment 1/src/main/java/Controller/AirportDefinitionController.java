@@ -29,6 +29,7 @@ public class AirportDefinitionController implements Initializable {
 
   private DatabaseModel database;
 
+
   @Override
   public void initialize(URL url, ResourceBundle resourceBundle) {
 

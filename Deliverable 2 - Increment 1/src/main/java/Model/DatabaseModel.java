@@ -35,6 +35,18 @@ public class DatabaseModel {
     return airports;
   }
 
+  public String getAirport(String airportID) throws SQLException {
+    String query = "SELECT airportID FROM Airport WHERE airportID = ?";
+    try (PreparedStatement statement = connection.prepareStatement(query)) {
+      statement.setString(1, airportID);
+      ResultSet resultSet = statement.executeQuery();
+      if (resultSet.next()) {
+        return resultSet.getString("airportID");
+      }
+    }
+    return null; // Return null if no airport with the specified ID is found
+  }
+
   public ArrayList<String> getPhysicalRunways(String airportName) throws SQLException {
     //PreparedStatement statement = connection.prepareStatement("SELECT RunwayID FROM Runway WHERE Airport (?)");
     ResultSet resultSet = query("SELECT RunwayID FROM Runway WHERE Airport = '" + airportName + "'");

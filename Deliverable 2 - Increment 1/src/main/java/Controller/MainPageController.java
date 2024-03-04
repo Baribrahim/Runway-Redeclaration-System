@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.function.UnaryOperator;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -73,6 +74,9 @@ public class MainPageController implements Initializable {
   private RadioButton rightSide;
   @FXML
   private Button calculateButton;
+
+  @FXML
+  private Button refreshButton;
 
   private TopDownViewController topDownViewController;
   private SideOnViewController sideOnViewController;
@@ -208,6 +212,18 @@ public class MainPageController implements Initializable {
       stage.show();
     } catch (IOException e) {
       e.printStackTrace();
+    }
+  }
+
+  @FXML
+  public void refreshAirports() throws SQLException {
+    ArrayList<String> allAirports = database.getAirports();
+    ObservableList<String> airportList = airportMenu.getItems();
+
+    for (String airport : allAirports) {
+      if (!airportList.contains(airport)) {
+        airportList.add(airport);
+      }
     }
   }
 }
