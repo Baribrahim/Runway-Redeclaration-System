@@ -9,6 +9,12 @@ public class Obstacle {
     private String dirFromCentre;
     public final static double slopeRatio = 50;
 
+    public Obstacle(String name, double height, double width) {
+        this.name = name;
+        this.height = height;
+        this.width = width;
+    }
+
     public Obstacle(String name, double height, double width, double distFCent, double distFThreshold){
         this.name = name;
         this.height = height;
