@@ -80,10 +80,18 @@ public class DatabaseModel {
     return true;
   }
 
-  public Boolean insertRunway(String runwayName, String airportName) throws SQLException {
-    PreparedStatement statement = connection.prepareStatement("INSERT INTO Runway (RunwayID, Airport) VALUES (?,?)");
+  public Boolean insertRunway(String runwayName, String airportName, Float leftTORA, Float leftTODA, Float leftASDA, Float leftLDA, Float rightTODA, Float rightTORA, Float rightASDA, Float rightLDA) throws SQLException {
+    PreparedStatement statement = connection.prepareStatement("INSERT INTO Runway (RunwayID, Airport, leftTORA, leftTODA, leftASDA, leftLDA, rightTODA, rightTORA, rightASDA, rightLDA) VALUES (?,?,?,?,?,?,?,?,?,?)");
     statement.setString(1, runwayName);
     statement.setString(2, airportName);
+    statement.setString(3, String.valueOf(leftTORA));
+    statement.setString(4, String.valueOf(leftTODA));
+    statement.setString(5, String.valueOf(leftASDA));
+    statement.setString(6, String.valueOf(leftLDA));
+    statement.setString(7, String.valueOf(rightTODA));
+    statement.setString(8, String.valueOf(rightTORA));
+    statement.setString(9, String.valueOf(rightASDA));
+    statement.setString(10, String.valueOf(rightLDA));
     statement.executeUpdate();
     statement.close();
     connection.commit();
@@ -99,6 +107,10 @@ public class DatabaseModel {
     statement.close();
     connection.commit();
     return true;
+  }
+
+  public void closeConnection() throws SQLException {
+    connection.close();
   }
 
 }
