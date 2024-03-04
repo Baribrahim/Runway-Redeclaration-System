@@ -67,47 +67,47 @@ public static ObstacleDefinitionController getInstance()
             String newObstacleName = obstacleName.getText().trim();
             String obstacleHeightText = obstacleHeight.getText().trim();
 
-            // 检查名称和高度字段是否为空
+            // Check if the name and height fields are empty
             if (newObstacleName.isEmpty() || obstacleHeightText.isEmpty()) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Input field empty");
                 alert.setContentText("Please fill in all input fields");
                 alert.showAndWait();
-                return; // 提前退出，不继续执行
+                return; // Exit early, do not continue executing
             }
 
             int newObstacleHeight = Integer.parseInt(obstacleHeightText);
 
-            // 检查高度值的有效性
+            // Validate the height value
             if (newObstacleHeight < 1) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setContentText("Please put a number greater than zero for Height");
                 alert.showAndWait();
-                return; // 提前退出
+                return; // Exit early
             } else if (newObstacleHeight > 100) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setContentText("Please put a number less than one hundred for Height");
                 alert.showAndWait();
-                return; // 提前退出
+                return; // Exit early
             }
 
-            // 创建并添加新的障碍物
-            Obstacle newObstacle = new Obstacle(newObstacleName, newObstacleHeight, 1); // 假设宽度为1
+            // Create and add a new obstacle
+            Obstacle newObstacle = new Obstacle(newObstacleName, newObstacleHeight, 1); // Assume width is 1
             obstacles.add(newObstacle);
 
-            // 检查是否有重复的障碍物
+            // Check for duplicate obstacles
             for (Obstacle obs : obstacles) {
                 if (obs.getName().equalsIgnoreCase(newObstacleName) && obs.getHeight() == newObstacleHeight) {
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setContentText("Duplicate alert: Obstacle has not been added");
                     alert.showAndWait();
-                    obstacles.remove(newObstacle); // 移除刚添加的重复障碍物
-                    return; // 提前退出
+                    obstacles.remove(newObstacle); // Remove the just added duplicate obstacle
+                    return; // Exit early
                 }
             }
 
-            // 将新障碍物插入数据库
-            databaseModel.insertObstacle(newObstacleName, newObstacleHeight, 1); // 假设宽度为1
+            // Insert the new obstacle into the database
+            databaseModel.insertObstacle(newObstacleName, newObstacleHeight, 1); // Assume width is 1
 
         } catch (NumberFormatException e) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
