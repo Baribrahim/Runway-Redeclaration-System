@@ -8,6 +8,8 @@ import java.util.ResourceBundle;
 import java.util.function.UnaryOperator;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
@@ -56,7 +58,14 @@ public class RunwayDefinition implements Initializable {
 
   @Override
   public void initialize(URL url, ResourceBundle resourceBundle) {
-
+    applyNumericInputFilter(leftTODAInput);
+    applyNumericInputFilter(leftTORAInput);
+    applyNumericInputFilter(leftASDAInput);
+    applyNumericInputFilter(leftLDAInput);
+    applyNumericInputFilter(rightTODAInput);
+    applyNumericInputFilter(rightTORAInput);
+    applyNumericInputFilter(rightASDAInput);
+    applyNumericInputFilter(rightLDAInput);
   }
 
   public void setDatabaseModel(DatabaseModel databaseModel) {
@@ -68,25 +77,37 @@ public class RunwayDefinition implements Initializable {
   private void handleSubmitButtonClick() throws SQLException {
     String runwayName = runwayNameInput.getText().trim();
     String airportName = airportNameInput.getText().trim();
-    applyNumericInputFilter(leftTODAInput);
-    applyNumericInputFilter(leftTORAInput);
-    applyNumericInputFilter(leftASDAInput);
-    applyNumericInputFilter(leftLDAInput);
-    applyNumericInputFilter(rightTODAInput);
-    applyNumericInputFilter(rightTORAInput);
-    applyNumericInputFilter(rightASDAInput);
-    applyNumericInputFilter(rightLDAInput);
-    Float leftTODA = Float.valueOf(leftTODAInput.getText().trim());
-    Float leftTORA = Float.valueOf(leftTORAInput.getText().trim());
-    Float leftASDA = Float.valueOf(leftASDAInput.getText().trim());
-    Float leftLDA = Float.valueOf(leftLDAInput.getText().trim());
-    Float rightTODA = Float.valueOf(rightTODAInput.getText().trim());
-    Float rightTORA = Float.valueOf(rightTORAInput.getText().trim());
-    Float rightASDA = Float.valueOf(rightASDAInput.getText().trim());
-    Float rightLDA = Float.valueOf(rightLDAInput.getText().trim());
-    database.insertRunway(runwayName, airportName, leftTODA, leftTORA, leftASDA, leftLDA, rightTORA, rightTODA, rightASDA, rightLDA);
-    // Optionally, you can close the stage here if needed
-    ((Stage) submitButton.getScene().getWindow()).close();
+
+// Check if any of the input fields are empty
+    if (runwayName.isEmpty() || airportName.isEmpty() ||
+        leftTODAInput.getText().isEmpty() || leftTORAInput.getText().isEmpty() ||
+        leftASDAInput.getText().isEmpty() || leftLDAInput.getText().isEmpty() ||
+        rightTODAInput.getText().isEmpty() || rightTORAInput.getText().isEmpty() ||
+        rightASDAInput.getText().isEmpty() || rightLDAInput.getText().isEmpty()) {
+
+      // Display an error alert if any input field is empty
+      Alert alert = new Alert(AlertType.ERROR);
+      alert.setTitle("Error");
+      alert.setHeaderText("Empty Input");
+      alert.setContentText("Please do not leave any empty inputs!");
+      alert.showAndWait();
+    } else {
+      // Convert input to appropriate data types
+      Float leftTODA = Float.valueOf(leftTODAInput.getText().trim());
+      Float leftTORA = Float.valueOf(leftTORAInput.getText().trim());
+      Float leftASDA = Float.valueOf(leftASDAInput.getText().trim());
+      Float leftLDA = Float.valueOf(leftLDAInput.getText().trim());
+      Float rightTODA = Float.valueOf(rightTODAInput.getText().trim());
+      Float rightTORA = Float.valueOf(rightTORAInput.getText().trim());
+      Float rightASDA = Float.valueOf(rightASDAInput.getText().trim());
+      Float rightLDA = Float.valueOf(rightLDAInput.getText().trim());
+
+      // Insert data into the database
+      database.insertRunway(runwayName, airportName, leftTODA, leftTORA, leftASDA, leftLDA, rightTODA, rightTORA, rightASDA, rightLDA);
+
+      // Close the window
+      ((Stage) submitButton.getScene().getWindow()).close();
+    }
   }
 
   @FXML
