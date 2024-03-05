@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.StartPageController">
+  <children>
+      <MenuBar>
+         <menus>
+            <Menu fx:id="helpMenu" mnemonicParsing="false" text="Help">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="Action 1" />
+               </items>
+            </Menu>
+         </menus>
+      </MenuBar>
+    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+         <children>
+            <Label layoutX="279.0" layoutY="46.0" prefHeight="31.0" prefWidth="83.0" text="Login">
+               <font>
+                  <Font size="32.0" />
+               </font>
+            </Label>
+            <Label layoutX="246.0" layoutY="104.0" text="UserID">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="246.0" layoutY="181.0" text="Password">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <TextField fx:id="userIDField" layoutX="246.0" layoutY="131.0" />
+            <Button layoutX="341.0" layoutY="255.0" mnemonicParsing="false" onAction="#Login" text="Login" />
+            <PasswordField fx:id="passwordField" layoutX="246.0" layoutY="208.0" />
+            <Label fx:id="fail" layoutX="191.0" layoutY="296.0" prefHeight="47.0" prefWidth="301.0" textFill="#f21212">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+         </children>
+    </AnchorPane>
+  </children>
+</VBox>
