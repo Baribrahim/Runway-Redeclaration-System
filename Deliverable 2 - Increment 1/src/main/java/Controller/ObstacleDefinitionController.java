@@ -81,7 +81,7 @@ public class ObstacleDefinitionController implements Initializable {
     private void applyNumericInputFilter(TextField textField) { // Allows only numerical values to be inputted
         UnaryOperator<TextFormatter.Change> filter = change -> {
             String text = change.getText();
-            if (text.matches("[0-9]*") || text.matches("[.]")) {
+            if (text.matches("[0-9]*") || text.matches("[.]") && (text.length() < 6 || change.isDeleted())) {
                 return change;
             }
             return null;
