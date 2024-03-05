@@ -120,9 +120,4 @@ public class DatabaseModel {
     connection.commit();
     return true;
   }
-
-  public void closeConnection() throws SQLException {
-    connection.close();
-  }
-
 }
