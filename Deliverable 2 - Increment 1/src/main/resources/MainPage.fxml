@@ -98,8 +98,8 @@
                               <Insets bottom="5.0" top="5.0" />
                            </padding>
                         </Label>
-                        <Button fx:id="importDataButton" layoutX="50.0" layoutY="34.0" mnemonicParsing="false" text="Import Data" />
-                        <Button fx:id="exportDataButton" layoutX="152.0" layoutY="33.0" mnemonicParsing="false" text="Export Data" />
+                        <Button fx:id="importDataButton" layoutX="50.0" layoutY="34.0" mnemonicParsing="false" onAction="#handleImportDataButtonClick" text="Import Data" />
+                        <Button fx:id="exportDataButton" layoutX="152.0" layoutY="33.0" mnemonicParsing="false" onAction="#handleExportDataButtonClick" text="Export Data" />
                         <Label fx:id="airportTitle1" alignment="CENTER" layoutX="20.0" layoutY="447.0" prefHeight="42.0" prefWidth="235.0" styleClass="common-text" text="Distance from Threshold (m)">
                            <font>
                               <Font name="Verdana Bold" size="12.0" />

@@ -2,6 +2,8 @@ package Controller;
 
 import Model.DatabaseModel;
 import Model.PhysicalRunway;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import java.io.IOException;
 import java.lang.reflect.Parameter;
 import java.net.URL;
@@ -82,6 +84,8 @@ public class MainPageController implements Initializable {
   private SideOnViewController sideOnViewController;
   private SimultaneousViewController simultaneousViewController;
   private DatabaseModel database = new DatabaseModel();
+
+  private static final Logger logger = LogManager.getLogger(MainPageController.class);
 
   @Override
   public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -259,6 +263,16 @@ public class MainPageController implements Initializable {
         obstacleList.add(obstacle);
       }
     }
+  }
+
+  @FXML
+  private void handleImportDataButtonClick() {
+    logger.info("Import button click");
+  }
+
+  @FXML
+  private void handleExportDataButtonClick() {
+    logger.info("Import button click");
   }
 
 }
