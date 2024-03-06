@@ -14,7 +14,7 @@ public class DatabaseModel {
   public DatabaseModel() {
     try {
       Class.forName("org.sqlite.JDBC");
-      connection = DriverManager.getConnection("jdbc:../RunwayRedeclaration.sqlite");
+      connection = DriverManager.getConnection("jdbc:sqlite:../RunwayRedeclaration.sqlite");
       connection.setAutoCommit(false);
     } catch (Exception e) {
       throw new RuntimeException(e);
