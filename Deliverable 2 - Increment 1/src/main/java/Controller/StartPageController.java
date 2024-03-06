@@ -14,7 +14,7 @@ import java.util.ResourceBundle;
 
 public class StartPageController implements Initializable {
     public LoginModel loginModel = new LoginModel();
-@FXML
+    @FXML
     private Label fail;
     @FXML
     private TextField userIDField;
