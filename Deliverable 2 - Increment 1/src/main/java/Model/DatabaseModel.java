@@ -14,7 +14,7 @@ public class DatabaseModel {
   public DatabaseModel() {
     try {
       Class.forName("org.sqlite.JDBC");
-      connection = DriverManager.getConnection("jdbc:sqlite:../RunwayRedeclaration.sqlite");
+      connection = DriverManager.getConnection("jdbc:../RunwayRedeclaration.sqlite");
       connection.setAutoCommit(false);
     } catch (Exception e) {
       throw new RuntimeException(e);
@@ -120,4 +120,16 @@ public class DatabaseModel {
     connection.commit();
     return true;
   }
+
+  public boolean CorrectInfo (String userID, String password) throws SQLException {
+    ResultSet resultSet = query("SELECT * FROM LoginInfo WHERE UserID = '" + userID + "' AND Password = '" +password+ "'" );
+    ArrayList<String> permissions = new ArrayList<>();
+    while (resultSet.next()) {
+      permissions.add(resultSet.getString("Permission"));
+    }
+    if(permissions.size() != 0 ) {
+      return true;
+    }else {return false;}
+  }
+
 }

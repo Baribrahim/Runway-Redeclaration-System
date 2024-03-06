@@ -13,12 +13,12 @@ public class Main extends Application {
 
   @Override
   public void start(Stage primaryStage) throws IOException {
-    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/MainPage.fxml"));
+    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/StartPage.fxml"));
     Parent root = fxmlLoader.load();
     Scene scene = new Scene(root);
     // Add the CSS stylesheet
     scene.getStylesheets().add(getClass().getResource("/CSS/MainPageStylesheet.css").toExternalForm());
-    primaryStage.setTitle("Main");
+    primaryStage.setTitle("Start");
     primaryStage.setScene(scene);
     primaryStage.show();
   }

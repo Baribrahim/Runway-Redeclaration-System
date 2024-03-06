@@ -1,59 +1,58 @@
 package Controller;
 
-import Model.LoginModel;
+import Model.DatabaseModel;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
-import java.awt.event.ActionEvent;
-import java.net.URL;
+import java.awt.*;
+import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ResourceBundle;
 
-public class StartPageController implements Initializable {
-    public LoginModel loginModel = new LoginModel();
-    @FXML
-    private Label fail;
+public class StartPageController {
+    public DatabaseModel databaseModel = new DatabaseModel();
     @FXML
     private TextField userIDField;
     @FXML
     private PasswordField passwordField;
 
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        if(loginModel.Connected()){
-            fail.setText("Connected");
-        }
-        else{
-            fail.setText("Not Connected");
-        }
-    }
-    public void Login (ActionEvent event) {
-        try {
-            if (loginModel.CorrectInfo(userIDField.getText(), passwordField.getText())) {
-                fail.setText("Login Successful");
-            } else {
-                fail.setText("UserId or Password Incorrect");
-            }
-        } catch (SQLException e) {
-            fail.setText("UserId or Password Incorrect");
-            e.printStackTrace();
-        }
-    }
 
     public void Login(javafx.event.ActionEvent actionEvent) {
         try {
-            if (loginModel.CorrectInfo(userIDField.getText(), passwordField.getText())) {
-                fail.setText("Login Successful");
-            } else {
-                fail.setText("UserId or Password Incorrect");
+            if (databaseModel.CorrectInfo(userIDField.getText(), passwordField.getText())) {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/MainPage.fxml"));
+                Parent root = loader.load();
+                Stage stage = new Stage();
+                Scene scene = new Scene(root);
+                scene.getStylesheets().add(getClass().getResource("/CSS/MainPageStylesheet.css").toExternalForm());
+                stage.setScene(scene);
+                stage.setTitle("Main");
+                stage.show();
+            } else if (userIDField.getText() == "" || passwordField.getText() == ""  ) {
+                    // Handle empty input error
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setHeaderText("Empty Input");
+                    alert.setContentText("Please enter a UserId and Password.");
+                    alert.showAndWait();
+                } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Incorrect Input");
+                alert.setContentText("Incorrect UserID or Password.");
+                alert.showAndWait();
             }
         } catch (SQLException e) {
-            fail.setText("UserId or Password Incorrect");
             e.printStackTrace();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 }
