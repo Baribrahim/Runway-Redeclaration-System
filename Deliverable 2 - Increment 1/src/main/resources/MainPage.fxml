@@ -33,6 +33,7 @@
                   <Menu fx:id="helpMenu" mnemonicParsing="false" text="Help">
                     <items>
                       <MenuItem fx:id="userGuidePage" mnemonicParsing="false" onAction="#handleUserGuidePageButton" text="User Guide" />
+                        <MenuItem fx:id="userGuidePage1" mnemonicParsing="false" onAction="#handleUserGuidePageButton" text="Colour Options" />
                     </items>
                   </Menu>
                </menus>
