@@ -48,7 +48,6 @@ public class DatabaseModel {
   }
 
   public ArrayList<String> getPhysicalRunways(String airportName) throws SQLException {
-    //PreparedStatement statement = connection.prepareStatement("SELECT RunwayID FROM Runway WHERE Airport (?)");
     ResultSet resultSet = query("SELECT RunwayID FROM Runway WHERE Airport = '" + airportName + "'");
     ArrayList<String> runways = new ArrayList<>();
     while (resultSet.next()) {
@@ -64,6 +63,34 @@ public class DatabaseModel {
       obstacles.add(resultSet.getString("ObstacleID"));
     }
     return obstacles;
+  }
+
+  public float getObstacleHeight(String obstacleName) throws SQLException {
+    String query = "SELECT Height FROM Obstacle WHERE ObstacleID = ?";
+    try (PreparedStatement statement = connection.prepareStatement(query)) {
+      statement.setString(1, obstacleName);
+      try (ResultSet resultSet = statement.executeQuery()) {
+        if (resultSet.next()) {
+          return resultSet.getFloat("Height");
+        } else {
+          return -1; // Indicator that the obstacle was not found
+        }
+      }
+    }
+  }
+
+  public float getObstacleWidth(String obstacleName) throws SQLException {
+    String query = "SELECT Width FROM Obstacle WHERE ObstacleID = ?";
+    try (PreparedStatement statement = connection.prepareStatement(query)) {
+      statement.setString(1, obstacleName);
+      try (ResultSet resultSet = statement.executeQuery()) {
+        if (resultSet.next()) {
+          return resultSet.getFloat("Width");
+        } else {
+          return -1; // Indicator that the obstacle was not found
+        }
+      }
+    }
   }
 
   public ArrayList<Float> getLogicalRunwayParameters(String runway) throws SQLException {
