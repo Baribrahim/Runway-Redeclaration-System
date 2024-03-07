@@ -48,7 +48,8 @@
       <menus>
         <Menu mnemonicParsing="false" text="Help">
           <items>
-            <MenuItem mnemonicParsing="false" text="About MyHelloApp" />
+            <MenuItem mnemonicParsing="false" text="User Guide" />
+                  <MenuItem mnemonicParsing="false" text="Colour Options" />
           </items>
         </Menu>
       </menus>

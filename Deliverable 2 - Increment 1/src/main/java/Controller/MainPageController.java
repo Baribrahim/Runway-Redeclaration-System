@@ -2,6 +2,7 @@ package Controller;
 
 import Model.DatabaseModel;
 import Model.PhysicalRunway;
+import javafx.scene.control.MenuItem;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import java.io.IOException;
@@ -79,6 +80,9 @@ public class MainPageController implements Initializable {
 
   @FXML
   private Button refreshButton;
+
+  @FXML
+  private MenuItem userGuidePage;
 
   private TopDownViewController topDownViewController;
   private SideOnViewController sideOnViewController;
@@ -273,6 +277,26 @@ public class MainPageController implements Initializable {
   @FXML
   private void handleExportDataButtonClick() {
     logger.info("Import button click");
+  }
+
+  @FXML
+  private void handleUserGuidePageButton() {
+    try {
+      // Load the obstacle definition FXML file
+      FXMLLoader loader = new FXMLLoader(getClass().getResource("/userGuidePage.fxml"));
+      Parent root = loader.load();
+
+      // Create a new stage (window) for the obstacle definition
+      // Create a new stage
+      Stage stage = new Stage();
+      Scene scene = new Scene(root);
+      scene.getStylesheets().add(getClass().getResource("/CSS/MainPageStylesheet.css").toExternalForm());
+      stage.setScene(scene);
+      stage.setTitle("User Guide");
+      stage.show();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
 
 }
