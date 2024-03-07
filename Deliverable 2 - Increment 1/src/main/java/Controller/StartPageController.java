@@ -10,7 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-
+import javafx.scene.control.Button;
 import java.awt.*;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -21,12 +21,18 @@ public class StartPageController {
     private TextField userIDField;
     @FXML
     private PasswordField passwordField;
+    @FXML
+    private Button loginButton;
 
 
-
-    public void Login(javafx.event.ActionEvent actionEvent) {
+    public void Login() {
         try {
             if (databaseModel.CorrectInfo(userIDField.getText(), passwordField.getText())) {
+                //close login screen
+                Stage loginStage = (Stage) loginButton.getScene().getWindow();
+                loginStage.close();
+
+                // Open main page
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/MainPage.fxml"));
                 Parent root = loader.load();
                 Stage stage = new Stage();
@@ -35,6 +41,7 @@ public class StartPageController {
                 stage.setScene(scene);
                 stage.setTitle("Main");
                 stage.show();
+
             } else if (userIDField.getText() == "" || passwordField.getText() == ""  ) {
                     // Handle empty input error
                     Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -43,6 +50,7 @@ public class StartPageController {
                     alert.setContentText("Please enter a UserId and Password.");
                     alert.showAndWait();
                 } else {
+                // Handle incorrect input error
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
                 alert.setHeaderText("Incorrect Input");
