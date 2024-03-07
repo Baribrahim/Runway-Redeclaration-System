@@ -1,8 +1,16 @@
 package Controller;
 
+import Model.Airport;
 import Model.DatabaseModel;
+import Model.Obstacle;
 import Model.PhysicalRunway;
+import View.Main;
+import XML.XMLExporter;
+import XML.XMLImporter;
+import java.io.File;
+import java.util.List;
 import javafx.scene.control.MenuItem;
+import javafx.stage.FileChooser;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import java.io.IOException;
@@ -269,14 +277,73 @@ public class MainPageController implements Initializable {
     }
   }
 
+
   @FXML
-  private void handleImportDataButtonClick() {
-    logger.info("Import button click");
+  private void onObstacleExportClick(ActionEvent actionEvent) {
+    XMLExporter xmlExporter = Main.xml;
+    FileChooser fileChooser = new FileChooser();
+    fileChooser.setTitle("Choose file to import");
+    fileChooser.setSelectedExtensionFilter(new FileChooser.ExtensionFilter("XML format(*.xml)","*.xml"));
+    File file = fileChooser.showSaveDialog(new Stage());
+    if(file == null)
+      return;
+
+    if(!file.getName().contains(".xml"))
+      file = new File(file.getAbsolutePath()+".xml");
+
+    boolean check = xmlExporter.exportObstacles(ObstacleViewController.getInstance().getBoxObstacles().getValue(),file);
+    if (check) {
+      logger.info("Exported successfully");
+    }
+    else {
+      logger.info("Exporting went wrong");
+    }
   }
 
   @FXML
-  private void handleExportDataButtonClick() {
-    logger.info("Import button click");
+  private void onAirportExportClick(ActionEvent actionEvent) {
+    XMLExporter xmlExporter = Main.xml;
+    FileChooser fileChooser = new FileChooser();
+    fileChooser.setTitle("Choose file to import");
+    fileChooser.setSelectedExtensionFilter(new FileChooser.ExtensionFilter("XML format(*.xml)","*.xml"));
+    File file = fileChooser.showSaveDialog(new Stage());
+    if(file == null)
+      return;
+
+    if(!file.getName().contains(".xml"))
+      file = new File(file.getAbsolutePath()+".xml");
+
+    boolean check = xmlExporter.exportAirport(AirportViewController.getInstance().getChoiceBoxAirport().getValue(),file);
+
+    if (check) {
+      logger.info("Exported successfully");
+    }
+    else {
+      logger.info("Exporting went wrong");
+    }
+
+  }
+
+  @FXML
+  private void onObstacleImportClick(ActionEvent actionEvent) {
+    XMLImporter xmlImporter = Main.xml;
+    FileChooser fileChooser = new FileChooser();
+    fileChooser.setTitle("Choose file to import");
+    File file = fileChooser.showOpenDialog(new Stage());
+    List<Obstacle> list = xmlImporter.importObstacles(file);
+  }
+
+  @FXML
+  private void onAirportImportClick(ActionEvent actionEvent) {
+    XMLImporter xmlImporter = Main.xml;
+    FileChooser fileChooser = new FileChooser();
+    fileChooser.setTitle("Choose file to import");
+    File file = fileChooser.showOpenDialog(new Stage());
+    Airport airport = xmlImporter.importAirport(file);
+    logger.info("Imported Airport : " + airport.getAirportName());
+
+    airport.getPhysicalRunways()
+        .forEach(r -> logger.info("With runway : " + r.toString()));
   }
 
   @FXML

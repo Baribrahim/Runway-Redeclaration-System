@@ -91,16 +91,15 @@
                         <Button fx:id="addNewRunwayButton" layoutX="27.0" layoutY="293.0" mnemonicParsing="false" onAction="#handleAddRunwayButtonClick" text="Add a new Runway" />
                         <Button fx:id="addNewObstacleButton" layoutX="26.0" layoutY="422.0" mnemonicParsing="false" onAction="#handleAddObstacleButtonClick" text="Add a new Obstacle" />
                         <Button fx:id="refreshObstaclesButton" layoutX="160.0" layoutY="422.0" mnemonicParsing="false" onAction="#refreshObstacles" text="Refresh Obstacles" />
-                              <Label fx:id="filesTitle" alignment="CENTER" layoutX="22.0" prefHeight="42.0" prefWidth="235.0" styleClass="common-text" text="Files">
-                           <font>
-                              <Font name="Verdana Bold" size="16.0" />
-                           </font>
-                           <padding>
-                              <Insets bottom="5.0" top="5.0" />
-                           </padding>
-                        </Label>
-                        <Button fx:id="importDataButton" layoutX="50.0" layoutY="34.0" mnemonicParsing="false" onAction="#handleImportDataButtonClick" text="Import Data" />
-                        <Button fx:id="exportDataButton" layoutX="152.0" layoutY="33.0" mnemonicParsing="false" onAction="#handleExportDataButtonClick" text="Export Data" />
+<!--                              <Label fx:id="filesTitle" alignment="CENTER" layoutX="22.0" layoutY="-5.0" prefHeight="40.0" prefWidth="235.0" styleClass="common-text" text="Files">-->
+<!--                           <font>-->
+<!--                              <Font name="Verdana Bold" size="16.0" />-->
+<!--                           </font>-->
+<!--                        </Label>-->
+                        <Button fx:id="importAirportButton" layoutX="15.0" layoutY="10.0" mnemonicParsing="false" onAction="#onAirportImportClick" text="Import Airport Data" />
+                        <Button fx:id="exportAirportButton" layoutX="140.0" layoutY="10.0" mnemonicParsing="false" onAction="#onAirportExportClick" text="Export Airport Data" />
+                        <Button fx:id="importObstacleButton" layoutX="5.0" layoutY="40.0" mnemonicParsing="false" onAction="#onObstacleImportClick" text="Import Obstacle Data" />
+                        <Button fx:id="exportObstacleButton" layoutX="140.0" layoutY="40.0" mnemonicParsing="false" onAction="#onObstacleExportClick" text="Export Obstacle Data" />
                         <Label fx:id="airportTitle1" alignment="CENTER" layoutX="20.0" layoutY="447.0" prefHeight="42.0" prefWidth="235.0" styleClass="common-text" text="Distance from Threshold (m)">
                            <font>
                               <Font name="Verdana Bold" size="12.0" />

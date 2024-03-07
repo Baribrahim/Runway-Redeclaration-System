@@ -1,20 +1,29 @@
 package Model;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import javafx.collections.ObservableList;
 
 public class Airport {
+
+  private ArrayList<PhysicalRunway> physicalRunways;
   private String airportName;
   private String manager;
   private String airportID;
-  private ObservableList<PhysicalRunway> physicalRunways;
+  private String city;
+  private Double latitude;
+  private Double longitude;
 
   //Constructor
   public Airport(){};
-  public Airport(String airportID, String aiportName, ObservableList<PhysicalRunway> physicalRunways, String manager) {
+  public Airport(String airportID, String aiportName, String manager, String city, Double latitude, Double longitude) {
     this.airportID = airportID;
     this.airportName = aiportName;
-    this.physicalRunways = physicalRunways;
+    this.physicalRunways = new ArrayList<>();
     this.manager = manager;
+    this.city = city;
+    this.latitude = latitude;
+    this.longitude = longitude;
   }
 
 
@@ -39,7 +48,7 @@ public class Airport {
     this.airportName = airportName;
   }
 
-  public ObservableList<PhysicalRunway> getPhysicalRunways() {
+  public ArrayList<PhysicalRunway> getPhysicalRunways() {
     return physicalRunways;
   }
 
@@ -49,6 +58,34 @@ public class Airport {
 
   public void setManager(String name){
     this.manager = name;
+  }
+
+  public void addRunway(PhysicalRunway runway) {
+    physicalRunways.add(runway);
+  }
+
+  public String getCity() {
+    return city;
+  }
+
+  public void setCity(String city) {
+    this.city = city;
+  }
+
+  public Double getLatitude() {
+    return latitude;
+  }
+
+  public void setLatitude(Double latitude) {
+    this.latitude = latitude;
+  }
+
+  public Double getLongitude() {
+    return longitude;
+  }
+
+  public void setLongitude(Double longitude) {
+    this.longitude = longitude;
   }
 
 }

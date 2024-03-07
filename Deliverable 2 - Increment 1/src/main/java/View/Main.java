@@ -1,15 +1,19 @@
 package View;
 
-import Model.DatabaseModel;
+import Model.Airport;
+import Model.Obstacle;
+import XML.XML;
 import java.io.IOException;
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import javax.xml.crypto.Data;
 
 public class Main extends Application {
+  public static final XML xml = new XML();
 
   @Override
   public void start(Stage primaryStage) throws IOException {
