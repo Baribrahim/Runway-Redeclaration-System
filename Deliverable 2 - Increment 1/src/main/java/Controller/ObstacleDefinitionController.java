@@ -35,7 +35,17 @@ public class ObstacleDefinitionController implements Initializable {
 
     private DatabaseModel database;
 
-    @Override
+    private static ObstacleDefinitionController instance;
+
+  public static ObstacleDefinitionController getInstance() {
+    return instance;
+  }
+
+  public ObstacleDefinitionController() {
+    instance = this;
+  }
+
+  @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         applyNumericInputFilter(obstacleHeightInput);
         applyNumericInputFilter(obstacleWidthInput);

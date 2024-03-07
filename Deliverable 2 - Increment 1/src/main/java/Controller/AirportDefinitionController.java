@@ -28,11 +28,17 @@ public class AirportDefinitionController implements Initializable {
   private Button goBackButton;
 
   private DatabaseModel database;
+  
+  private static AirportDefinitionController instance;
 
 
   @Override
   public void initialize(URL url, ResourceBundle resourceBundle) {
 
+  }
+  
+  public AirportDefinitionController() {
+    instance = this;
   }
 
   public void setDatabaseModel(DatabaseModel databaseModel) {
@@ -61,4 +67,8 @@ public class AirportDefinitionController implements Initializable {
     Stage stage = (Stage) goBackButton.getScene().getWindow();
     stage.close();
   }
+
+  public static AirportDefinitionController getInstance( {
+    return instance;
+  })
 }

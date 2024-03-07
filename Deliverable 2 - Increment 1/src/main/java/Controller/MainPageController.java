@@ -282,7 +282,7 @@ public class MainPageController implements Initializable {
   private void onObstacleExportClick(ActionEvent actionEvent) {
     XMLExporter xmlExporter = Main.xml;
     FileChooser fileChooser = new FileChooser();
-    fileChooser.setTitle("Choose file to import");
+    fileChooser.setTitle("Choose file to export");
     fileChooser.setSelectedExtensionFilter(new FileChooser.ExtensionFilter("XML format(*.xml)","*.xml"));
     File file = fileChooser.showSaveDialog(new Stage());
     if(file == null)
@@ -291,7 +291,7 @@ public class MainPageController implements Initializable {
     if(!file.getName().contains(".xml"))
       file = new File(file.getAbsolutePath()+".xml");
 
-    boolean check = xmlExporter.exportObstacles(ObstacleViewController.getInstance().getBoxObstacles().getValue(),file);
+    boolean check = xmlExporter.exportObstacles(ObstacleDefinitionController.getInstance(),file);
     if (check) {
       logger.info("Exported successfully");
     }
@@ -304,7 +304,7 @@ public class MainPageController implements Initializable {
   private void onAirportExportClick(ActionEvent actionEvent) {
     XMLExporter xmlExporter = Main.xml;
     FileChooser fileChooser = new FileChooser();
-    fileChooser.setTitle("Choose file to import");
+    fileChooser.setTitle("Choose file to export");
     fileChooser.setSelectedExtensionFilter(new FileChooser.ExtensionFilter("XML format(*.xml)","*.xml"));
     File file = fileChooser.showSaveDialog(new Stage());
     if(file == null)
@@ -313,7 +313,7 @@ public class MainPageController implements Initializable {
     if(!file.getName().contains(".xml"))
       file = new File(file.getAbsolutePath()+".xml");
 
-    boolean check = xmlExporter.exportAirport(AirportViewController.getInstance().getChoiceBoxAirport().getValue(),file);
+    boolean check = xmlExporter.exportAirport(AirportDefinitionController.getInstance().,file);
 
     if (check) {
       logger.info("Exported successfully");
