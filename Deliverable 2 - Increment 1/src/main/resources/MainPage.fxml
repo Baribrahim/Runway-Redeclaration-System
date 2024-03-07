@@ -32,7 +32,7 @@
                <menus>
                   <Menu fx:id="helpMenu" mnemonicParsing="false" text="Help">
                     <items>
-                      <MenuItem mnemonicParsing="false" text="Action 1" />
+                      <MenuItem fx:id="userGuidePage" mnemonicParsing="false" onAction="#handleUserGuidePageButton" text="User Guide" />
                     </items>
                   </Menu>
                </menus>
@@ -89,7 +89,7 @@
                         <Button fx:id="addNewAirportButton" layoutX="22.0" layoutY="160.0" mnemonicParsing="false" onAction="#handleAddAirportButtonClick" text="Add a new Airport" />
                         <Button fx:id="addNewRunwayButton" layoutX="27.0" layoutY="293.0" mnemonicParsing="false" onAction="#handleAddRunwayButtonClick" text="Add a new Runway" />
                         <Button fx:id="addNewObstacleButton" layoutX="26.0" layoutY="422.0" mnemonicParsing="false" onAction="#handleAddObstacleButtonClick" text="Add a new Obstacle" />
-                        <Button fx:id="refreshObstaclesButton" layoutX="160.0" layoutY="422.0" mnemonicParsing="false" onAction="#refreshObstacles"  text="Refresh Obstacles"  />
+                        <Button fx:id="refreshObstaclesButton" layoutX="160.0" layoutY="422.0" mnemonicParsing="false" onAction="#refreshObstacles" text="Refresh Obstacles" />
                               <Label fx:id="filesTitle" alignment="CENTER" layoutX="22.0" prefHeight="42.0" prefWidth="235.0" styleClass="common-text" text="Files">
                            <font>
                               <Font name="Verdana Bold" size="16.0" />
