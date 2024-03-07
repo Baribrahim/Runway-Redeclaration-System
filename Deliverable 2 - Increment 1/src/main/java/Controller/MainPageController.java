@@ -291,13 +291,13 @@ public class MainPageController implements Initializable {
     if(!file.getName().contains(".xml"))
       file = new File(file.getAbsolutePath()+".xml");
 
-    boolean check = xmlExporter.exportObstacles(ObstacleDefinitionController.getInstance(),file);
-    if (check) {
-      logger.info("Exported successfully");
-    }
-    else {
-      logger.info("Exporting went wrong");
-    }
+//    boolean check = xmlExporter.exportObstacles(ObstacleDefinitionController.getInstance(),file);
+//    if (check) {
+//      logger.info("Exported successfully");
+//    }
+//    else {
+//      logger.info("Exporting went wrong");
+//    }
   }
 
   @FXML
@@ -313,14 +313,14 @@ public class MainPageController implements Initializable {
     if(!file.getName().contains(".xml"))
       file = new File(file.getAbsolutePath()+".xml");
 
-    boolean check = xmlExporter.exportAirport(AirportDefinitionController.getInstance().,file);
+//    boolean check = xmlExporter.exportAirport(AirportDefinitionController.getInstance().,file);
 
-    if (check) {
-      logger.info("Exported successfully");
-    }
-    else {
-      logger.info("Exporting went wrong");
-    }
+//    if (check) {
+//      logger.info("Exported successfully");
+//    }
+//    else {
+//      logger.info("Exporting went wrong");
+//    }
 
   }
 

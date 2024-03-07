@@ -68,7 +68,7 @@ public class AirportDefinitionController implements Initializable {
     stage.close();
   }
 
-  public static AirportDefinitionController getInstance( {
+  public static AirportDefinitionController getInstance() {
     return instance;
-  })
+  }
 }

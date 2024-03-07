@@ -64,33 +64,33 @@ public class XML implements XMLExporter, XMLImporter{
         Element lr = document.createElement("left");
         runway.appendChild(lr);
 
-        Element designator = document.createElement("designator");
-        designator.appendChild(document.createTextNode(run.getDesignator()));
-        lr.appendChild(designator);
-
-        Element tora = document.createElement("tora");
-        tora.appendChild(document.createTextNode(String.valueOf(run.getTora())));
-        lr.appendChild(tora);
-
-        Element toda = document.createElement("toda");
-        toda.appendChild(document.createTextNode(String.valueOf(run.getToda())));
-        lr.appendChild(toda);
-
-        Element asda = document.createElement("asda");
-        asda.appendChild(document.createTextNode(String.valueOf(run.getAsda())));
-        lr.appendChild(asda);
-
-        Element lda = document.createElement("lda");
-        lda.appendChild(document.createTextNode(String.valueOf(run.getLda())));
-        lr.appendChild(lda);
-
-        Element clearway = document.createElement("clearway");
-        clearway.appendChild(document.createTextNode(String.valueOf(run.getClearway())));
-        lr.appendChild(clearway);
-
-        Element stopway = document.createElement("stopway");
-        stopway.appendChild(document.createTextNode(String.valueOf(run.getStopway())));
-        lr.appendChild(stopway);
+//        Element designator = document.createElement("designator");
+//        designator.appendChild(document.createTextNode(run.getDesignator()));
+//        lr.appendChild(designator);
+//
+//        Element tora = document.createElement("tora");
+//        tora.appendChild(document.createTextNode(String.valueOf(run.getTora())));
+//        lr.appendChild(tora);
+//
+//        Element toda = document.createElement("toda");
+//        toda.appendChild(document.createTextNode(String.valueOf(run.getToda())));
+//        lr.appendChild(toda);
+//
+//        Element asda = document.createElement("asda");
+//        asda.appendChild(document.createTextNode(String.valueOf(run.getAsda())));
+//        lr.appendChild(asda);
+//
+//        Element lda = document.createElement("lda");
+//        lda.appendChild(document.createTextNode(String.valueOf(run.getLda())));
+//        lr.appendChild(lda);
+//
+//        Element clearway = document.createElement("clearway");
+//        clearway.appendChild(document.createTextNode(String.valueOf(run.getClearway())));
+//        lr.appendChild(clearway);
+//
+//        Element stopway = document.createElement("stopway");
+//        stopway.appendChild(document.createTextNode(String.valueOf(run.getStopway())));
+//        lr.appendChild(stopway);
 
         Element length = document.createElement("length");
         length.appendChild(document.createTextNode(String.valueOf(run)));
@@ -133,7 +133,7 @@ public class XML implements XMLExporter, XMLImporter{
       eObstacle.appendChild(name);
 
       Element height = document.createElement("height");
-      height.appendChild(document.createTextNode(String.valueOf(obstacle.getHeight()));
+      height.appendChild(document.createTextNode(String.valueOf(obstacle.getHeight())));
       eObstacle.appendChild(height);
 
       Element width = document.createElement("width");
@@ -176,7 +176,7 @@ public class XML implements XMLExporter, XMLImporter{
         Double latitude = Double.parseDouble(elementAirport.getElementsByTagName("lat").item(0).getTextContent());
         Double longitude = Double.parseDouble(elementAirport.getElementsByTagName("long").item(0).getTextContent());
 
-        airport = new Airport(elementAirport.getAttribute("name"),city,latitude,longitude);
+//        airport = new Airport(elementAirport.getAttribute("name"),city,latitude,longitude);
 
       }
       NodeList runwayList = document.getElementsByTagName("runway");
@@ -200,8 +200,8 @@ public class XML implements XMLExporter, XMLImporter{
         Double stopwayR = Double.parseDouble(runway.getElementsByTagName("stopway").item(1).getTextContent());
 
         Double length = Double.parseDouble(runway.getElementsByTagName("length").item(0).getTextContent());
-        airport.addRunway(new PhysicalRunway(new DirectedRunway(designatorR,toraR,todaR,asdaR,ldaR,thresholdR,clearwayR,stopwayR),
-            new DirectedRunway(designatorL,toraL,todaL,asdaL,ldaL,thresholdL,clearwayL,stopwayL), length));
+//        airport.addRunway(new PhysicalRunway(new DirectedRunway(designatorR,toraR,todaR,asdaR,ldaR,thresholdR,clearwayR,stopwayR),
+//            new DirectedRunway(designatorL,toraL,todaL,asdaL,ldaL,thresholdL,clearwayL,stopwayL), length));
       }
 
     } catch (ParserConfigurationException | SAXException | IOException e){
