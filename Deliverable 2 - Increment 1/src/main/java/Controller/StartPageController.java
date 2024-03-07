@@ -37,6 +37,9 @@ public class StartPageController {
                 stage.setTitle("Main");
                 stage.show();
 
+                // Close connection to database to prevent locked database
+                databaseModel.getConnection().close();
+
                 // Close the login window
                 Node source = (Node) actionEvent.getSource();
                 Stage currentStage = (Stage) source.getScene().getWindow();

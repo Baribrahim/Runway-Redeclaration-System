@@ -132,4 +132,8 @@ public class DatabaseModel {
     }else {return false;}
   }
 
+  public Connection getConnection() {
+    return connection;
+  }
+
 }
