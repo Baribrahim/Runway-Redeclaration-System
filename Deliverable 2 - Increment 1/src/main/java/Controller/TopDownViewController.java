@@ -4,6 +4,7 @@ import Model.DatabaseModel;
 import Model.LogicalRunway;
 import Model.PhysicalRunway;
 import Model.RunwayParameterSpan;
+import Model.Obstacle;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ import javafx.scene.shape.Line;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Polyline;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.paint.Color;
 
 public class TopDownViewController implements Initializable {
 
@@ -320,6 +322,29 @@ public class TopDownViewController implements Initializable {
     label.setLayoutX(labelLayout);
     arrowHead.setLayoutX(end.getLayoutX());
   }
+
+  public void displayObstacle(Obstacle obstacle) {
+    double obstacleX = calculateXPosition(obstacle.getDistanceFromThreshold());
+    double obstacleY = calculateYPosition(obstacle.getDistanceFromCentre());
+    double obstacleWidth = obstacle.getWidth();
+    // In the top view, the height of the obstacle is not represented, so we only need a rectangle to represent the width
+    double obstacleHeight = 10; // Assign a fixed height value for the representation of the obstacle
+
+    Rectangle obstacleShape = new Rectangle(obstacleX, obstacleY, obstacleWidth, obstacleHeight);
+    obstacleShape.setFill(Color.RED); // Set the obstacle color to red
+    topDownRunwayPane.getChildren().add(obstacleShape); // Add the obstacle to the view
+  }
+
+  private double calculateXPosition(double distanceFromThreshold) {
+    // Here, the processing is simplified; in reality, the X coordinate should be calculated based on the runway size and threshold position
+    return distanceFromThreshold;
+  }
+
+  private double calculateYPosition(double distanceFromCentre) {
+    // Here, the processing is simplified; in reality, the Y coordinate should be calculated based on the runway width
+    return topDownRunwayPane.getHeight() / 2 + distanceFromCentre;
+  }
+
 
   protected void setUpLogicalRunway(PhysicalRunway physicalRunway){
     RunwayParameterSpan ToraArrow = new RunwayParameterSpan(toraStart1,toraLength1,toraEnd1,toraLabel1,toraArrow1);
