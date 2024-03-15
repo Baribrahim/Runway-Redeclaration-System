@@ -14,6 +14,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tab;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Line;
@@ -21,6 +22,9 @@ import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Polyline;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.paint.Color;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import java.io.IOException;
 
 
 public class TopDownViewController implements Initializable {
@@ -218,6 +222,8 @@ public class TopDownViewController implements Initializable {
   private Label scale1500;
   @FXML
   private Label scaleUnit;
+  @FXML
+  private Rectangle obstacleRectangle;
 
   @Override
   public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -253,7 +259,7 @@ public class TopDownViewController implements Initializable {
   }
 
   protected void setUpLine(String type,String LeftorRight, PhysicalRunway physicalRunway,
-      RunwayParameterSpan arrow){
+                           RunwayParameterSpan arrow){
     LogicalRunway logicalRunway = null;
     double originalStartX;
     double originalEndX;
@@ -324,27 +330,35 @@ public class TopDownViewController implements Initializable {
     arrowHead.setLayoutX(end.getLayoutX());
   }
 
-
   public void displayObstacle(Obstacle obstacle) {
-    double obstacleX = calculateXPosition(obstacle.getDistanceFromThreshold());
-    double obstacleY = calculateYPosition(obstacle.getDistanceFromCentre());
-    double obstacleWidth = obstacle.getWidth();
-    // 在顶视图中，障碍物的高度不体现，因此我们只需要一个表示宽度的矩形
-    double obstacleHeight = 10; // 为障碍物表示分配一个固定的高度值
+    // User-provided distance values
+    double distanceFromThreshold = obstacle.getDistanceFromThreshold();
+    double distanceFromCentre = obstacle.getDistanceFromCentre();
 
-    Rectangle obstacleShape = new Rectangle(obstacleX, obstacleY, obstacleWidth, obstacleHeight);
-    obstacleShape.setFill(Color.RED); // 设置障碍物颜色为红色
-    topDownRunwayPane.getChildren().add(obstacleShape); // 将障碍物添加到视图中
+    // Calculate the obstacle's x and y coordinates in the view
+    double obstacleX = calculateXPosition(distanceFromThreshold);
+    double obstacleY = calculateYPosition(distanceFromCentre, obstacle.getWidth());
+
+    // Set the position and size of the obstacle rectangle
+    obstacleRectangle.setX(obstacleX);
+    obstacleRectangle.setY(obstacleY);
+    obstacleRectangle.setWidth(obstacle.getWidth());
+    // Height can be fixed as this is a top-down view
+    obstacleRectangle.setHeight(10); // The height is arbitrarily set here because the top-down view does not show height
+
+    // Display the obstacle
+    obstacleRectangle.setVisible(true);
   }
 
+  // Simplified processing here, the actual implementation should determine the X coordinate based on the specific layout of the view
   private double calculateXPosition(double distanceFromThreshold) {
-    // 此处简化处理，实际应根据跑道的尺寸和阈值位置计算X坐标
     return distanceFromThreshold;
   }
 
-  private double calculateYPosition(double distanceFromCentre) {
-    // 此处简化处理，实际应根据跑道宽度计算Y坐标
-    return topDownRunwayPane.getHeight() / 2 + distanceFromCentre;
+  private double calculateYPosition(double distanceFromCentre, double obstacleWidth) {
+    // Calculate the Y position based on the distance of the obstacle from the centerline and the width of the obstacle
+    // Simplified processing here, more complex calculations might be needed in actual applications
+    return topDownRunwayPane.getHeight() / 2 + distanceFromCentre - obstacleWidth / 2;
   }
 
   protected void setUpLogicalRunway(PhysicalRunway physicalRunway){

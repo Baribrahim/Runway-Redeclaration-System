@@ -319,6 +319,28 @@ public class MainPageController implements Initializable {
     }
   }
 
+  public void someMethodThatGetsObstacle() {
+    Platform.runLater(() -> {
+      try {
+        String selectedObstacleId = obstacleMenu.getValue();
+        if (selectedObstacleId != null && !selectedObstacleId.isEmpty()) {
+         double distanceFromThreshold = Double.parseDouble(distanceFromThresholdInput.getText());
+          double distanceFromCentre = Double.parseDouble(distanceFromCentreLineInput.getText());
+
+          double height = database.getObstacleHeight(selectedObstacleId);
+          double width = database.getObstacleWidth(selectedObstacleId);
+
+          Obstacle obstacle = new Obstacle(selectedObstacleId, height, width, distanceFromCentre, distanceFromThreshold);
+
+          topDownViewController.displayObstacle(obstacle);
+          sideOnViewController.displayObstacle(obstacle);
+        }
+      } catch (SQLException e) {
+        e.printStackTrace();
+      }
+    });
+  }
+
 
   @FXML
   private void onObstacleExportClick() {
@@ -333,53 +355,16 @@ public class MainPageController implements Initializable {
     }
   }
 
-//
-//  @FXML
-//  private void calculateRunwayDistances() {
-//    try {
-//      String selectedObstacleId = obstacleMenu.getValue(); // 用户选择的障碍物ID
-//      float height = database.getObstacleHeight(selectedObstacleId);
-//      float width = database.getObstacleWidth(selectedObstacleId);
-//
-//      if (height == -1 || width == -1) {
-//        // 障碍物高度或宽度未找到，处理错误情况
-//        System.out.println("障碍物数据不完整");
-//        return;
-//      }
-//
-//      // 构建障碍物实例
-//      Obstacle obstacle = new Obstacle(selectedObstacleId, height, width);
-//
-//      // 假设您已经有方式获取选定跑道的参数，我们这里只是示意
-//      String selectedRunway = runwayMenu.getValue();
-//      ArrayList<Float> runwayParameters = database.getLogicalRunwayParameters(selectedRunway);
-//      LogicalRunway runway = new LogicalRunway(selectedRunway, runwayParameters.get(0), runwayParameters.get(1), runwayParameters.get(2), runwayParameters.get(3));
-//
-//      // 使用障碍物和跑道信息计算跑道参数
-//      double newTora = ParameterCalculator.calculateTORA(obstacle, runway);
-//      double newLda = ParameterCalculator.calculateLDA(obstacle, runway);
-//      double newAsda = ParameterCalculator.calculateASDA(obstacle, runway);
-//      double newToda = ParameterCalculator.calculateTODA(obstacle, runway);
-//
-//      // 更新UI或其他逻辑来显示计算结果
-//      //updateUI(newTora, newLda, newAsda, newToda);
-//      updateUI(runway.getTora(), newTora, runway.getToda(), newToda, runway.getAsda(), newAsda, runway.getLda(), newLda);
-//
-//    } catch (SQLException e) {
-//      e.printStackTrace();
-//    }
-//  }
+
 @FXML
 private void calculateRunwayDistances() {
   try {
-    // 获取障碍物和跑道的数据
-    String selectedObstacleId = obstacleMenu.getValue(); // 用户选择的障碍物ID
+    String selectedObstacleId = obstacleMenu.getValue();
     float height = database.getObstacleHeight(selectedObstacleId);
     float width = database.getObstacleWidth(selectedObstacleId);
 
     if (height == -1 || width == -1) {
-      // 障碍物高度或宽度未找到，处理错误情况
-      System.out.println("障碍物数据不完整");
+      System.out.println("Obstacle information not completed");
       return;
     }
 
@@ -387,95 +372,20 @@ private void calculateRunwayDistances() {
 
     ArrayList<Float> runwayParameters = database.getLogicalRunwayParameters(runwayMenu.getValue());
 
-    // 构建LogicalRunway对象
     LogicalRunway runway = new LogicalRunway(runwayMenu.getValue(), runwayParameters.get(0), runwayParameters.get(1), runwayParameters.get(2), runwayParameters.get(3));
 
-    // 使用ParameterCalculator计算修正后的参数
-//    runway.setNewTora(ParameterCalculator.calculateTORA(obstacle, runway));
-//    runway.setNewLda(ParameterCalculator.calculateLDA(obstacle, runway));
-//    runway.setNewAsda(ParameterCalculator.calculateASDA(obstacle, runway));
-//    runway.setNewToda(ParameterCalculator.calculateTODA(obstacle, runway));
-    double newTora = ParameterCalculator.calculateTORA(obstacle, runway);
+      double newTora = ParameterCalculator.calculateTORA(obstacle, runway);
     double newLda = ParameterCalculator.calculateLDA(obstacle, runway);
     double newAsda = ParameterCalculator.calculateASDA(obstacle, runway);
     double newToda = ParameterCalculator.calculateTODA(obstacle, runway);
 
-
-    // 使用刚刚计算的参数更新UI
-//    updateUI(runway.getTora(), runway.getNewTora(),
-//            runway.getToda(), runway.getNewToda(),
-//            runway.getAsda(), runway.getNewAsda(),
-//            runway.getLda(), runway.getNewLda());
     updateUI(runway.getTora(), newTora, runway.getToda(), newToda, runway.getAsda(), newAsda, runway.getLda(), newLda);
 
   } catch (SQLException e) {
     e.printStackTrace();
   }
 }
-//  public void updateUI(double newTora, double newLda, double newAsda, double newToda) {
-//    // 假设您有一个名为RunwayData的类，它有四个属性：tora, toda, asda, lda
-//    // 创建两个实例分别表示左侧和右侧跑道的结果
-//    RunwayData leftRunwayData = new RunwayData(newTora, newLda, newAsda, newToda);
-//    RunwayData rightRunwayData = new RunwayData(newTora, newLda, newAsda, newToda); // 根据需要调整值
-//
-//    // 清除现有数据
-//    leftTableView.getItems().clear();
-//    rightTableView.getItems().clear();
-//
-//    // 添加新数据
-//    leftTableView.getItems().add(leftRunwayData);
-//    rightTableView.getItems().add(rightRunwayData);
-//  }
-//private void updateUI(double newTora, double newLda, double newAsda, double newToda) {
-//  // 更新每个TextField以显示新计算的跑道参数
-//  Platform.runLater(() -> {
-//    newTORATextField.setText(String.format("%.2f", newTora));
-//    newTODATextField.setText(String.format("%.2f", newToda));
-//    newASDATextField.setText(String.format("%.2f", newAsda));
-//    newLDATextField.setText(String.format("%.2f", newLda));
-//  });
-//}
-// 该方法假定leftTableView和rightTableView的数据类型已经是LogicalRunway
-//private void updateUI(double newTora, double newLda, double newAsda, double newToda) {
-//  // 创建两个新的LogicalRunway对象，一个用于左侧跑道，一个用于右侧跑道
-//  LogicalRunway newLeftRunwayData = new LogicalRunway("L", newTora, newToda, newAsda, newLda);
-//  LogicalRunway newRightRunwayData = new LogicalRunway("R", newTora, newToda, newAsda, newLda);
-//
-//  // 更新左侧跑道的TableView
-//  leftTableView.getItems().clear(); // 如果您想保留现有的数据，请不要清除它们
-//  leftTableView.getItems().add(newLeftRunwayData);
-//
-//  // 更新右侧跑道的TableView
-//  rightTableView.getItems().clear(); // 如果您想保留现有的数据，请不要清除它们
-//  rightTableView.getItems().add(newRightRunwayData);
-//}
-//private void updateUI(LogicalRunway leftRunway, LogicalRunway rightRunway) {
-//  Platform.runLater(() -> {
-//    // 更新左侧跑道原始参数
-//    leftOriginalTORATextField.setText(String.format("%.2f", leftRunway.getTora()));
-//    leftOriginalTODATextField.setText(String.format("%.2f", leftRunway.getToda()));
-//    leftOriginalASDATextField.setText(String.format("%.2f", leftRunway.getAsda()));
-//    leftOriginalLDATextField.setText(String.format("%.2f", leftRunway.getLda()));
-//
-//    // 更新左侧跑道修正后的参数
-//    leftRevisedTORATextField.setText(String.format("%.2f", leftRunway.getNewTora()));
-//    leftRevisedTODATextField.setText(String.format("%.2f", leftRunway.getNewToda()));
-//    leftRevisedASDATextField.setText(String.format("%.2f", leftRunway.getNewAsda()));
-//    leftRevisedLDATextField.setText(String.format("%.2f", leftRunway.getNewLda()));
-//
-//    // 更新右侧跑道原始参数
-//    rightOriginalTORATextField.setText(String.format("%.2f", rightRunway.getTora()));
-//    rightOriginalTODATextField.setText(String.format("%.2f", rightRunway.getToda()));
-//    rightOriginalASDATextField.setText(String.format("%.2f", rightRunway.getAsda()));
-//    rightOriginalLDATextField.setText(String.format("%.2f", rightRunway.getLda()));
-//
-//    // 更新右侧跑道修正后的参数
-//    rightRevisedTORATextField.setText(String.format("%.2f", rightRunway.getNewTora()));
-//    rightRevisedTODATextField.setText(String.format("%.2f", rightRunway.getNewToda()));
-//    rightRevisedASDATextField.setText(String.format("%.2f", rightRunway.getNewAsda()));
-//    rightRevisedLDATextField.setText(String.format("%.2f", rightRunway.getNewLda()));
-//  });
-//}
+
 private void updateUI(double originalTora, double revisedTora,
                       double originalToda, double revisedToda,
                       double originalAsda, double revisedAsda,
@@ -490,7 +400,6 @@ private void updateUI(double originalTora, double revisedTora,
     leftOriginalLDATextField.setText(String.format("%.2f", originalLda));
     leftRevisedLDATextField.setText(String.format("%.2f", revisedLda));
 
-    // 如果右跑道参数与左跑道参数相同，可以复制左侧参数到右侧
     rightOriginalTORATextField.setText(leftOriginalTORATextField.getText());
     rightRevisedTORATextField.setText(leftRevisedTORATextField.getText());
     rightOriginalTODATextField.setText(leftOriginalTODATextField.getText());

@@ -15,6 +15,8 @@
       <Rectangle fx:id="clearwayColour" arcHeight="5.0" arcWidth="5.0" fill="#ffc13a" height="12.0" layoutX="19.0" layoutY="63.0" stroke="BLACK" strokeType="INSIDE" width="12.0" />
       <Rectangle fx:id="obstacleColour" arcHeight="5.0" arcWidth="5.0" fill="#40f54f" height="12.0" layoutX="19.0" layoutY="85.0" stroke="BLACK" strokeType="INSIDE" width="12.0" />
       <Rectangle fx:id="displacedThresholdColour" arcHeight="5.0" arcWidth="5.0" fill="RED" height="12.0" layoutX="19.0" layoutY="107.0" stroke="BLACK" strokeType="INSIDE" width="12.0" />
+      <Rectangle fx:id="obstacleRectangle" fill="GREEN" stroke="BLACK" strokeWidth="1.0" visible="true" />
+
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="12.0" layoutX="19.0" layoutY="19.0" stroke="BLACK" strokeType="INSIDE" width="12.0" />
       <Label layoutX="45.0" layoutY="19.0" prefHeight="12.0" prefWidth="130.0" style="-fx-text-fill: black;" text="Threshold" wrapText="true">
          <font>
