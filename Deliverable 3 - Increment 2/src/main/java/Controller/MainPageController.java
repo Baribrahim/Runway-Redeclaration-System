@@ -1,13 +1,12 @@
 package Controller;
 
-import Model.DatabaseModel;
-import Model.Obstacle;
-import Model.LogicalRunway;
-import Model.ParameterCalculator;
-import Model.RunwayParameterSpan;
-import Model.DatabaseModel;
+import Model.*;
+
 import java.io.File;
-import javafx.scene.control.MenuItem;
+
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.scene.control.*;
 import javafx.stage.FileChooser;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -25,16 +24,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
-import javafx.scene.control.TextFormatter;
 import javafx.scene.control.TextFormatter.Change;
 import javafx.stage.Stage;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.scene.control.cell.PropertyValueFactory;
+
+
 
 public class MainPageController implements Initializable {
 
@@ -69,10 +65,29 @@ public class MainPageController implements Initializable {
   private Tab sideViewTab;
   @FXML
   private Tab simultaneousViewTab;
+//  @FXML
+//  private TableView<Parameter> leftTableView;
+//  @FXML
+//  private TableView<Parameter> rightTableView;
   @FXML
-  private TableView<Parameter> leftTableView;
+  private TableView<RunwayParameter> leftTableView;
   @FXML
-  private TableView<Parameter> rightTableView;
+  private TableView<RunwayParameter> rightTableView;
+
+  @FXML
+  private TableColumn<RunwayParameter, String> parColumn1;
+  @FXML
+  private TableColumn<RunwayParameter, String> originalCol1;
+  @FXML
+  private TableColumn<RunwayParameter, String> revisedCol1;
+  @FXML
+  private TableColumn<RunwayParameter, String> parColumn2;
+  @FXML
+  private TableColumn<RunwayParameter, String> originalCol2;
+  @FXML
+  private TableColumn<RunwayParameter, String> revisedCol2;
+
+
   @FXML
   private TableView<Parameter> notificationsTable;
   @FXML
@@ -138,6 +153,22 @@ public class MainPageController implements Initializable {
   private SideOnViewController sideOnViewController;
   private SimultaneousViewController simultaneousViewController;
   private DatabaseModel database = new DatabaseModel();
+
+  ObservableList<RunwayParameter> leftRunwayParameters = FXCollections.observableArrayList();
+  ObservableList<RunwayParameter> rightRunwayParameters = FXCollections.observableArrayList();
+
+  public static ObjectProperty<PhysicalRunway> physRunwayItem = new SimpleObjectProperty<>();
+  public static ObjectProperty<Airport> airportItem = new SimpleObjectProperty();
+  public static ObjectProperty<Obstacle> obstacleProperty = new SimpleObjectProperty<>();
+
+
+  public static ObservableList<Obstacle> obstacles = FXCollections.observableArrayList();
+  public static ObservableList<String> airportNames = FXCollections.observableArrayList();
+
+  public ObservableList<Obstacle> getObstacles(){return obstacles;}
+  public static PhysicalRunway getPhysRunwaySelected() {return physRunwayItem.get();}
+  //public static boolean needRedeclare(){return needRedeclare;}
+  public static Obstacle getObstacleSelected() {return obstacleProperty.get();}
 
   private static final Logger logger = LogManager.getLogger(MainPageController.class);
 
@@ -374,7 +405,7 @@ private void calculateRunwayDistances() {
 
     LogicalRunway runway = new LogicalRunway(runwayMenu.getValue(), runwayParameters.get(0), runwayParameters.get(1), runwayParameters.get(2), runwayParameters.get(3));
 
-      double newTora = ParameterCalculator.calculateTORA(obstacle, runway);
+    double newTora = ParameterCalculator.calculateTORA(obstacle, runway);
     double newLda = ParameterCalculator.calculateLDA(obstacle, runway);
     double newAsda = ParameterCalculator.calculateASDA(obstacle, runway);
     double newToda = ParameterCalculator.calculateTODA(obstacle, runway);
@@ -386,7 +417,80 @@ private void calculateRunwayDistances() {
   }
 }
 
-private void updateUI(double originalTora, double revisedTora,
+  private void editColumn(TableColumn<RunwayParameter, String> tableColumn) {
+    tableColumn.setResizable(false);
+    tableColumn.setCellFactory(column -> new TableCell<>() {
+      @Override
+      protected void updateItem(String item, boolean empty) {
+        super.updateItem(item, empty);
+        if (!empty) {
+          this.setStyle("-fx-background-color: rgb(244,244,244); -fx-alignment: CENTER;-fx-font-family: Verdana; -fx-padding: 7");
+          // Set the text of the cell to the item
+          setText(item);
+        } else {
+          setText(null);
+        }
+      }
+    });
+  }
+
+//  private void updateUI(double originalTora, double revisedTora,
+//                        double originalToda, double revisedToda,
+//                        double originalAsda, double revisedAsda,
+//                        double originalLda, double revisedLda) {
+//    Platform.runLater(() -> {
+//      ObservableList<RunwayParameter> leftData = FXCollections.observableArrayList();
+//      LogicalRunway logRunway1 = getPhysRunwaySelected().getLogicalRunways().get(0);
+//      ObservableList<RunwayParameter> rightData = FXCollections.observableArrayList();
+//      LogicalRunway logRunway2 = getPhysRunwaySelected().getLogicalRunways().get(1);
+//
+//      parColumn1.setCellValueFactory(new PropertyValueFactory<>("name"));
+//      parColumn1.setText(logRunway1.getDesignator());
+//      originalCol1.setCellValueFactory(new PropertyValueFactory<>("originalValue"));
+//      revisedCol1.setCellValueFactory(new PropertyValueFactory<>("newValue"));
+//      editColumn(parColumn1);
+//      editColumn(originalCol1);
+//      editColumn(revisedCol1);
+//
+//      parColumn2.setCellValueFactory(new PropertyValueFactory<>("name"));
+//      parColumn2.setText(logRunway2.getDesignator());
+//      originalCol2.setCellValueFactory(new PropertyValueFactory<>("originalValue"));
+//      revisedCol2.setCellValueFactory(new PropertyValueFactory<>("newValue"));
+//      editColumn(parColumn2);
+//      editColumn(originalCol2);
+//      editColumn(revisedCol2);
+//
+//
+////      leftData.add(new RunwayParameter("TORA (m)", String.valueOf(logRunway1.getTora()), "-"));
+////      leftData.add(new RunwayParameter("TODA (m)", String.valueOf(logRunway1.getToda()), "-"));
+////      leftData.add(new RunwayParameter("ASDA (m)", String.valueOf(logRunway1.getAsda()), "-"));
+////      leftData.add(new RunwayParameter("LDA (m)", String.valueOf(logRunway1.getLda()), "-"));
+////
+////      rightData.add(new RunwayParameter("TORA (m)", String.valueOf(logRunway2.getTora()), "-"));
+////      rightData.add(new RunwayParameter("TODA (m)", String.valueOf(logRunway2.getToda()), "-"));
+////      rightData.add(new RunwayParameter("ASDA (m)", String.valueOf(logRunway2.getAsda()), "-"));
+////      rightData.add(new RunwayParameter("LDA (m)", String.valueOf(logRunway2.getLda()), "-"));
+//
+//      // 更新左边的表格数据，使用传入的原始值和修订后的值
+//      leftData.add(new RunwayParameter("TORA (m)", String.valueOf(originalTora), String.valueOf(revisedTora)));
+//      leftData.add(new RunwayParameter("TODA (m)", String.valueOf(originalToda), String.valueOf(revisedToda)));
+//      leftData.add(new RunwayParameter("ASDA (m)", String.valueOf(originalAsda), String.valueOf(revisedAsda)));
+//      leftData.add(new RunwayParameter("LDA (m)", String.valueOf(originalLda), String.valueOf(revisedLda)));
+//
+//      // 更新右边的表格数据，这里假设右边表格显示另一逻辑跑道的数据，如果逻辑不同，请做相应调整
+//      rightData.add(new RunwayParameter("TORA (m)", String.valueOf(logRunway2.getTora()), "-"));
+//      rightData.add(new RunwayParameter("TODA (m)", String.valueOf(logRunway2.getToda()), "-"));
+//      rightData.add(new RunwayParameter("ASDA (m)", String.valueOf(logRunway2.getAsda()), "-"));
+//      rightData.add(new RunwayParameter("LDA (m)", String.valueOf(logRunway2.getLda()), "-"));
+//
+//      leftTableView.setItems(leftData);
+//      rightTableView.setItems(rightData);
+//
+//
+//    });
+//  }
+
+  private void updateUI(double originalTora, double revisedTora,
                       double originalToda, double revisedToda,
                       double originalAsda, double revisedAsda,
                       double originalLda, double revisedLda) {
@@ -410,6 +514,32 @@ private void updateUI(double originalTora, double revisedTora,
     rightRevisedLDATextField.setText(leftRevisedLDATextField.getText());
   });
 }
+
+
+//private void updateUI(double originalTora, double revisedTora,
+//                      double originalToda, double revisedToda,
+//                      double originalAsda, double revisedAsda,
+//                      double originalLda, double revisedLda) {
+//  Platform.runLater(() -> {
+//    leftOriginalTORATextField.setText(String.format("%.2f", originalTora));
+//    leftRevisedTORATextField.setText(String.format("%.2f", revisedTora));
+//    leftOriginalTODATextField.setText(String.format("%.2f", originalToda));
+//    leftRevisedTODATextField.setText(String.format("%.2f", revisedToda));
+//    leftOriginalASDATextField.setText(String.format("%.2f", originalAsda));
+//    leftRevisedASDATextField.setText(String.format("%.2f", revisedAsda));
+//    leftOriginalLDATextField.setText(String.format("%.2f", originalLda));
+//    leftRevisedLDATextField.setText(String.format("%.2f", revisedLda));
+//
+//    rightOriginalTORATextField.setText(leftOriginalTORATextField.getText());
+//    rightRevisedTORATextField.setText(leftRevisedTORATextField.getText());
+//    rightOriginalTODATextField.setText(leftOriginalTODATextField.getText());
+//    rightRevisedTODATextField.setText(leftRevisedTODATextField.getText());
+//    rightOriginalASDATextField.setText(leftOriginalASDATextField.getText());
+//    rightRevisedASDATextField.setText(leftRevisedASDATextField.getText());
+//    rightOriginalLDATextField.setText(leftOriginalLDATextField.getText());
+//    rightRevisedLDATextField.setText(leftRevisedLDATextField.getText());
+//  });
+//}
 
 
 
