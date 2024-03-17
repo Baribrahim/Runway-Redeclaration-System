@@ -87,6 +87,7 @@
                                       <Insets bottom="5.0" top="5.0" />
                                   </padding>
                               </Label>
+                              <ComboBox fx:id="obstacleMenu" layoutX="42.0" layoutY="368.0" prefHeight="25.0" prefWidth="197.0" onAction="#someMethodThatGetsObstacle" />
                         <Button fx:id="addNewAirportButton" layoutX="22.0" layoutY="160.0" mnemonicParsing="false" onAction="#handleAddAirportButtonClick" text="Add a new Airport" />
                         <Button fx:id="addNewRunwayButton" layoutX="27.0" layoutY="293.0" mnemonicParsing="false" onAction="#handleAddRunwayButtonClick" text="Add a new Runway" />
                         <Button fx:id="addNewObstacleButton" layoutX="26.0" layoutY="422.0" mnemonicParsing="false" onAction="#handleAddObstacleButtonClick" text="Add a new Obstacle" />
@@ -128,10 +129,11 @@
                         </Label>
                         <RadioButton fx:id="leftSide" layoutX="80.0" layoutY="602.0" mnemonicParsing="false" text="Left" />
                         <RadioButton fx:id="rightSide" layoutX="144.0" layoutY="602.0" mnemonicParsing="false" text="Right" />
-                        <Button fx:id="calculateButton" layoutX="105.0" layoutY="635.0" mnemonicParsing="false" text="Calculate" />
+                        <Button fx:id="calculateButton" layoutX="105.0" layoutY="635.0" mnemonicParsing="false" onAction="#calculateRunwayDistances" text="Calculate" />
+
                         <ComboBox fx:id="airportMenu" layoutX="35.0" layoutY="111.0" onAction="#showPhysicalRunways" prefHeight="25.0" prefWidth="207.0" />
                         <ComboBox fx:id="runwayMenu" layoutX="33.0" layoutY="237.0" onAction="#runwayMenuChanged" prefHeight="25.0" prefWidth="207.0" />
-                        <ComboBox fx:id="obstacleMenu" layoutX="42.0" layoutY="368.0" prefHeight="25.0" prefWidth="197.0" />
+                        <!--<ComboBox fx:id="obstacleMenu" layoutX="42.0" layoutY="368.0" prefHeight="25.0" prefWidth="197.0" />-->
                         <Button fx:id="refreshButton" layoutX="149.0" layoutY="160.0" mnemonicParsing="false" onAction="#refreshAirports" text="Refresh" />
                           </children>
                       </AnchorPane>
@@ -171,6 +173,29 @@
                           </children>
                   </AnchorPane>
                       <AnchorPane fx:id="stripEndLabel" maxWidth="-Infinity" prefHeight="655.0" prefWidth="294.0" styleClass="pane">
+                          <!--VBox layoutX="10" layoutY="10" spacing="5"--> <!-- Adjust layoutX and layoutY as needed -->
+                              <!-- Left Runway Original Parameters -->
+                              <TextField fx:id="leftOriginalTORATextField" layoutX="68.0" layoutY="82.0" promptText="Left Original TORA" />
+                              <TextField fx:id="leftOriginalTODATextField" layoutX="68.0" layoutY="111.0" promptText="Left Original TODA" />
+                              <TextField fx:id="leftOriginalASDATextField" layoutX="68.0" layoutY="139.0" promptText="Left Original ASDA" />
+                              <TextField fx:id="leftOriginalLDATextField" layoutX="68.0" layoutY="168.0" promptText="Left Original LDA" />
+                              <!-- Left Runway Revised Parameters -->
+                              <TextField fx:id="leftRevisedTORATextField" layoutX="165.0" layoutY="82.0" promptText="Left Revised TORA" />
+                              <TextField fx:id="leftRevisedTODATextField" layoutX="165.0" layoutY="111.0" promptText="Left Revised TODA" />
+                              <TextField fx:id="leftRevisedASDATextField" layoutX="165.0" layoutY="139.0" promptText="Left Revised ASDA" />
+                              <TextField fx:id="leftRevisedLDATextField" layoutX="165.0" layoutY="168.0" promptText="Left Revised LDA" />
+                              <!-- Right Runway Original Parameters -->
+                              <TextField fx:id="rightOriginalTORATextField" layoutX="68.0" layoutY="230.0" promptText="Right Original TORA" />
+                              <TextField fx:id="rightOriginalASDATextField" layoutX="68.0" layoutY="290.0" promptText="Right Original ASDA" />
+                              <TextField fx:id="rightOriginalTODATextField" layoutX="68.0" layoutY="259.0" promptText="Right Original TODA" />
+                              <TextField fx:id="rightOriginalLDATextField" layoutX="68.0" layoutY="318.0" promptText="Right Original LDA" />
+                              <!-- Right Runway Revised Parameters -->
+                              <TextField fx:id="rightRevisedTORATextField" layoutX="165.0" layoutY="230.0" promptText="Right Revised TORA" />
+                              <TextField fx:id="rightRevisedASDATextField" layoutX="165.0" layoutY="290.0" promptText="Right Revised ASDA" />
+                              <TextField fx:id="rightRevisedTODATextField" layoutX="165.0" layoutY="259.0" promptText="Right Revised TODA" />
+                              <TextField fx:id="rightRevisedLDATextField" layoutX="165.0" layoutY="318.0" promptText="Right Revised LDA" />
+                          <!--/VBox-->
+
                           <children>
                               <Button fx:id="calculationBreakdown" disable="true" layoutX="37.0" layoutY="373.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="219.0" styleClass="functionButton" text="Calculation Breakdown">
                                   <font>
@@ -180,6 +205,7 @@
                               <Cursor fx:constant="HAND" />
                            </cursor>
                               </Button>
+                              <!--
                               <TableView fx:id="leftTableView" layoutX="28.0" layoutY="72.0" prefHeight="132.0" prefWidth="245.0" style="-fx-background-color: rgb(244,244,244);">
                                   <columns>
                                       <TableColumn fx:id="parColumn1" editable="false" prefWidth="73.62646484375" resizable="false" sortable="false" style="-fx-font-size: 14px; -fx-font-family: Arial;" text="L" />
@@ -194,6 +220,7 @@
                                       <TableColumn fx:id="revisedCol2" editable="false" prefWidth="93.5" resizable="false" sortable="false" style="-fx-font-family: Arial; -fx-font-size: 14px;" text="Revised" />
                                   </columns>
                               </TableView>
+                              -->
                               <Label fx:id="calTitle" alignment="CENTER" layoutX="11.0" layoutY="16.0" prefHeight="42.0" prefWidth="268.0" styleClass="common-text" text="CALCULATION">
                                   <font>
                                       <Font name="Verdana Bold" size="16.0" />

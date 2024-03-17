@@ -35,6 +35,7 @@ public class StartPageController {
                 scene.getStylesheets().add(getClass().getResource("/CSS/MainPageStylesheet.css").toExternalForm());
                 stage.setScene(scene);
                 stage.setTitle("Main");
+                stage.setResizable(false);
                 stage.show();
 
                 // Close connection to database to prevent locked database

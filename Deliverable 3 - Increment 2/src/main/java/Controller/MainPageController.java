@@ -1,6 +1,11 @@
 package Controller;
 
 import Model.DatabaseModel;
+import Model.Obstacle;
+import Model.LogicalRunway;
+import Model.ParameterCalculator;
+import Model.RunwayParameterSpan;
+import Model.DatabaseModel;
 import java.io.File;
 import javafx.scene.control.MenuItem;
 import javafx.stage.FileChooser;
@@ -29,6 +34,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.control.TextFormatter.Change;
 import javafx.stage.Stage;
+import javafx.application.Platform;
 
 public class MainPageController implements Initializable {
 
@@ -69,6 +75,41 @@ public class MainPageController implements Initializable {
   private TableView<Parameter> rightTableView;
   @FXML
   private TableView<Parameter> notificationsTable;
+  @FXML
+  private TextField leftOriginalTORATextField;
+  @FXML
+  private TextField leftOriginalTODATextField;
+  @FXML
+  private TextField leftOriginalASDATextField;
+  @FXML
+  private TextField leftOriginalLDATextField;
+
+  @FXML
+  private TextField leftRevisedTORATextField;
+  @FXML
+  private TextField leftRevisedTODATextField;
+  @FXML
+  private TextField leftRevisedASDATextField;
+  @FXML
+  private TextField leftRevisedLDATextField;
+
+  @FXML
+  private TextField rightOriginalTORATextField;
+  @FXML
+  private TextField rightOriginalTODATextField;
+  @FXML
+  private TextField rightOriginalASDATextField;
+  @FXML
+  private TextField rightOriginalLDATextField;
+
+  @FXML
+  private TextField rightRevisedTORATextField;
+  @FXML
+  private TextField rightRevisedTODATextField;
+  @FXML
+  private TextField rightRevisedASDATextField;
+  @FXML
+  private TextField rightRevisedLDATextField;
 
   @FXML
   private Button calculationBreakdown;
@@ -278,6 +319,28 @@ public class MainPageController implements Initializable {
     }
   }
 
+  public void someMethodThatGetsObstacle() {
+    Platform.runLater(() -> {
+      try {
+        String selectedObstacleId = obstacleMenu.getValue();
+        if (selectedObstacleId != null && !selectedObstacleId.isEmpty()) {
+         double distanceFromThreshold = Double.parseDouble(distanceFromThresholdInput.getText());
+          double distanceFromCentre = Double.parseDouble(distanceFromCentreLineInput.getText());
+
+          double height = database.getObstacleHeight(selectedObstacleId);
+          double width = database.getObstacleWidth(selectedObstacleId);
+
+          Obstacle obstacle = new Obstacle(selectedObstacleId, height, width, distanceFromCentre, distanceFromThreshold);
+
+          topDownViewController.displayObstacle(obstacle);
+          sideOnViewController.displayObstacle(obstacle);
+        }
+      } catch (SQLException e) {
+        e.printStackTrace();
+      }
+    });
+  }
+
 
   @FXML
   private void onObstacleExportClick() {
@@ -291,6 +354,64 @@ public class MainPageController implements Initializable {
       xmlController.exportObstacles(file);
     }
   }
+
+
+@FXML
+private void calculateRunwayDistances() {
+  try {
+    String selectedObstacleId = obstacleMenu.getValue();
+    float height = database.getObstacleHeight(selectedObstacleId);
+    float width = database.getObstacleWidth(selectedObstacleId);
+
+    if (height == -1 || width == -1) {
+      System.out.println("Obstacle information not completed");
+      return;
+    }
+
+    Obstacle obstacle = new Obstacle(selectedObstacleId, height, width);
+
+    ArrayList<Float> runwayParameters = database.getLogicalRunwayParameters(runwayMenu.getValue());
+
+    LogicalRunway runway = new LogicalRunway(runwayMenu.getValue(), runwayParameters.get(0), runwayParameters.get(1), runwayParameters.get(2), runwayParameters.get(3));
+
+      double newTora = ParameterCalculator.calculateTORA(obstacle, runway);
+    double newLda = ParameterCalculator.calculateLDA(obstacle, runway);
+    double newAsda = ParameterCalculator.calculateASDA(obstacle, runway);
+    double newToda = ParameterCalculator.calculateTODA(obstacle, runway);
+
+    updateUI(runway.getTora(), newTora, runway.getToda(), newToda, runway.getAsda(), newAsda, runway.getLda(), newLda);
+
+  } catch (SQLException e) {
+    e.printStackTrace();
+  }
+}
+
+private void updateUI(double originalTora, double revisedTora,
+                      double originalToda, double revisedToda,
+                      double originalAsda, double revisedAsda,
+                      double originalLda, double revisedLda) {
+  Platform.runLater(() -> {
+    leftOriginalTORATextField.setText(String.format("%.2f", originalTora));
+    leftRevisedTORATextField.setText(String.format("%.2f", revisedTora));
+    leftOriginalTODATextField.setText(String.format("%.2f", originalToda));
+    leftRevisedTODATextField.setText(String.format("%.2f", revisedToda));
+    leftOriginalASDATextField.setText(String.format("%.2f", originalAsda));
+    leftRevisedASDATextField.setText(String.format("%.2f", revisedAsda));
+    leftOriginalLDATextField.setText(String.format("%.2f", originalLda));
+    leftRevisedLDATextField.setText(String.format("%.2f", revisedLda));
+
+    rightOriginalTORATextField.setText(leftOriginalTORATextField.getText());
+    rightRevisedTORATextField.setText(leftRevisedTORATextField.getText());
+    rightOriginalTODATextField.setText(leftOriginalTODATextField.getText());
+    rightRevisedTODATextField.setText(leftRevisedTODATextField.getText());
+    rightOriginalASDATextField.setText(leftOriginalASDATextField.getText());
+    rightRevisedASDATextField.setText(leftRevisedASDATextField.getText());
+    rightOriginalLDATextField.setText(leftOriginalLDATextField.getText());
+    rightRevisedLDATextField.setText(leftRevisedLDATextField.getText());
+  });
+}
+
+
 
   @FXML
   private void onAirportExportClick() {
