@@ -1,9 +1,7 @@
 package Controller;
 
-import Model.DatabaseModel;
-import Model.LogicalRunway;
-import Model.PhysicalRunway;
-import Model.RunwayParameterSpan;
+import Model.*;
+
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -217,6 +215,9 @@ public class TopDownViewController implements Initializable {
   private Label scale1500;
   @FXML
   private Label scaleUnit;
+  @FXML
+  private Rectangle minCGArea;
+
 private boolean isRotated = false;
 private int rotation = 0;
 private boolean labelFlipped = false;
@@ -324,6 +325,36 @@ private boolean labelFlipped = false;
     label.setLayoutX(labelLayout);
     arrowHead.setLayoutX(end.getLayoutX());
   }
+
+  public void relocateObstacle(){
+    obstacleBlock.setVisible(true);
+    Obstacle obstacle = MainPageController.getObstacleSelected();
+    LogicalRunway logRunway;
+    double runwayStartX = runway.getLayoutX();
+    double runwayLength = runway.getWidth();
+    double centre = centreLine.getLayoutY();
+    double disFromThreshold = obstacle.getDistanceFromThreshold();
+    double tora;
+    double stripEnd;
+    double obsBlockWidth = obstacleBlock.getHeight();
+
+    logRunway = MainPageController.getPhysRunwaySelected().getLogicalRunways().get(0);
+    tora = logRunway.getTora();
+    double displacedFromCentre = obstacle.getDirFromCentre().equals("L")? (-obstacle.getDistanceFromCentre()*(minCGArea.getHeight()/2)/PhysicalRunway.minCGArea)
+            -obsBlockWidth/2: (obstacle.getDistanceFromCentre()*(minCGArea.getHeight()/2)/PhysicalRunway.minCGArea)-obsBlockWidth/2;
+    if(ParameterCalculator.needRedeclare(obstacle, logRunway)){
+      if(ParameterCalculator.getFlightMethod(obstacle, logRunway).equals("Take-Off Away Landing Over")){
+        obstacleBlock.relocate(runwayStartX+((disFromThreshold+logRunway.getDisplacedThreshold())*(runwayLength-logRunway.getClearway())/tora) -obsBlockWidth,
+                centre+displacedFromCentre);
+      } else{
+        obstacleBlock.relocate(runwayStartX+((disFromThreshold+logRunway.getDisplacedThreshold())*(runwayLength-logRunway.getClearway())/tora),
+                centre+(displacedFromCentre));
+      }
+    }else{
+      obstacleBlock.setVisible(false);
+    }
+  }
+
 
   protected void setUpLogicalRunway(PhysicalRunway physicalRunway){
     RunwayParameterSpan ToraArrow = new RunwayParameterSpan(toraStart1,toraLength1,toraEnd1,toraLabel1,toraArrow1);

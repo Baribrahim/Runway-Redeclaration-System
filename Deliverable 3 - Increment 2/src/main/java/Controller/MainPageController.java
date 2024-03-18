@@ -1,13 +1,11 @@
 package Controller;
 
-import Model.DatabaseModel;
-import Model.Obstacle;
-import Model.LogicalRunway;
-import Model.ParameterCalculator;
-import Model.RunwayParameterSpan;
+import Model.*;
 import Model.DatabaseModel;
 import java.io.File;
 import java.lang.reflect.Parameter;
+
+import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
@@ -19,6 +17,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 import java.util.function.UnaryOperator;
 import javafx.collections.ObservableList;
@@ -66,6 +65,8 @@ public class MainPageController implements Initializable {
   private Button addNewRunwayButton;
   @FXML
   private Button addNewObstacleButton;
+  @FXML
+  private Button updateView;
   @FXML
   public Tab topViewTab;
   @FXML
@@ -137,6 +138,38 @@ public class MainPageController implements Initializable {
   private Boolean isLightMode;
 
   private static final Logger logger = LogManager.getLogger(MainPageController.class);
+
+
+  public ObservableList<Obstacle> getObstacles(){return obstacles;}
+  public static ObservableList<Airport> getAirports(){return airports;}
+  public static PhysicalRunway getPhysRunwaySelected() {return physRunwayItem.get();}
+  //  public static boolean needRedeclare(){return needRedeclare;}
+  public static Obstacle getObstacleSelected() {return obstacleProperty.get();}
+  public static Airport getAirportSelected() {return airportItem.get();}
+
+  //  public MenuButton getAirportMenu() {return this.airportMenu;}
+  public TopDownViewController getTopDownViewController() { return topDownViewController;}
+  public SideOnViewController getSideOnViewController() { return sideOnViewController;}
+  public static boolean beforeCalculation = false;
+
+  public static ObjectProperty<PhysicalRunway> physRunwayItem = new SimpleObjectProperty<>();
+  public static ObjectProperty<Airport> airportItem = new SimpleObjectProperty();
+  public static ObjectProperty<Obstacle> obstacleProperty = new SimpleObjectProperty<>();
+  public static DoubleProperty disFromThreshold = new SimpleDoubleProperty();
+  public static DoubleProperty disFromCentre = new SimpleDoubleProperty();
+  public static StringProperty dirFromCentre = new SimpleStringProperty();
+  public static DoubleProperty valueChanged = new SimpleDoubleProperty();
+  public static DoubleProperty obstacleHeight = new SimpleDoubleProperty();
+  public static DoubleProperty obstacleWidth = new SimpleDoubleProperty();
+  public static IntegerProperty themeProperty = new SimpleIntegerProperty();
+
+  public static HashMap<String, Airport> airportMap = new HashMap<>();
+  public static ObservableList<Airport> airports = FXCollections.observableArrayList();
+  //    public static MapProperty<String, Airport> airports = new SimpleMapProperty<>(FXCollections.observableMap(map));
+  public static ObservableList<Obstacle> obstacles = FXCollections.observableArrayList();
+  public static ObservableList<String> airportNames = FXCollections.observableArrayList();
+
+  private static boolean needRedeclare = true;
 
   @Override
   public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -331,7 +364,7 @@ public class MainPageController implements Initializable {
 
           Obstacle obstacle = new Obstacle(selectedObstacleId, height, width, distanceFromCentre, distanceFromThreshold);
 
-          topDownViewController.displayObstacle(obstacle);
+          topDownViewController.relocateObstacle();
           sideOnViewController.displayObstacle(obstacle);
         }
       } catch (SQLException e) {

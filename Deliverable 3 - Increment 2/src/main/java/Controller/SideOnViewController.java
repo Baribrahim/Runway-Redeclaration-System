@@ -1,15 +1,13 @@
 package Controller;
 
-import Model.LogicalRunway;
-import Model.PhysicalRunway;
-import Model.RunwayParameterSpan;
-import Model.DatabaseModel;
-import Model.Obstacle;
+import Model.*;
+
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -20,34 +18,34 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
+import Model.Helper.Utility;
 
 public class SideOnViewController implements Initializable {
 
   @FXML
   private Pane dragPane;
-  //The Physical Runway
+  //physical runway
   @FXML
-  private AnchorPane sideOnViewPane;
+  private AnchorPane sideOnPane;
   @FXML
-  private Rectangle physicalRunway;
+  private Rectangle phyRunway;
   @FXML
-  private Label leftDesignator;
+  private Label designatorL;
   @FXML
-  private Label rightDesignator;
+  private Label designatorR;
   @FXML
-  private Label leftDesignator1;
+  private Label designatorL1;
   @FXML
-  private Label rightDesignator1;
+  private Label designatorR1;
   @FXML
-  private Line leftThreshold;
+  private Line thresholdL;
   @FXML
-  private Line rightThreshold;
+  private Line thresholdR;
   @FXML
-  private Line leftDisplacedThreshold;
+  private Line displacedThresholdL;
   @FXML
-  private Line rightDisplacedThreshold;
-
-  //TORA
+  private Line displacedThresholdR;
+  //tora
   @FXML
   private Line toraStart;
   @FXML
@@ -69,7 +67,7 @@ public class SideOnViewController implements Initializable {
   @FXML
   private Polygon rToraArrow;
 
-  //LDA
+  //lda
   @FXML
   private Line ldaStart;
   @FXML
@@ -91,7 +89,7 @@ public class SideOnViewController implements Initializable {
   @FXML
   private Polygon rLdaArrow;
 
-  //ASDA
+  //asda
   @FXML
   private Line asdaStart;
   @FXML
@@ -113,7 +111,7 @@ public class SideOnViewController implements Initializable {
   @FXML
   private Polygon rAsdaArrow;
 
-  //TODA
+  //toda
   @FXML
   private Line todaStart;
   @FXML
@@ -135,59 +133,57 @@ public class SideOnViewController implements Initializable {
   @FXML
   private Polygon rTodaArrow;
 
-  //EXTRAS
+  //others
   @FXML
-  private Line toraExtraLength;
+  private Line toraOtherLength;
   @FXML
-  private Line toraExtraLength1;
+  private Line toraOtherLength1;
   @FXML
-  private Line ldaExtraLength;
+  private Line ldaOtherLength;
   @FXML
-  private Line ldaExtraLength1;
+  private Line ldaOtherLength1;
   @FXML
-  private Label toraExtraLabel;
+  private Label toraOtherLabel;
   @FXML
-  private Label toraExtraLabel1;
+  private Label toraOtherLabel1;
   @FXML
-  private Label ldaExtraLabel;
+  private Label ldaOtherLabel;
   @FXML
-  private Label ldaExtraLabel1;
+  private Label ldaOtherLabel1;
   @FXML
-  private Line toraExtraStart;
+  private Line toraOtherStart;
   @FXML
-  private Line ldaExtraStart;
+  private Line ldaOtherStart;
   @FXML
-  private Line ldaExtraEnd;
+  private Line ldaOtherEnd;
   @FXML
-  private Line toraExtraEnd;
+  private Line toraOtherEnd;
   @FXML
-  private Polygon toraExtraArrow;
+  private Polygon toraOtherArrow;
   @FXML
-  private Polygon toraExtraArrow1;
+  private Polygon toraOtherArrow1;
   @FXML
-  private Polygon ldaExtraArrow;
+  private Polygon ldaOtherArrow;
   @FXML
-  private Polygon ldaExtraArrow1;
+  private Polygon ldaOtherArrow1;
 
-  //Stopway and Clearway
+  //clearway and stopway
   @FXML
-  private Rectangle leftStopway;
+  private Rectangle clearwayL;
   @FXML
-  private Rectangle rightStopway;
+  private Rectangle clearwayR;
   @FXML
-  private Rectangle leftClearway;
+  private Rectangle stopwayL;
   @FXML
-  private Rectangle rihgtClearway;
+  private Rectangle stopwayR;
 
-  //Obstacles
+  //obstacles
   @FXML
   private Polygon tocsSlope;
   @FXML
   private Polygon alsSlope;
-  @FXML
-  private Rectangle obstacleRectangle;
 
-  //Scales
+  //scales
   @FXML
   private Label scaleLabel;
   @FXML
@@ -207,6 +203,7 @@ public class SideOnViewController implements Initializable {
   @FXML
   private Label scaleUnit;
 
+
   //Colours
   @FXML
   private Rectangle stopwayColour;
@@ -219,17 +216,23 @@ public class SideOnViewController implements Initializable {
   @FXML
   private Rectangle minCGArea;
 
-  private final double visualRunwayLength = 600.0; // 这应该与physicalRunway.getWidth()相匹配
-
-  // 实际跑道的长度（米）
-  private final double actualRunwayLength = 3000.0; // 这是一个例子，你需要用你的实际跑道长度替换它
-
-  // 计算缩放因子
-  private final double scaleFactor = actualRunwayLength / visualRunwayLength;
-
-
   @Override
   public void initialize(URL url, ResourceBundle resourceBundle) {
+
+    MainPageController.obstacleProperty.addListener(((ObservableValue<? extends Obstacle> observable, Obstacle oldValue, Obstacle newValue) -> {
+      if(newValue != null){
+        if(oldValue != null){
+          oldValue.setDistFThreshold(0);
+          oldValue.setDistFCent(0);
+        }
+        newValue.setDistFThreshold(MainPageController.disFromThreshold.get());
+        setUpAlsTocs(newValue,MainPageController.getPhysRunwaySelected().getLogicalRunways().get(0));
+      }
+    }));
+
+    MainPageController.disFromThreshold.addListener((observable, oldValue, newValue) -> {
+      setUpAlsTocs(MainPageController.getObstacleSelected(),MainPageController.getPhysRunwaySelected().getLogicalRunways().get(0));
+    });
 
   }
   public void displayObstacle(Obstacle obstacle) {
@@ -257,19 +260,19 @@ public class SideOnViewController implements Initializable {
     //double obstacleY = runwayLayoutY + runwayHeight - obstacleVisualHeight;
 
     // Set or update the position and size of the obstacle rectangle
-    obstacleRectangle.setX(obstacleX);
-    obstacleRectangle.setY(obstacleY);
-    obstacleRectangle.setWidth(obstacle.getWidth());
-    obstacleRectangle.setHeight(obstacleVisualHeight); // Set a fixed height
-
-    // Ensure the obstacle is visible
-    obstacleRectangle.setVisible(true);
+//    obstacleRectangle.setX(obstacleX);
+//    obstacleRectangle.setY(obstacleY);
+//    obstacleRectangle.setWidth(obstacle.getWidth());
+//    obstacleRectangle.setHeight(obstacleVisualHeight); // Set a fixed height
+//
+//    // Ensure the obstacle is visible
+//    obstacleRectangle.setVisible(true);
   }
 
   // Below are the example methods for calculating X and Y coordinates; you need to adjust them according to the actual view size and scale
   private double calculateXPosition(double distanceFromThreshold) {
     // Get the x-coordinate of the runway threshold defined in FXML
-    final double thresholdX = leftThreshold.getLayoutX();
+    final double thresholdX = thresholdL.getLayoutX();
     // Assuming each pixel represents a specific actual distance, directly convert it to an x-coordinate in the view
     final double unitDistance = 50; // Actual distance each unit represents (e.g., 1 pixel represents 1 meter)
     return thresholdX + (distanceFromThreshold / unitDistance);
@@ -282,9 +285,185 @@ public class SideOnViewController implements Initializable {
     return centreY - (obstacleWidth / 2);
   }
 
+
+  private double[] oldAndNewValue(String type, LogicalRunway logicalRunway){
+    double originalValue = 0;
+    double newValue = 0;
+    switch (type) {
+      case "TORA" -> {
+        originalValue = logicalRunway.getTora();
+        newValue = logicalRunway.getNewTora();
+      }
+      case "LDA" -> {
+        originalValue = logicalRunway.getLda();
+        newValue = logicalRunway.getNewLda();
+      }
+      case "ASDA" -> {
+        originalValue = logicalRunway.getAsda();
+        newValue = logicalRunway.getNewAsda();
+      }
+      case "TODA" -> {
+        originalValue = logicalRunway.getToda();
+        newValue = logicalRunway.getNewToda();
+      }
+    }
+    return new double[]{originalValue,newValue};
+  }
+
+  protected void setUpScale(LogicalRunway logRunway){
+    double tora = logRunway.getTora();
+    int scaleRange = Utility.getScaleRange(tora);
+    //setting up scale proportion
+    scaleLength.setLayoutX(scaleLength.getLayoutX());
+    scaleLength.setWidth(scaleRange*toraLength.getEndX()/tora);
+    scaleStart.setLayoutX(scaleLength.getLayoutX());
+    double length = scaleLength.getWidth();
+    scaleStart.setWidth(length/3);
+    scaleEnd.setLayoutX(scaleLength.getLayoutX()+length*2/3);
+    scaleEnd.setWidth(length/3);
+
+    //setting up scale labels
+    scale500.setText(""+scaleRange/3);
+    scale1000.setText(""+scaleRange*2/3);
+    scale1500.setText(""+scaleRange);
+    scale0.setLayoutX(scaleStart.getLayoutX()-scale0.getWidth());
+    scale500.setLayoutX(scaleStart.getLayoutX() + length/3 - scale500.getWidth());
+    scale1000.setLayoutX(scaleEnd.getLayoutX() -scale1000.getWidth());
+    scale1500.setLayoutX(scaleEnd.getLayoutX() + scaleEnd.getWidth()-scale1500.getWidth());
+    scaleUnit.setLayoutX(scaleEnd.getLayoutX() + scaleEnd.getWidth() + 10);
+    scaleLabel.setLayoutX(scaleLength.getLayoutX() + (length - scaleLabel.getWidth())/2);
+  }
+
+  private void setUpPhyRunway(PhysicalRunway physicalRunway, LogicalRunway selectedLogRunway){
+    LogicalRunway lLogicalRunway = physicalRunway.getLogicalRunways().get(0);
+    LogicalRunway rLogicalRunway = physicalRunway.getLogicalRunways().get(1);
+
+    //Set Up Threshold
+    thresholdL.setLayoutX(phyRunway.getLayoutX());
+    thresholdR.setLayoutX(phyRunway.getLayoutX()+phyRunway.getWidth());
+
+    //Set Up Designator
+    String lDesignator = lLogicalRunway.getDesignator();
+    String rDesignator = rLogicalRunway.getDesignator();
+    //Set Up DisplacedThreshold
+    double lDisplacedThreshold = lLogicalRunway.getDisplacedThreshold();
+    double rDisplacedThreshold = rLogicalRunway.getDisplacedThreshold();
+    double lDisplacedThresholdX;
+    double rDisplacedThresholdX;
+
+    //change in designator and displacedThreshold as logical runway changes
+    designatorL.setText(lDesignator.substring(0, lDesignator.length()-1));
+    designatorR.setText(rDesignator.substring(0, rDesignator.length()-1));
+    designatorL1.setText(lDesignator.substring(lDesignator.length()-1));
+    designatorR1.setText(rDesignator.substring(rDesignator.length()-1));
+    lDisplacedThresholdX = thresholdL.getLayoutX() + getNumberOfPx(lDisplacedThreshold,lLogicalRunway);
+    rDisplacedThresholdX = thresholdR.getLayoutX() - getNumberOfPx(rDisplacedThreshold,rLogicalRunway);
+
+    displacedThresholdL.setLayoutX(lDisplacedThresholdX);
+    displacedThresholdR.setLayoutX(rDisplacedThresholdX);
+  }
+
+  protected void setUpStopwayAndClearway(PhysicalRunway physicalRunway, LogicalRunway selectedLogRunway){
+    LogicalRunway lLogicalRunway = physicalRunway.getLogicalRunways().get(0);
+    LogicalRunway rLogicalRunway = physicalRunway.getLogicalRunways().get(1);
+    setStopClearway(lLogicalRunway,"Right");
+    setStopClearway(rLogicalRunway,"Left");
+  }
+
+  private void setStopClearway(LogicalRunway logicalRunway,String leftOrRightWay){
+    //Set Up  Variable
+    double stopwayLength = logicalRunway.getStopway();
+    double stopwayWidthPx = getNumberOfPx(stopwayLength,logicalRunway);
+    double clearwayLength = logicalRunway.getClearway();
+    double clearwayWidthPx = getNumberOfPx(clearwayLength,logicalRunway);
+    double oriStopwayX;
+    double oriClearwayX;
+    Rectangle stopway;
+    Rectangle clearway;
+
+    //Set Up Variable based on left or right
+    if (leftOrRightWay.equals("Left")){
+      oriStopwayX = thresholdL.getLayoutX() - stopwayWidthPx;
+      oriClearwayX = thresholdL.getLayoutX() - clearwayWidthPx;
+      stopway = stopwayL;
+      clearway = clearwayL;
+    } else {
+      oriStopwayX = thresholdR.getLayoutX();
+      oriClearwayX = thresholdR.getLayoutX();
+      stopway = stopwayR;
+      clearway = clearwayR;
+    }
+
+    // Set Values for both clearway and stopway
+    setStopClearwayValue(stopway,stopwayLength,stopwayWidthPx,oriStopwayX);
+    setStopClearwayValue(clearway,clearwayLength,clearwayWidthPx,oriClearwayX);
+  }
+
+  private void setStopClearwayValue(Rectangle way,double length, double widthPx, double oriWayX){
+    if (length != 0 ){
+      way.setWidth(widthPx);
+    }else {
+      way.setWidth(0);
+    }
+    way.setLayoutX(oriWayX);
+  }
+
+  private void setUpAlsTocs(Obstacle obstacle, LogicalRunway logicalRunway){
+    double obsHeight = obstacle.getHeight();
+    double slopeWidth = obstacle.getAlsTocs();
+    double distanceFromThreshold = obstacle.getDistanceFromThreshold();
+
+    //Get Number of Pixel
+    double slopeWidthPx = getNumberOfPx(slopeWidth,logicalRunway);
+    double obsHeightPx = getNumberOfPx(obsHeight,logicalRunway);
+    double distanceFromThresholdPx = getNumberOfPx(distanceFromThreshold,logicalRunway);
+
+    Polygon slope;
+    boolean usingAls = ParameterCalculator.getFlightMethod(obstacle,logicalRunway).equals(ParameterCalculator.TAKE_OFF_AWAY_LANDING_OVER);
+    if (usingAls){
+      tocsSlope.setVisible(false);
+      alsSlope.setVisible(true);
+      slope = alsSlope;
+      slope.setLayoutX(displacedThresholdL.getLayoutX()+distanceFromThresholdPx);
+      ObservableList<Double> points = slope.getPoints();
+      points.set(3,-obsHeightPx*10);
+      //points.set(3,-20d);
+      points.set(0, points.get(4)+slopeWidthPx);
+    }else {
+      tocsSlope.setVisible(true);
+      alsSlope.setVisible(false);
+      slope = tocsSlope;
+      slope.setLayoutX(displacedThresholdL.getLayoutX()+distanceFromThresholdPx);
+      ObservableList<Double> points = slope.getPoints();
+      points.set(3,-obsHeightPx*10);
+      //points.set(3,-20d);
+      points.set(0, points.get(4)-slopeWidthPx);
+    }
+  }
+
+  private double getMeterPerPx(LogicalRunway logicalRunway){
+    return logicalRunway.getTora()/ phyRunway.getWidth();
+  }
+
+  private double getNumberOfPx(double length,LogicalRunway logicalRunway){
+    return length/getMeterPerPx(logicalRunway);
+  }
+
+  private double getLabelLayout(Line start,Line length,Label label){
+    return start.getLayoutX() + (length.getEndX()/2 - label.getWidth()/2);
+  }
+
+//  public AnchorPane getSideOnPane() {
+//    return sideOnPane;
+//  }
+
+  public Pane getDragPane() {
+    return dragPane;
+  }
+
   public void updateView(String runwayName, ArrayList<Float> parameters) throws SQLException {
-    leftDesignator.setText(runwayName.split("/")[0]);
-    rightDesignator.setText(runwayName.split("/")[1]);
+    designatorL.setText(runwayName.split("/")[0]);
+    designatorR.setText(runwayName.split("/")[1]);
     ldaLabel.setText("LDA = " + parameters.get(3) + "m");
     todaLabel.setText("TODA = " + parameters.get(1) + "m");
     asdaLabel.setText("ASDA = " + parameters.get(2) + "m");

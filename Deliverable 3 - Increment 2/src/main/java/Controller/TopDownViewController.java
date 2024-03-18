@@ -1,10 +1,7 @@
 package Controller;
 
-import Model.DatabaseModel;
-import Model.LogicalRunway;
-import Model.PhysicalRunway;
-import Model.RunwayParameterSpan;
-import Model.Obstacle;
+import Model.*;
+
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -15,20 +12,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
-import javafx.scene.control.Tab;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Polyline;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.paint.Color;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.transform.Rotate;
-
-import java.io.IOException;
-
 
 public class TopDownViewController implements Initializable {
 
@@ -226,7 +216,8 @@ public class TopDownViewController implements Initializable {
   @FXML
   private Label scaleUnit;
   @FXML
-  private Rectangle obstacleRectangle;
+  private Rectangle minCGArea;
+
   private boolean isRotated = false;
   private int rotation = 0;
   private boolean labelFlipped = false;
@@ -335,36 +326,35 @@ public class TopDownViewController implements Initializable {
     arrowHead.setLayoutX(end.getLayoutX());
   }
 
-  public void displayObstacle(Obstacle obstacle) {
-    // User-provided distance values
-    double distanceFromThreshold = obstacle.getDistanceFromThreshold();
-    double distanceFromCentre = obstacle.getDistanceFromCentre();
+  public void relocateObstacle(){
+    obstacleBlock.setVisible(true);
+    Obstacle obstacle = MainPageController.getObstacleSelected();
+    LogicalRunway logRunway;
+    double runwayStartX = runway.getLayoutX();
+    double runwayLength = runway.getWidth();
+    double centre = centreLine.getLayoutY();
+    double disFromThreshold = obstacle.getDistanceFromThreshold();
+    double tora;
+    double stripEnd;
+    double obsBlockWidth = obstacleBlock.getHeight();
 
-    // Calculate the obstacle's x and y coordinates in the view
-    double obstacleX = calculateXPosition(distanceFromThreshold);
-    double obstacleY = calculateYPosition(distanceFromCentre, obstacle.getWidth());
-
-    // Set the position and size of the obstacle rectangle
-    obstacleRectangle.setX(obstacleX);
-    obstacleRectangle.setY(obstacleY);
-    obstacleRectangle.setWidth(obstacle.getWidth());
-    // Height can be fixed as this is a top-down view
-    obstacleRectangle.setHeight(10); // The height is arbitrarily set here because the top-down view does not show height
-
-    // Display the obstacle
-    obstacleRectangle.setVisible(true);
+    logRunway = MainPageController.getPhysRunwaySelected().getLogicalRunways().get(0);
+    tora = logRunway.getTora();
+    double displacedFromCentre = obstacle.getDirFromCentre().equals("L")? (-obstacle.getDistanceFromCentre()*(minCGArea.getHeight()/2)/PhysicalRunway.minCGArea)
+            -obsBlockWidth/2: (obstacle.getDistanceFromCentre()*(minCGArea.getHeight()/2)/PhysicalRunway.minCGArea)-obsBlockWidth/2;
+    if(ParameterCalculator.needRedeclare(obstacle, logRunway)){
+      if(ParameterCalculator.getFlightMethod(obstacle, logRunway).equals("Take-Off Away Landing Over")){
+        obstacleBlock.relocate(runwayStartX+((disFromThreshold+logRunway.getDisplacedThreshold())*(runwayLength-logRunway.getClearway())/tora) -obsBlockWidth,
+                centre+displacedFromCentre);
+      } else{
+        obstacleBlock.relocate(runwayStartX+((disFromThreshold+logRunway.getDisplacedThreshold())*(runwayLength-logRunway.getClearway())/tora),
+                centre+(displacedFromCentre));
+      }
+    }else{
+      obstacleBlock.setVisible(false);
+    }
   }
 
-  // Simplified processing here, the actual implementation should determine the X coordinate based on the specific layout of the view
-  private double calculateXPosition(double distanceFromThreshold) {
-    return distanceFromThreshold;
-  }
-
-  private double calculateYPosition(double distanceFromCentre, double obstacleWidth) {
-    // Calculate the Y position based on the distance of the obstacle from the centerline and the width of the obstacle
-    // Simplified processing here, more complex calculations might be needed in actual applications
-    return topDownRunwayPane.getHeight() / 2 + distanceFromCentre - obstacleWidth / 2;
-  }
 
   protected void setUpLogicalRunway(PhysicalRunway physicalRunway){
     RunwayParameterSpan ToraArrow = new RunwayParameterSpan(toraStart1,toraLength1,toraEnd1,toraLabel1,toraArrow1);
@@ -405,7 +395,7 @@ public class TopDownViewController implements Initializable {
     todaLabel2.setText("TODA = " + parameters.get(4) + "m");
     ldaLabel2.setText("LDA = " + parameters.get(7) + "m");
     leftThreshold.setLayoutX(runway.getLayoutX());
-    rightThreshold.setLayoutX(runway.getLayoutX() + runway.getWidth());
+    rightThreshold.setLayoutX(runway.getLayoutX()+runway.getWidth());
     setUpLogicalRunway(physicalRunway);
 
     //Rotates the view back to normal when runway changes
@@ -421,6 +411,7 @@ public class TopDownViewController implements Initializable {
       topDownRunwayPane.setScaleY(1);
     }
   }
+
   @FXML
   public void rotateRunway() {
     Rotate rotate = new Rotate();
