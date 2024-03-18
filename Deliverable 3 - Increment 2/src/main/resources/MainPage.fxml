@@ -159,25 +159,32 @@
                       <AnchorPane fx:id="stripEndLabel" maxWidth="-Infinity" prefHeight="655.0" prefWidth="294.0" styleClass="pane">
                           <!--VBox layoutX="10" layoutY="10" spacing="5"--> <!-- Adjust layoutX and layoutY as needed -->
                               <!-- Left Runway Original Parameters -->
-                              <TextField fx:id="leftOriginalTORATextField" layoutX="68.0" layoutY="82.0" promptText="Left Original TORA" />
-                              <TextField fx:id="leftOriginalTODATextField" layoutX="68.0" layoutY="111.0" promptText="Left Original TODA" />
-                              <TextField fx:id="leftOriginalASDATextField" layoutX="68.0" layoutY="139.0" promptText="Left Original ASDA" />
-                              <TextField fx:id="leftOriginalLDATextField" layoutX="68.0" layoutY="168.0" promptText="Left Original LDA" />
+                              <TextField fx:id="leftOriginalTORATextField" layoutX="7.0" layoutY="82.0" prefHeight="25.0" prefWidth="152.0" promptText="Left Original TORA" />
+                              <TextField fx:id="leftOriginalTODATextField" layoutX="7.0" layoutY="111.0" prefHeight="25.0" prefWidth="152.0" promptText="Left Original TODA" />
+                              <TextField fx:id="leftOriginalASDATextField" layoutX="7.0" layoutY="139.0" prefHeight="25.0" prefWidth="152.0" promptText="Left Original ASDA" />
+                              <TextField fx:id="leftOriginalLDATextField" layoutX="7.0" layoutY="168.0" prefHeight="25.0" prefWidth="152.0" promptText="Left Original LDA" />
                               <!-- Left Runway Revised Parameters -->
-                              <TextField fx:id="leftRevisedTORATextField" layoutX="165.0" layoutY="82.0" promptText="Left Revised TORA" />
-                              <TextField fx:id="leftRevisedTODATextField" layoutX="165.0" layoutY="111.0" promptText="Left Revised TODA" />
-                              <TextField fx:id="leftRevisedASDATextField" layoutX="165.0" layoutY="139.0" promptText="Left Revised ASDA" />
-                              <TextField fx:id="leftRevisedLDATextField" layoutX="165.0" layoutY="168.0" promptText="Left Revised LDA" />
+                              <TextField fx:id="leftRevisedTORATextField" layoutX="165.0" layoutY="82.0" prefHeight="25.0" prefWidth="152.0" promptText="Left Revised TORA" />
+                              <TextField fx:id="leftRevisedTODATextField" layoutX="165.0" layoutY="111.0" prefHeight="25.0" prefWidth="152.0" promptText="Left Revised TODA" />
+                              <TextField fx:id="leftRevisedASDATextField" layoutX="165.0" layoutY="139.0" prefHeight="25.0" prefWidth="152.0" promptText="Left Revised ASDA" />
+                              <TextField fx:id="leftRevisedLDATextField" layoutX="165.0" layoutY="168.0" prefHeight="25.0" prefWidth="152.0" promptText="Left Revised LDA" />
                               <!-- Right Runway Original Parameters -->
-                              <TextField fx:id="rightOriginalTORATextField" layoutX="68.0" layoutY="230.0" promptText="Right Original TORA" />
-                              <TextField fx:id="rightOriginalASDATextField" layoutX="68.0" layoutY="290.0" promptText="Right Original ASDA" />
-                              <TextField fx:id="rightOriginalTODATextField" layoutX="68.0" layoutY="259.0" promptText="Right Original TODA" />
-                              <TextField fx:id="rightOriginalLDATextField" layoutX="68.0" layoutY="318.0" promptText="Right Original LDA" />
+                              <TextField fx:id="rightOriginalTORATextField" layoutX="8.0" layoutY="230.0" prefHeight="25.0" prefWidth="152.0" promptText="Right Original TORA" />
+                              <TextField fx:id="rightOriginalASDATextField" layoutX="8.0" layoutY="290.0" prefHeight="25.0" prefWidth="152.0" promptText="Right Original ASDA" />
+                              <TextField fx:id="rightOriginalTODATextField" layoutX="8.0" layoutY="259.0" prefHeight="25.0" prefWidth="152.0" promptText="Right Original TODA" />
+                              <TextField fx:id="rightOriginalLDATextField" layoutX="8.0" layoutY="318.0" prefHeight="25.0" prefWidth="152.0" promptText="Right Original LDA" />
                               <!-- Right Runway Revised Parameters -->
-                              <TextField fx:id="rightRevisedTORATextField" layoutX="165.0" layoutY="230.0" promptText="Right Revised TORA" />
-                              <TextField fx:id="rightRevisedASDATextField" layoutX="165.0" layoutY="290.0" promptText="Right Revised ASDA" />
-                              <TextField fx:id="rightRevisedTODATextField" layoutX="165.0" layoutY="259.0" promptText="Right Revised TODA" />
-                              <TextField fx:id="rightRevisedLDATextField" layoutX="165.0" layoutY="318.0" promptText="Right Revised LDA" />
+                              <TextField fx:id="rightRevisedTORATextField" layoutX="165.0" layoutY="230.0" prefHeight="25.0" prefWidth="152.0" promptText="Right Revised TORA" />
+                              <TextField fx:id="rightRevisedASDATextField" layoutX="165.0" layoutY="290.0" prefHeight="25.0" prefWidth="152.0" promptText="Right Revised ASDA" />
+                              <TextField fx:id="rightRevisedTODATextField" layoutX="165.0" layoutY="259.0" prefHeight="25.0" prefWidth="152.0" promptText="Right Revised TODA" />
+                              <TextField fx:id="rightRevisedLDATextField" layoutX="165.0" layoutY="318.0" prefHeight="25.0" prefWidth="152.0" promptText="Right Revised LDA" />
+                     <TableView fx:id="leftTableView" layoutX="38.0" layoutY="70.0" prefHeight="132.0" prefWidth="245.0" style="-fx-background-color: rgb(244,244,244);">
+                        <columns>
+                           <TableColumn fx:id="parColumn1" editable="false" prefWidth="73.62646484375" resizable="false" sortable="false" style="-fx-font-size: 14px; -fx-font-family: Arial;" text="L" />
+                           <TableColumn fx:id="originalCol1" editable="false" minWidth="3.9134521484375" prefWidth="75.824951171875" resizable="false" sortable="false" style="-fx-font-family: Arial; -fx-font-size: 14px;" text="Original" />
+                           <TableColumn fx:id="revisedCol1" editable="false" prefWidth="94.0" resizable="false" sortable="false" style="-fx-font-family: Arial; -fx-font-size: 14px;" text="Revised" />
+                        </columns>
+                     </TableView>
                           <!--/VBox-->
 
                           <children>

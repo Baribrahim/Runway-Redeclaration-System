@@ -7,12 +7,15 @@ import Model.ParameterCalculator;
 import Model.RunwayParameterSpan;
 import Model.DatabaseModel;
 import java.io.File;
+import java.lang.reflect.Parameter;
+import javafx.collections.FXCollections;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.FileChooser;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import java.io.IOException;
-import java.lang.reflect.Parameter;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -70,7 +73,16 @@ public class MainPageController implements Initializable {
   @FXML
   private Tab simultaneousViewTab;
   @FXML
-  private TableView<Parameter> leftTableView;
+  private TableView<Model.Parameter> leftTableView;
+
+  @FXML
+  private TableColumn<Model.Parameter, String> parColumn1;
+
+  @FXML
+  private TableColumn<Model.Parameter, Double> originalCol1;
+
+  @FXML
+  private TableColumn<Parameter, Double> revisedCol1;
   @FXML
   private TableView<Parameter> rightTableView;
   @FXML
@@ -139,6 +151,8 @@ public class MainPageController implements Initializable {
   private SimultaneousViewController simultaneousViewController;
   private DatabaseModel database = new DatabaseModel();
 
+  private Boolean isLightMode;
+
   private static final Logger logger = LogManager.getLogger(MainPageController.class);
 
   @Override
@@ -162,6 +176,8 @@ public class MainPageController implements Initializable {
     topViewTab.setContent(root1);
     sideViewTab.setContent(root2);
     simultaneousViewTab.setContent(root3);
+
+    isLightMode = true;
 
     airportMenu.setVisible(true);
     airportMenu.setDisable(false);
@@ -409,9 +425,19 @@ private void updateUI(double originalTora, double revisedTora,
     rightOriginalLDATextField.setText(leftOriginalLDATextField.getText());
     rightRevisedLDATextField.setText(leftRevisedLDATextField.getText());
   });
+  ObservableList<Model.Parameter> leftData = FXCollections.observableArrayList();
+  ObservableList<Model.Parameter> rightData = FXCollections.observableArrayList();
+
+  parColumn1.setCellValueFactory(new PropertyValueFactory<>("name"));
+  originalCol1.setCellValueFactory(new PropertyValueFactory<>("originalValue"));
+  revisedCol1.setCellValueFactory(new PropertyValueFactory<>("newValue"));
+
+  leftData.add(new Model.Parameter("TORA (m)", String.valueOf(originalTora), String.valueOf(revisedTora)));
+  leftData.add(new Model.Parameter("TODA (m)", String.valueOf(originalToda), String.valueOf(revisedToda)));
+  leftData.add(new Model.Parameter("ASDA (m)", String.valueOf(originalAsda), String.valueOf(revisedAsda)));
+  leftData.add(new Model.Parameter("LDA (m)", String.valueOf(originalLda), String.valueOf(revisedLda)));
+  leftTableView.setItems(leftData);
 }
-
-
 
   @FXML
   private void onAirportExportClick() {
