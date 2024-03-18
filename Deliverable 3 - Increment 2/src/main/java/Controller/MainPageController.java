@@ -451,7 +451,6 @@ private void updateUI(double originalTora, double revisedTora,
     }
   }
 
-
   @FXML
   private void onObstacleImportClick() {
     FileChooser fileChooser = new FileChooser();

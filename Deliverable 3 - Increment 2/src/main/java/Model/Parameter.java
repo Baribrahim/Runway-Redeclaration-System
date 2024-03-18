@@ -15,11 +15,11 @@ public class Parameter {
     return name;
   }
 
-  public String getOriginalValue() {
+  public String getOriginalVal() {
     return originalValue;
   }
 
-  public String getNewValue() {
+  public String getNewVal() {
     return newValue;
   }
 }

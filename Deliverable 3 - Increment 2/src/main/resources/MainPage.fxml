@@ -163,7 +163,7 @@
                               <TextField fx:id="leftOriginalTODATextField" layoutX="7.0" layoutY="111.0" prefHeight="25.0" prefWidth="152.0" promptText="Left Original TODA" />
                               <TextField fx:id="leftOriginalASDATextField" layoutX="7.0" layoutY="139.0" prefHeight="25.0" prefWidth="152.0" promptText="Left Original ASDA" />
                               <TextField fx:id="leftOriginalLDATextField" layoutX="7.0" layoutY="168.0" prefHeight="25.0" prefWidth="152.0" promptText="Left Original LDA" />
-                              <!-- Left Runway Revised Parameters -->
+                              <!-- Left Runway revised Parameters -->
                               <TextField fx:id="leftRevisedTORATextField" layoutX="165.0" layoutY="82.0" prefHeight="25.0" prefWidth="152.0" promptText="Left Revised TORA" />
                               <TextField fx:id="leftRevisedTODATextField" layoutX="165.0" layoutY="111.0" prefHeight="25.0" prefWidth="152.0" promptText="Left Revised TODA" />
                               <TextField fx:id="leftRevisedASDATextField" layoutX="165.0" layoutY="139.0" prefHeight="25.0" prefWidth="152.0" promptText="Left Revised ASDA" />
