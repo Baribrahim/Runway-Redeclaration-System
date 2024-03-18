@@ -407,8 +407,8 @@ private boolean labelFlipped = false;
     rotate.setPivotY(topDownRunwayPane.getHeight() / 2);
     if (isRotated != true) {
       topDownRunwayPane.getTransforms().add(rotate);
-      topDownRunwayPane.setScaleX(1 - (double) Math.abs(rotation) /400 );
-      topDownRunwayPane.setScaleY(1 - (double) Math.abs(rotation) /400 );
+      topDownRunwayPane.setScaleX(1 - (double) Math.abs(rotation) /300 );
+      topDownRunwayPane.setScaleY(1 - (double) Math.abs(rotation) /300 );
       rotation = 360 - rotation  ;
       isRotated = true;
     } else {
