@@ -75,20 +75,22 @@ public class MainPageController implements Initializable {
   private Tab simultaneousViewTab;
   @FXML
   private TableView<Model.Parameter> leftTableView;
-
+  @FXML
+  private TableView<Model.Parameter> rightTableView;
   @FXML
   private TableColumn<Model.Parameter, String> parColumnL;
-
+  @FXML
+  private TableColumn<Model.Parameter, String> parColumnR;
   @FXML
   private TableColumn<Model.Parameter, Double> originalColL;
-
+  @FXML
+  private TableColumn<Model.Parameter, Double> originalColR;
   @FXML
   private TableColumn<Parameter, Double> revisedColL;
   @FXML
-  private TableView<Parameter> rightTableView;
+  private TableColumn<Parameter, Double> revisedColR;
   @FXML
   private TableView<Parameter> notificationsTable;
-
   @FXML
   private TextField rightOriginalTORATextField;
   @FXML
@@ -388,53 +390,78 @@ public class MainPageController implements Initializable {
   }
 
 
-@FXML
-private void calculateRunwayDistances() {
-  try {
-    String selectedObstacleId = obstacleMenu.getValue();
-    float height = database.getObstacleHeight(selectedObstacleId);
-    float width = database.getObstacleWidth(selectedObstacleId);
+  @FXML
+  private void calculateRunwayDistances() {
+    try {
+      String selectedObstacleId = obstacleMenu.getValue();
+      float height = database.getObstacleHeight(selectedObstacleId);
+      float width = database.getObstacleWidth(selectedObstacleId);
 
-    if (height == -1 || width == -1) {
-      System.out.println("Obstacle information not completed");
-      return;
+      if (height == -1 || width == -1) {
+        System.out.println("Obstacle information not completed");
+        return;
+      }
+
+      Obstacle obstacle = new Obstacle(selectedObstacleId, height, width);
+
+      ArrayList<Float> runwayParameters = database.getLogicalRunwayParameters(runwayMenu.getValue());
+
+      LogicalRunway runwayL = new LogicalRunway(runwayMenu.getValue(), runwayParameters.get(0), runwayParameters.get(1), runwayParameters.get(2), runwayParameters.get(3));
+
+      LogicalRunway runwayR = new LogicalRunway(runwayMenu.getValue(), runwayParameters.get(5), runwayParameters.get(4), runwayParameters.get(6), runwayParameters.get(7));
+
+      double newToraL = ParameterCalculator.calculateTORA(obstacle, runwayL);
+      double newLdaL = ParameterCalculator.calculateLDA(obstacle, runwayL);
+      double newAsdaL = ParameterCalculator.calculateASDA(obstacle, runwayL);
+      double newTodaL = ParameterCalculator.calculateTODA(obstacle, runwayL);
+
+      double newToraR = ParameterCalculator.calculateTORA(obstacle, runwayR);
+      double newLdaR = ParameterCalculator.calculateLDA(obstacle, runwayR);
+      double newAsdaR = ParameterCalculator.calculateASDA(obstacle, runwayR);
+      double newTodaR = ParameterCalculator.calculateTODA(obstacle, runwayR);
+
+      updateUI(runwayL.getTora(), newToraL, runwayL.getToda(), newTodaL, runwayL.getAsda(), newAsdaL, runwayL.getLda(), newLdaL,
+          runwayR.getTora(), newToraR, runwayR.getToda(), newTodaR, runwayR.getAsda(), newAsdaR, runwayR.getLda(), newLdaR);
+
+    } catch (SQLException e) {
+      e.printStackTrace();
     }
-
-    Obstacle obstacle = new Obstacle(selectedObstacleId, height, width);
-
-    ArrayList<Float> runwayParameters = database.getLogicalRunwayParameters(runwayMenu.getValue());
-
-    LogicalRunway runway = new LogicalRunway(runwayMenu.getValue(), runwayParameters.get(0), runwayParameters.get(1), runwayParameters.get(2), runwayParameters.get(3));
-
-      double newTora = ParameterCalculator.calculateTORA(obstacle, runway);
-    double newLda = ParameterCalculator.calculateLDA(obstacle, runway);
-    double newAsda = ParameterCalculator.calculateASDA(obstacle, runway);
-    double newToda = ParameterCalculator.calculateTODA(obstacle, runway);
-
-    updateUI(runway.getTora(), newTora, runway.getToda(), newToda, runway.getAsda(), newAsda, runway.getLda(), newLda);
-
-  } catch (SQLException e) {
-    e.printStackTrace();
   }
-}
 
-private void updateUI(double originalTora, double revisedTora,
-                      double originalToda, double revisedToda,
-                      double originalAsda, double revisedAsda,
-                      double originalLda, double revisedLda) {
+  private void updateUI(double originalToraL, double revisedToraL,
+      double originalTodaL, double revisedTodaL,
+      double originalAsdaL, double revisedAsdaL,
+      double originalLdaL, double revisedLdaL,
+      double originalToraR, double revisedToraR,
+      double originalTodaR, double revisedTodaR,
+      double originalAsdaR, double revisedAsdaR,
+      double originalLdaR, double revisedLdaR) {
 
-  ObservableList<Model.Parameter> leftData = FXCollections.observableArrayList();
+    ObservableList<Model.Parameter> leftData = FXCollections.observableArrayList();
+    ObservableList<Model.Parameter> rightData = FXCollections.observableArrayList();
 
-  parColumnL.setCellValueFactory(new PropertyValueFactory<>("name"));
-  originalColL.setCellValueFactory(new PropertyValueFactory<>("originalValue"));
-  revisedColL.setCellValueFactory(new PropertyValueFactory<>("newValue"));
+    parColumnL.setCellValueFactory(new PropertyValueFactory<>("name"));
+    originalColL.setCellValueFactory(new PropertyValueFactory<>("originalValue"));
+    revisedColL.setCellValueFactory(new PropertyValueFactory<>("newValue"));
 
-  leftData.add(new Model.Parameter("TORA (m)", String.valueOf(originalTora), String.valueOf(revisedTora)));
-  leftData.add(new Model.Parameter("TODA (m)", String.valueOf(originalToda), String.valueOf(revisedToda)));
-  leftData.add(new Model.Parameter("ASDA (m)", String.valueOf(originalAsda), String.valueOf(revisedAsda)));
-  leftData.add(new Model.Parameter("LDA (m)", String.valueOf(originalLda), String.valueOf(revisedLda)));
-  leftTableView.setItems(leftData);
-}
+    parColumnR.setCellValueFactory(new PropertyValueFactory<>("name"));
+    originalColR.setCellValueFactory(new PropertyValueFactory<>("originalValue"));
+    revisedColR.setCellValueFactory(new PropertyValueFactory<>("newValue"));
+
+    leftData.add(new Model.Parameter("TORA (m)", String.valueOf(originalToraL), String.valueOf(revisedToraL)));
+    leftData.add(new Model.Parameter("TODA (m)", String.valueOf(originalTodaL), String.valueOf(revisedTodaL)));
+    leftData.add(new Model.Parameter("ASDA (m)", String.valueOf(originalAsdaL), String.valueOf(revisedAsdaL)));
+    leftData.add(new Model.Parameter("LDA (m)", String.valueOf(originalLdaL), String.valueOf(revisedLdaL)));
+    leftTableView.setItems(leftData);
+
+    rightData.add(new Model.Parameter("TORA (m)", String.valueOf(originalToraR), String.valueOf(revisedToraR)));
+    rightData.add(new Model.Parameter("TODA (m)", String.valueOf(originalTodaR), String.valueOf(revisedTodaR)));
+    rightData.add(new Model.Parameter("ASDA (m)", String.valueOf(originalAsdaR), String.valueOf(revisedAsdaR)));
+    rightData.add(new Model.Parameter("LDA (m)", String.valueOf(originalLdaR), String.valueOf(revisedLdaR)));
+    rightTableView.setItems(rightData);
+
+  }
+
 
   @FXML
   private void onAirportExportClick() {
