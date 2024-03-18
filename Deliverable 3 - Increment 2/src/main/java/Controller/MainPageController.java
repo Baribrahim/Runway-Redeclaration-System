@@ -469,5 +469,10 @@ private void updateUI(double originalTora, double revisedTora,
     }
   }
 
+  @FXML
+  private void handleRotateButton() {
+    topDownViewController.rotateRunway();
+  }
+
 }
 
