@@ -87,23 +87,6 @@ public class MainPageController implements Initializable {
   private TableView<Parameter> rightTableView;
   @FXML
   private TableView<Parameter> notificationsTable;
-  @FXML
-  private TextField leftOriginalTORATextField;
-  @FXML
-  private TextField leftOriginalTODATextField;
-  @FXML
-  private TextField leftOriginalASDATextField;
-  @FXML
-  private TextField leftOriginalLDATextField;
-
-  @FXML
-  private TextField leftRevisedTORATextField;
-  @FXML
-  private TextField leftRevisedTODATextField;
-  @FXML
-  private TextField leftRevisedASDATextField;
-  @FXML
-  private TextField leftRevisedLDATextField;
 
   @FXML
   private TextField rightOriginalTORATextField;
@@ -406,25 +389,7 @@ private void updateUI(double originalTora, double revisedTora,
                       double originalToda, double revisedToda,
                       double originalAsda, double revisedAsda,
                       double originalLda, double revisedLda) {
-  Platform.runLater(() -> {
-    leftOriginalTORATextField.setText(String.format("%.2f", originalTora));
-    leftRevisedTORATextField.setText(String.format("%.2f", revisedTora));
-    leftOriginalTODATextField.setText(String.format("%.2f", originalToda));
-    leftRevisedTODATextField.setText(String.format("%.2f", revisedToda));
-    leftOriginalASDATextField.setText(String.format("%.2f", originalAsda));
-    leftRevisedASDATextField.setText(String.format("%.2f", revisedAsda));
-    leftOriginalLDATextField.setText(String.format("%.2f", originalLda));
-    leftRevisedLDATextField.setText(String.format("%.2f", revisedLda));
 
-    rightOriginalTORATextField.setText(leftOriginalTORATextField.getText());
-    rightRevisedTORATextField.setText(leftRevisedTORATextField.getText());
-    rightOriginalTODATextField.setText(leftOriginalTODATextField.getText());
-    rightRevisedTODATextField.setText(leftRevisedTODATextField.getText());
-    rightOriginalASDATextField.setText(leftOriginalASDATextField.getText());
-    rightRevisedASDATextField.setText(leftRevisedASDATextField.getText());
-    rightOriginalLDATextField.setText(leftOriginalLDATextField.getText());
-    rightRevisedLDATextField.setText(leftRevisedLDATextField.getText());
-  });
   ObservableList<Model.Parameter> leftData = FXCollections.observableArrayList();
 
   parColumnL.setCellValueFactory(new PropertyValueFactory<>("name"));
