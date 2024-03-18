@@ -12,6 +12,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
@@ -19,6 +20,7 @@ import javafx.scene.shape.Line;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Polyline;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.transform.Rotate;
 
 public class TopDownViewController implements Initializable {
 
@@ -215,7 +217,9 @@ public class TopDownViewController implements Initializable {
   private Label scale1500;
   @FXML
   private Label scaleUnit;
-
+private boolean isRotated = false;
+private int rotation = 0;
+private boolean labelFlipped = false;
   @Override
   public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -362,5 +366,64 @@ public class TopDownViewController implements Initializable {
     leftThreshold.setLayoutX(runway.getLayoutX());
     rightThreshold.setLayoutX(runway.getLayoutX()+runway.getWidth());
     setUpLogicalRunway(physicalRunway);
+
+    //Rotates the view back to normal when runway changes
+    if (isRotated != false) {
+      Rotate rotate = new Rotate();
+      rotate.setPivotX(topDownRunwayPane.getWidth() / 2);
+      rotate.setPivotY(topDownRunwayPane.getHeight() / 2);
+      rotate.setAngle(rotation);
+      topDownRunwayPane.getTransforms().add(rotate);
+      isRotated = false;
+      labelFlipped = false;
+      topDownRunwayPane.setScaleX(1);
+      topDownRunwayPane.setScaleY(1);
+    }
+  }
+
+  @FXML
+  public void rotateRunway() {
+    Rotate rotate = new Rotate();
+    try {
+      if(Integer.parseInt(leftDesignator.getText().substring(0, 2)) < 18) {
+        rotation = Integer.parseInt(leftDesignator.getText().substring(0, 2)) * 10 - 90;
+      } else {
+        String temp = leftDesignator.getText();
+        leftDesignator.setText(rightDesignator.getText());
+        rightDesignator.setText(temp);
+        rotation = Integer.parseInt(leftDesignator.getText().substring(0, 2)) * 10 - 90;
+        labelFlipped = true;
+      }
+    } catch (NumberFormatException e){
+      // Handle empty runway error
+      Alert alert = new Alert(Alert.AlertType.ERROR);
+      alert.setTitle("Error");
+      alert.setHeaderText("No Runway");
+      alert.setContentText("Please select a runway.");
+      alert.showAndWait();
+    }
+    rotate.setAngle(rotation);
+    rotate.setPivotX(topDownRunwayPane.getWidth() / 2);
+    rotate.setPivotY(topDownRunwayPane.getHeight() / 2);
+    if (isRotated != true) {
+      topDownRunwayPane.getTransforms().add(rotate);
+      topDownRunwayPane.setScaleX(1 - (double) Math.abs(rotation) /400 );
+      topDownRunwayPane.setScaleY(1 - (double) Math.abs(rotation) /400 );
+      rotation = 360 - rotation  ;
+      isRotated = true;
+    } else {
+      rotate.setAngle(360 - rotation);
+      topDownRunwayPane.getTransforms().add(rotate);
+      isRotated = false;
+      topDownRunwayPane.setScaleX(1);
+      topDownRunwayPane.setScaleY(1);
+      if (labelFlipped == true){
+        String temp = leftDesignator.getText();
+        leftDesignator.setText(rightDesignator.getText());
+        rightDesignator.setText(temp);
+        labelFlipped = false;
+      }
+    }
+
   }
 }

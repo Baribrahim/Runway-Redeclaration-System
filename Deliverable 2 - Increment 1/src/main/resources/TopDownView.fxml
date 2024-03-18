@@ -1,23 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.Cursor?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.shape.Line?>
-<?import javafx.scene.shape.Polygon?>
-<?import javafx.scene.shape.Polyline?>
-<?import javafx.scene.shape.Rectangle?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="606.5" prefWidth="804.0" style="-fx-background-color: rgb(244, 244,244);" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.TopDownViewController">
+<AnchorPane prefHeight="606.5" prefWidth="804.0" style="-fx-background-color: rgb(244, 244,244);" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.TopDownViewController">
    <children>
       <Rectangle fx:id="background" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="627.0" stroke="#00000008" strokeType="INSIDE" width="804.0" />
       <Pane fx:id="dragPane" layoutY="151.0" prefHeight="388.0" prefWidth="804.0">
          <children>
             <AnchorPane fx:id="topDownRunwayPane" prefHeight="400.0" prefWidth="600.0">
                <children>
-                  <Rectangle fx:id="minCGArea1" arcHeight="5.0" fill="#119000" height="200.0" layoutY="105.0" stroke="TRANSPARENT" strokeType="INSIDE" width="804.0" />
+                  <Rectangle fx:id="minCGArea1" arcHeight="5.0" fill="#119000" height="200.0" layoutY="106.0" stroke="TRANSPARENT" strokeType="INSIDE" width="804.0" />
                   <Rectangle fx:id="minCGArea2" arcHeight="5.0" arcWidth="5.0" fill="#119000" height="280.0" layoutX="192.0" layoutY="66.0" stroke="TRANSPARENT" strokeType="INSIDE" width="411.0" />
                   <Rectangle fx:id="rightClearway" arcHeight="5.0" fill="#ffc13a" height="93.0" layoutX="700.0" layoutY="159.0" stroke="#40ff0000" strokeType="INSIDE" strokeWidth="2.0" width="50.0" />
                   <Rectangle fx:id="leftClearway" arcHeight="5.0" fill="#ffc13a" height="93.0" layoutX="50.0" layoutY="159.0" stroke="#40ff0000" strokeType="INSIDE" strokeWidth="2.0" width="50.0" />
