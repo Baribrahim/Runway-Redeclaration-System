@@ -180,9 +180,9 @@
                               <TextField fx:id="rightRevisedLDATextField" layoutX="165.0" layoutY="318.0" prefHeight="25.0" prefWidth="152.0" promptText="Right Revised LDA" />
                      <TableView fx:id="leftTableView" layoutX="38.0" layoutY="70.0" prefHeight="132.0" prefWidth="245.0" style="-fx-background-color: rgb(244,244,244);">
                         <columns>
-                           <TableColumn fx:id="parColumn1" editable="false" prefWidth="73.62646484375" resizable="false" sortable="false" style="-fx-font-size: 14px; -fx-font-family: Arial;" text="L" />
-                           <TableColumn fx:id="originalCol1" editable="false" minWidth="3.9134521484375" prefWidth="75.824951171875" resizable="false" sortable="false" style="-fx-font-family: Arial; -fx-font-size: 14px;" text="Original" />
-                           <TableColumn fx:id="revisedCol1" editable="false" prefWidth="94.0" resizable="false" sortable="false" style="-fx-font-family: Arial; -fx-font-size: 14px;" text="Revised" />
+                           <TableColumn fx:id="parColumnL" editable="false" prefWidth="73.62646484375" resizable="false" sortable="false" style="-fx-font-size: 14px; -fx-font-family: Arial;" text="L" />
+                           <TableColumn fx:id="originalColL" editable="false" minWidth="3.9134521484375" prefWidth="75.824951171875" resizable="false" sortable="false" style="-fx-font-family: Arial; -fx-font-size: 14px;" text="Original" />
+                           <TableColumn fx:id="revisedColL" editable="false" prefWidth="94.0" resizable="false" sortable="false" style="-fx-font-family: Arial; -fx-font-size: 14px;" text="Revised" />
                         </columns>
                      </TableView>
                           <!--/VBox-->

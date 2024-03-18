@@ -76,13 +76,13 @@ public class MainPageController implements Initializable {
   private TableView<Model.Parameter> leftTableView;
 
   @FXML
-  private TableColumn<Model.Parameter, String> parColumn1;
+  private TableColumn<Model.Parameter, String> parColumnL;
 
   @FXML
-  private TableColumn<Model.Parameter, Double> originalCol1;
+  private TableColumn<Model.Parameter, Double> originalColL;
 
   @FXML
-  private TableColumn<Parameter, Double> revisedCol1;
+  private TableColumn<Parameter, Double> revisedColL;
   @FXML
   private TableView<Parameter> rightTableView;
   @FXML
@@ -426,11 +426,10 @@ private void updateUI(double originalTora, double revisedTora,
     rightRevisedLDATextField.setText(leftRevisedLDATextField.getText());
   });
   ObservableList<Model.Parameter> leftData = FXCollections.observableArrayList();
-  ObservableList<Model.Parameter> rightData = FXCollections.observableArrayList();
 
-  parColumn1.setCellValueFactory(new PropertyValueFactory<>("name"));
-  originalCol1.setCellValueFactory(new PropertyValueFactory<>("originalValue"));
-  revisedCol1.setCellValueFactory(new PropertyValueFactory<>("newValue"));
+  parColumnL.setCellValueFactory(new PropertyValueFactory<>("name"));
+  originalColL.setCellValueFactory(new PropertyValueFactory<>("originalValue"));
+  revisedColL.setCellValueFactory(new PropertyValueFactory<>("newValue"));
 
   leftData.add(new Model.Parameter("TORA (m)", String.valueOf(originalTora), String.valueOf(revisedTora)));
   leftData.add(new Model.Parameter("TODA (m)", String.valueOf(originalToda), String.valueOf(revisedToda)));
