@@ -357,27 +357,28 @@ public class MainPageController implements Initializable {
     Platform.runLater(() -> {
       try {
         String selectedObstacleId = obstacleMenu.getValue();
+        System.out.println("Current selected obstacle is: " + selectedObstacleId.toString());
         if (selectedObstacleId != null && !selectedObstacleId.isEmpty()) {
          double distanceFromThreshold = Double.parseDouble(distanceFromThresholdInput.getText());
-          double distanceFromCentre = Double.parseDouble(distanceFromCentreLineInput.getText());
+         double distanceFromCentre = Double.parseDouble(distanceFromCentreLineInput.getText());
 
-          double height = database.getObstacleHeight(selectedObstacleId);
-          double width = database.getObstacleWidth(selectedObstacleId);
+         double height = database.getObstacleHeight(selectedObstacleId);
+         double width = database.getObstacleWidth(selectedObstacleId);
 
-          Obstacle obstacle = new Obstacle(selectedObstacleId, height, width, distanceFromCentre, distanceFromThreshold);
-          ArrayList<Float> parameters = database.getLogicalRunwayParameters(runwayMenu.getValue());
-          LogicalRunway leftLogicalRunway = new LogicalRunway(runwayMenu.getValue().split("/")[0], parameters.get(0), parameters.get(1), parameters.get(2), parameters.get(3));
-          LogicalRunway rightLogicalRunway = new LogicalRunway(runwayMenu.getValue().split("/")[1], parameters.get(5), parameters.get(4), parameters.get(6), parameters.get(7));
-          ObservableList<LogicalRunway> logicalRunways = FXCollections.observableArrayList();
-          logicalRunways.add(leftLogicalRunway);
-          logicalRunways.add(rightLogicalRunway);
-          PhysicalRunway physicalRunway = new PhysicalRunway(runwayMenu.getValue(), logicalRunways);
-          obstacleProperty.set(obstacle);
-          physRunwayItem.set(physicalRunway);
+         Obstacle obstacle = new Obstacle(selectedObstacleId, height, width, distanceFromCentre, distanceFromThreshold);
+         ArrayList<Float> parameters = database.getLogicalRunwayParameters(runwayMenu.getValue());
+         LogicalRunway leftLogicalRunway = new LogicalRunway(runwayMenu.getValue().split("/")[0], parameters.get(0), parameters.get(1), parameters.get(2), parameters.get(3));
+         LogicalRunway rightLogicalRunway = new LogicalRunway(runwayMenu.getValue().split("/")[1], parameters.get(5), parameters.get(4), parameters.get(6), parameters.get(7));
+         ObservableList<LogicalRunway> logicalRunways = FXCollections.observableArrayList();
+         logicalRunways.add(leftLogicalRunway);
+         logicalRunways.add(rightLogicalRunway);
+         PhysicalRunway physicalRunway = new PhysicalRunway(runwayMenu.getValue(), logicalRunways);
+         obstacleProperty.set(obstacle);
+         physRunwayItem.set(physicalRunway);
 
 
-          topDownViewController.relocateObstacle();
-          sideOnViewController.displayObstacle(obstacle);
+         topDownViewController.relocateObstacle();
+         sideOnViewController.displayObstacle(obstacle);
         }
       } catch (SQLException e) {
         e.printStackTrace();
@@ -481,6 +482,8 @@ public class MainPageController implements Initializable {
     reDeclaredDistances.add((float) revisedLdaR);
     topDownViewController.updateView(runwayMenu.getValue(), reDeclaredDistances);
 
+    calculationBreakdown.setDisable(false);
+
   }
 
 
@@ -533,6 +536,7 @@ public class MainPageController implements Initializable {
       scene.getStylesheets().add(getClass().getResource("/CSS/MainPageStylesheet.css").toExternalForm());
       stage.setScene(scene);
       stage.setTitle("User Guide");
+      stage.setResizable(false);
       stage.show();
     } catch (IOException e) {
       e.printStackTrace();
@@ -542,6 +546,25 @@ public class MainPageController implements Initializable {
   @FXML
   private void handleRotateButton() {
     topDownViewController.rotateRunway();
+  }
+
+  @FXML
+  private void handleCalculationBreakdown() throws IOException {
+    try {
+      Stage stage= new Stage();
+      FXMLLoader loader = new FXMLLoader(getClass().getResource("/CalculationBreakdown.fxml"));
+      Parent root = loader.load();
+
+      Scene scene = new Scene(root);
+      scene.getStylesheets().add(getClass().getResource("/CSS/MainPageStylesheet.css").toExternalForm());
+      stage.setScene(scene);
+      stage.setTitle("Calculation Breakdown");
+      stage.setResizable(false);
+      stage.show();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+
   }
 
 

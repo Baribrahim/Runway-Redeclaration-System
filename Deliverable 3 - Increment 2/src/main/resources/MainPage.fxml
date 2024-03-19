@@ -191,7 +191,7 @@
               <!--/VBox-->
 
               <children>
-                <Button fx:id="calculationBreakdown" disable="true" layoutX="37.0" layoutY="373.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="219.0" styleClass="functionButton" text="Calculation Breakdown">
+                <Button fx:id="calculationBreakdown" disable="true" layoutX="37.0" layoutY="373.0" mnemonicParsing="false" onAction="#handleCalculationBreakdown" prefHeight="35.0" prefWidth="219.0" styleClass="functionButton" text="Calculation Breakdown">
                   <font>
                     <Font name="Verdana" size="16.0" />
                   </font>
