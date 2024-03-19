@@ -9,6 +9,7 @@ import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.FileChooser;
 import org.apache.log4j.LogManager;
@@ -130,6 +131,8 @@ public class MainPageController implements Initializable {
   @FXML
   private MenuItem userGuidePage;
 
+  private ToggleGroup toggleGroup = new ToggleGroup();
+
   private XMLController xmlController = new XMLController();
 
   private TopDownViewController topDownViewController;
@@ -196,6 +199,8 @@ public class MainPageController implements Initializable {
     simultaneousViewTab.setContent(root3);
 
     isLightMode = true;
+    leftSide.setToggleGroup(toggleGroup);
+    rightSide.setToggleGroup(toggleGroup);
 
     airportMenu.setVisible(true);
     airportMenu.setDisable(false);
