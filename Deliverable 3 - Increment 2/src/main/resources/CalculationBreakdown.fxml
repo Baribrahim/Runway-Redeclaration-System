@@ -95,17 +95,17 @@
             <Font name="Verdana" size="13.0" />
          </font>
       </Label>
-      <Label fx:id="resa" layoutX="164.0" layoutY="31.0" text="Label">
+      <Label fx:id="resa" layoutX="146.0" layoutY="31.0" text="Label">
          <font>
             <Font name="Verdana" size="13.0" />
          </font>
       </Label>
-      <Label fx:id="stripEnd" layoutX="409.0" layoutY="31.0" text="Label">
+      <Label fx:id="stripEnd" layoutX="389.0" layoutY="31.0" text="Label">
          <font>
             <Font name="Verdana" size="13.0" />
          </font>
       </Label>
-      <Label fx:id="blastProtection" layoutX="164.0" layoutY="57.0" text="Label">
+      <Label fx:id="blastProtection" layoutX="146.0" layoutY="57.0" text="Label">
          <font>
             <Font name="Verdana" size="13.0" />
          </font>
