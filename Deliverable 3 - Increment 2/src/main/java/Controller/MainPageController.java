@@ -131,7 +131,7 @@ public class MainPageController implements Initializable {
   @FXML
   private MenuItem userGuidePage;
 
-  private ToggleGroup toggleGroup = new ToggleGroup();
+  private ToggleGroup toggleGroupLR = new ToggleGroup();
 
   private XMLController xmlController = new XMLController();
 
@@ -199,8 +199,8 @@ public class MainPageController implements Initializable {
     simultaneousViewTab.setContent(root3);
 
     isLightMode = true;
-    leftSide.setToggleGroup(toggleGroup);
-    rightSide.setToggleGroup(toggleGroup);
+    leftSide.setToggleGroup(toggleGroupLR);
+    rightSide.setToggleGroup(toggleGroupLR);
 
     airportMenu.setVisible(true);
     airportMenu.setDisable(false);
