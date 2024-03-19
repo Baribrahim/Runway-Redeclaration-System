@@ -435,7 +435,7 @@ public class MainPageController implements Initializable {
       double originalToraR, double revisedToraR,
       double originalTodaR, double revisedTodaR,
       double originalAsdaR, double revisedAsdaR,
-      double originalLdaR, double revisedLdaR) {
+      double originalLdaR, double revisedLdaR) throws SQLException {
 
     ObservableList<Model.Parameter> leftData = FXCollections.observableArrayList();
     ObservableList<Model.Parameter> rightData = FXCollections.observableArrayList();
@@ -459,6 +459,17 @@ public class MainPageController implements Initializable {
     rightData.add(new Model.Parameter("ASDA (m)", String.valueOf(originalAsdaR), String.valueOf(revisedAsdaR)));
     rightData.add(new Model.Parameter("LDA (m)", String.valueOf(originalLdaR), String.valueOf(revisedLdaR)));
     rightTableView.setItems(rightData);
+
+    ArrayList<Float> reDeclaredDistances = new ArrayList<>();
+    reDeclaredDistances.add((float) revisedToraL);
+    reDeclaredDistances.add((float) revisedTodaL);
+    reDeclaredDistances.add((float) revisedAsdaL);
+    reDeclaredDistances.add((float) revisedLdaL);
+    reDeclaredDistances.add((float) revisedToraR);
+    reDeclaredDistances.add((float) revisedTodaR);
+    reDeclaredDistances.add((float) revisedAsdaR);
+    reDeclaredDistances.add((float) revisedLdaR);
+    topDownViewController.updateView(runwayMenu.getValue(), reDeclaredDistances);
 
   }
 
