@@ -418,7 +418,13 @@ public class TopDownViewController implements Initializable {
     try {
       if(Integer.parseInt(leftDesignator.getText().substring(0, 2)) < 18) {
         rotation = Integer.parseInt(leftDesignator.getText().substring(0, 2)) * 10 - 90;
-      } else {
+      }else if (Integer.parseInt(leftDesignator.getText().substring(0, 2)) == 9){
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Heads up");
+        alert.setHeaderText("Already Rotates");
+        alert.setContentText("This runway faces east and therefore is already rotated correctly.");
+        alert.showAndWait();
+      }else {
         String temp = leftDesignator.getText();
         leftDesignator.setText(rightDesignator.getText());
         rightDesignator.setText(temp);
