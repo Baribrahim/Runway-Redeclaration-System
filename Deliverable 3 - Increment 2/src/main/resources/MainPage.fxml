@@ -129,7 +129,8 @@
                 </Label>
                 <RadioButton fx:id="leftSide" layoutX="80.0" layoutY="602.0" mnemonicParsing="false" onAction="#someMethodThatGetsObstacle" text="Left" />
                 <RadioButton fx:id="rightSide" layoutX="144.0" layoutY="602.0" mnemonicParsing="false" onAction="#someMethodThatGetsObstacle" text="Right" />
-                <Button fx:id="calculateButton" layoutX="105.0" layoutY="635.0" mnemonicParsing="false" onAction="#calculateRunwayDistances" text="Calculate" />
+                <Button fx:id="calculateButton" layoutX="65.0" layoutY="635.0" mnemonicParsing="false" onAction="#calculateRunwayDistances" text="Calculate" />
+                <Button fx:id="updateView" layoutX="165.0" layoutY="635.0" mnemonicParsing="false" onAction="#someMethodThatGetsObstacle" text="UpdateView" />
 
                 <ComboBox fx:id="airportMenu" layoutX="35.0" layoutY="111.0" onAction="#showPhysicalRunways" prefHeight="25.0" prefWidth="207.0" />
                 <ComboBox fx:id="runwayMenu" layoutX="33.0" layoutY="237.0" onAction="#runwayMenuChanged" prefHeight="25.0" prefWidth="207.0" />
