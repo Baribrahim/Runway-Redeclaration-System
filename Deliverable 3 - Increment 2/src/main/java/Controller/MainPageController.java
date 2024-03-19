@@ -365,6 +365,7 @@ public class MainPageController implements Initializable {
           double width = database.getObstacleWidth(selectedObstacleId);
 
           Obstacle obstacle = new Obstacle(selectedObstacleId, height, width, distanceFromCentre, distanceFromThreshold);
+          obstacleProperty.set(obstacle);
 
           topDownViewController.relocateObstacle();
           sideOnViewController.displayObstacle(obstacle);
