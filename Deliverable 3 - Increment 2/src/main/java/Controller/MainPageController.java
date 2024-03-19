@@ -365,7 +365,16 @@ public class MainPageController implements Initializable {
           double width = database.getObstacleWidth(selectedObstacleId);
 
           Obstacle obstacle = new Obstacle(selectedObstacleId, height, width, distanceFromCentre, distanceFromThreshold);
+          ArrayList<Float> parameters = database.getLogicalRunwayParameters(runwayMenu.getValue());
+          LogicalRunway leftLogicalRunway = new LogicalRunway(runwayMenu.getValue().split("/")[0], parameters.get(0), parameters.get(1), parameters.get(2), parameters.get(3));
+          LogicalRunway rightLogicalRunway = new LogicalRunway(runwayMenu.getValue().split("/")[1], parameters.get(5), parameters.get(4), parameters.get(6), parameters.get(7));
+          ObservableList<LogicalRunway> logicalRunways = FXCollections.observableArrayList();
+          logicalRunways.add(leftLogicalRunway);
+          logicalRunways.add(rightLogicalRunway);
+          PhysicalRunway physicalRunway = new PhysicalRunway(runwayMenu.getValue(), logicalRunways);
           obstacleProperty.set(obstacle);
+          physRunwayItem.set(physicalRunway);
+
 
           topDownViewController.relocateObstacle();
           sideOnViewController.displayObstacle(obstacle);
@@ -534,6 +543,7 @@ public class MainPageController implements Initializable {
   private void handleRotateButton() {
     topDownViewController.rotateRunway();
   }
+
 
 }
 

@@ -340,7 +340,7 @@ public class TopDownViewController implements Initializable {
 
     logRunway = MainPageController.getPhysRunwaySelected().getLogicalRunways().get(0);
     tora = logRunway.getTora();
-    double displacedFromCentre = obstacle.getDirFromCentre().equals("L")? (-obstacle.getDistanceFromCentre()*(minCGArea.getHeight()/2)/PhysicalRunway.minCGArea)
+    double displacedFromCentre = obstacle.getDirFromCentre().equals("L")? (-obstacle.getDistanceFromCentre()*(minCGArea1.getHeight()/2)/PhysicalRunway.minCGArea)
             -obsBlockWidth/2: (obstacle.getDistanceFromCentre()*(minCGArea.getHeight()/2)/PhysicalRunway.minCGArea)-obsBlockWidth/2;
     if(ParameterCalculator.needRedeclare(obstacle, logRunway)){
       if(ParameterCalculator.getFlightMethod(obstacle, logRunway).equals("Take-Off Away Landing Over")){
