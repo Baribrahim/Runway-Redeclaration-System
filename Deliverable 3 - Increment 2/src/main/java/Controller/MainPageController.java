@@ -366,6 +366,7 @@ public class MainPageController implements Initializable {
          double width = database.getObstacleWidth(selectedObstacleId);
 
          Obstacle obstacle = new Obstacle(selectedObstacleId, height, width, distanceFromCentre, distanceFromThreshold);
+          obstacleProperty.set(obstacle);
          ArrayList<Float> parameters = database.getLogicalRunwayParameters(runwayMenu.getValue());
          LogicalRunway leftLogicalRunway = new LogicalRunway(runwayMenu.getValue().split("/")[0], parameters.get(0), parameters.get(1), parameters.get(2), parameters.get(3));
          LogicalRunway rightLogicalRunway = new LogicalRunway(runwayMenu.getValue().split("/")[1], parameters.get(5), parameters.get(4), parameters.get(6), parameters.get(7));
@@ -373,12 +374,11 @@ public class MainPageController implements Initializable {
          logicalRunways.add(leftLogicalRunway);
          logicalRunways.add(rightLogicalRunway);
          PhysicalRunway physicalRunway = new PhysicalRunway(runwayMenu.getValue(), logicalRunways);
-         obstacleProperty.set(obstacle);
          physRunwayItem.set(physicalRunway);
 
 
          topDownViewController.relocateObstacle();
-         sideOnViewController.displayObstacle(obstacle);
+         //sideOnViewController.displayObstacle(obstacle);
         }
       } catch (SQLException e) {
         e.printStackTrace();
@@ -405,6 +405,8 @@ public class MainPageController implements Initializable {
   private void calculateRunwayDistances() {
     try {
       String selectedObstacleId = obstacleMenu.getValue();
+      double distanceFromThreshold = Double.parseDouble(distanceFromThresholdInput.getText());
+      double distanceFromCentre = Double.parseDouble(distanceFromCentreLineInput.getText());
       float height = database.getObstacleHeight(selectedObstacleId);
       float width = database.getObstacleWidth(selectedObstacleId);
 
@@ -412,8 +414,8 @@ public class MainPageController implements Initializable {
         System.out.println("Obstacle information not completed");
         return;
       }
-
-      Obstacle obstacle = new Obstacle(selectedObstacleId, height, width);
+      Obstacle obstacle = new Obstacle(selectedObstacleId, height, width, distanceFromCentre, distanceFromThreshold);
+      obstacleProperty.set(obstacle);
 
       ArrayList<Float> runwayParameters = database.getLogicalRunwayParameters(runwayMenu.getValue());
 

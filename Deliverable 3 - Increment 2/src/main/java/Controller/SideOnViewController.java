@@ -219,6 +219,7 @@ public class SideOnViewController implements Initializable {
   @Override
   public void initialize(URL url, ResourceBundle resourceBundle) {
 
+    /***
     MainPageController.obstacleProperty.addListener(((ObservableValue<? extends Obstacle> observable, Obstacle oldValue, Obstacle newValue) -> {
       if(newValue != null){
         if(oldValue != null){
@@ -232,7 +233,7 @@ public class SideOnViewController implements Initializable {
 
     MainPageController.disFromThreshold.addListener((observable, oldValue, newValue) -> {
       setUpAlsTocs(MainPageController.getObstacleSelected(),MainPageController.getPhysRunwaySelected().getLogicalRunways().get(0));
-    });
+    });***/
 
   }
   public void displayObstacle(Obstacle obstacle) {
