@@ -1,0 +1,60 @@
+.root {
+  -fx-background-color: #121212;
+}
+
+.label {
+  -fx-text-fill: #E0E0E0;
+}
+
+.tabButton {
+  -fx-background-color: #333333;
+  -fx-border-radius: 10px;
+  -fx-background-radius: 2px;
+}
+
+.button {
+  -fx-background-color: #333333;
+  -fx-border-color: #E76F51;
+  -fx-text-fill: #E0E0E0;
+}
+
+.combo-box {
+  -fx-background-color: #333333;
+  -fx-text-fill: #E0E0E0;
+  -fx-arrow-button-background: #2C2C2C;
+}
+
+.menu-bar {
+  -fx-background-color: #1A1A1A;
+}
+
+.menu {
+  -fx-text-fill: #E0E0E0;
+}
+
+.menu-item {
+  -fx-background-color: #1A1A1A;
+  -fx-text-fill: #E0E0E0;
+}
+
+.radio-button {
+  -fx-text-fill: #E0E0E0;
+}
+
+.scroll-pane {
+  -fx-background: #121212;
+  -fx-border-color: #121212;
+}
+
+.split-pane {
+  -fx-background-color: #121212;
+  -fx-border-color: #121212;
+}
+
+.split-pane .split-pane-divider {
+  -fx-background-color: #333333;
+}
+
+.AnchorPane {
+  -fx-background-color: #121212;
+}

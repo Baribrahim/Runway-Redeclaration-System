@@ -131,6 +131,9 @@ public class MainPageController implements Initializable {
   @FXML
   private MenuItem userGuidePage;
 
+  @FXML
+  private MenuItem darkModeButton;
+
   private ToggleGroup toggleGroup = new ToggleGroup();
 
   private XMLController xmlController = new XMLController();
@@ -201,6 +204,8 @@ public class MainPageController implements Initializable {
     isLightMode = true;
     leftSide.setToggleGroup(toggleGroup);
     rightSide.setToggleGroup(toggleGroup);
+
+    darkModeButton.setOnAction(e -> toggleDarkMode());
 
     airportMenu.setVisible(true);
     airportMenu.setDisable(false);
@@ -574,6 +579,26 @@ public class MainPageController implements Initializable {
 
   }
 
+  private Scene getScene() {
+    // This method needs to retrieve the current scene. Depending on your UI structure,
+    // you may need to adjust how you retrieve the scene. This is a generic example.
+    return darkModeButton.getParentPopup().getOwnerWindow().getScene();
+  }
+
+  private void toggleDarkMode() {
+    Scene scene = getScene(); // Ensure this method correctly retrieves your scene
+    String darkModeStylesheetUrl = getClass().getResource("/CSS/darkMode.css").toExternalForm();
+    if (scene.getStylesheets().contains(darkModeStylesheetUrl)) {
+      scene.getStylesheets().remove(darkModeStylesheetUrl);
+    } else {
+      scene.getStylesheets().add(darkModeStylesheetUrl);
+    }
+  }
+
+  @FXML
+  private void handleToggleDarkMode() {
+    toggleDarkMode();
+  }
 
 }
 
