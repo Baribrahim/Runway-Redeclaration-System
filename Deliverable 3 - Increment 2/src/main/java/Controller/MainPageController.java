@@ -531,7 +531,8 @@ public class MainPageController implements Initializable {
     topDownViewController.updateView(runwayMenu.getValue(), reDeclaredDistances);
     topDownViewController.relocateObstacle();
     calculationBreakdown.setDisable(false);
-
+    sideOnViewController.updateView(runwayMenu.getValue(), reDeclaredDistances);
+    simultaneousViewController.updateView(runwayMenu.getValue(), reDeclaredDistances);
   }
 
 
