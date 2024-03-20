@@ -337,11 +337,18 @@ public class TopDownViewController implements Initializable {
     double tora;
     double stripEnd;
     double obsBlockWidth = obstacleBlock.getHeight();
+    String direction = obstacle.getDirFromCentre();
 
     logRunway = MainPageController.getPhysRunwaySelected().getLogicalRunways().get(0);
     tora = logRunway.getTora();
-    double displacedFromCentre = obstacle.getDirFromCentre().equals("L")? (-obstacle.getDistanceFromCentre()*(minCGArea1.getHeight()/2)/PhysicalRunway.minCGArea)
-            -obsBlockWidth/2: (obstacle.getDistanceFromCentre()*(minCGArea.getHeight()/2)/PhysicalRunway.minCGArea)-obsBlockWidth/2;
+//    double displacedFromCentre = obstacle.getDirFromCentre().equals("L")? (-obstacle.getDistanceFromCentre()*(minCGArea1.getHeight()/2)/PhysicalRunway.minCGArea )
+//            -obsBlockWidth/2: (obstacle.getDistanceFromCentre()*(minCGArea1.getHeight()/2)/PhysicalRunway.minCGArea)-obsBlockWidth/2;
+    double displacedFromCentre = 0;
+    if (obstacle.getDirFromCentre().equals("L")) {
+      displacedFromCentre = -obstacle.getDistanceFromCentre() * (minCGArea1.getHeight() / 2) / PhysicalRunway.minCGArea - obsBlockWidth / 2;
+    } else if (obstacle.getDirFromCentre().equals("R")) {
+      displacedFromCentre = obstacle.getDistanceFromCentre() * (minCGArea1.getHeight() / 2) / PhysicalRunway.minCGArea - obsBlockWidth / 2;
+    }
     if(ParameterCalculator.needRedeclare(obstacle, logRunway)){
       if(ParameterCalculator.getFlightMethod(obstacle, logRunway).equals("Take-Off Away Landing Over")){
         obstacleBlock.relocate(runwayStartX+((disFromThreshold+logRunway.getDisplacedThreshold())*(runwayLength-logRunway.getClearway())/tora) -obsBlockWidth,

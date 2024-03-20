@@ -363,6 +363,17 @@ public class MainPageController implements Initializable {
     }
   }
 
+  @FXML
+  public void setLeftRightDirection(ActionEvent event){
+    if(leftSide.isSelected()){
+      getObstacleSelected().setDirFromCentre("L");
+      dirFromCentre.set("L");
+    } else{
+      getObstacleSelected().setDirFromCentre("R");
+      dirFromCentre.set("R");
+    }
+  }
+
   public void someMethodThatGetsObstacle() {
     Platform.runLater(() -> {
       try {
