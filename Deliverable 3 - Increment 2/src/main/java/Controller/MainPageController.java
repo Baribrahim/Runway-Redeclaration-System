@@ -429,9 +429,9 @@ public class MainPageController implements Initializable {
 
       ArrayList<Float> runwayParameters = database.getLogicalRunwayParameters(runwayMenu.getValue());
 
-      LogicalRunway runwayL = new LogicalRunway(runwayMenu.getValue(), runwayParameters.get(0), runwayParameters.get(1), runwayParameters.get(2), runwayParameters.get(3));
+      LogicalRunway runwayL = new LogicalRunway(runwayMenu.getValue().split("/")[0], runwayParameters.get(0), runwayParameters.get(1), runwayParameters.get(2), runwayParameters.get(3));
 
-      LogicalRunway runwayR = new LogicalRunway(runwayMenu.getValue(), runwayParameters.get(5), runwayParameters.get(4), runwayParameters.get(6), runwayParameters.get(7));
+      LogicalRunway runwayR = new LogicalRunway(runwayMenu.getValue().split("/")[1], runwayParameters.get(5), runwayParameters.get(4), runwayParameters.get(6), runwayParameters.get(7));
 
       double newToraL = ParameterCalculator.calculateTORA(obstacle, runwayL);
       double newLdaL = ParameterCalculator.calculateLDA(obstacle, runwayL);
@@ -442,6 +442,21 @@ public class MainPageController implements Initializable {
       double newLdaR = ParameterCalculator.calculateLDA(obstacle, runwayR);
       double newAsdaR = ParameterCalculator.calculateASDA(obstacle, runwayR);
       double newTodaR = ParameterCalculator.calculateTODA(obstacle, runwayR);
+
+      runwayL.setNewTora(newToraL);
+      runwayL.setNewToda(newTodaL);
+      runwayL.setNewAsda(newAsdaL);
+      runwayL.setNewLda(newLdaL);
+      runwayR.setNewTora(newToraR);
+      runwayR.setNewToda(newTodaR);
+      runwayR.setNewAsda(newAsdaR);
+      runwayR.setNewLda(newLdaR);
+
+      ObservableList<LogicalRunway> logicalRunways = FXCollections.observableArrayList();
+      logicalRunways.add(runwayL);
+      logicalRunways.add(runwayR);
+      PhysicalRunway physicalRunway = new PhysicalRunway(runwayMenu.getValue(), logicalRunways);
+      physRunwayItem.set(physicalRunway);
 
       updateUI(runwayL.getTora(), newToraL, runwayL.getToda(), newTodaL, runwayL.getAsda(), newAsdaL, runwayL.getLda(), newLdaL,
           runwayR.getTora(), newToraR, runwayR.getToda(), newTodaR, runwayR.getAsda(), newAsdaR, runwayR.getLda(), newLdaR);
@@ -493,7 +508,7 @@ public class MainPageController implements Initializable {
     reDeclaredDistances.add((float) revisedAsdaR);
     reDeclaredDistances.add((float) revisedLdaR);
     topDownViewController.updateView(runwayMenu.getValue(), reDeclaredDistances);
-
+    topDownViewController.relocateObstacle();
     calculationBreakdown.setDisable(false);
 
   }
