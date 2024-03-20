@@ -153,6 +153,7 @@ public class MainPageController implements Initializable {
   public static PhysicalRunway getPhysRunwaySelected() {return physRunwayItem.get();}
   //  public static boolean needRedeclare(){return needRedeclare;}
   public static Obstacle getObstacleSelected() {return obstacleProperty.get();}
+  public static String getdirFromCentre() {return dirFromCentre.get();}
   public static Airport getAirportSelected() {return airportItem.get();}
 
   //  public MenuButton getAirportMenu() {return this.airportMenu;}
@@ -364,11 +365,20 @@ public class MainPageController implements Initializable {
   }
 
   @FXML
-  public void setLeftRightDirection(ActionEvent event){
+  public void setLeftRightDirection(ActionEvent event) throws SQLException {
+    String selectedObstacleId = obstacleMenu.getValue();
+    double distanceFromThreshold = Double.parseDouble(distanceFromThresholdInput.getText());
+    double distanceFromCentre = Double.parseDouble(distanceFromCentreLineInput.getText());
+
+    double height = database.getObstacleHeight(selectedObstacleId);
+    double width = database.getObstacleWidth(selectedObstacleId);
+
+    Obstacle obstacle = new Obstacle(selectedObstacleId, height, width, distanceFromCentre, distanceFromThreshold);
+    obstacleProperty.set(obstacle);
     if(leftSide.isSelected()){
       getObstacleSelected().setDirFromCentre("L");
       dirFromCentre.set("L");
-    } else{
+    } else if (rightSide.isSelected()){
       getObstacleSelected().setDirFromCentre("R");
       dirFromCentre.set("R");
     }

@@ -344,9 +344,10 @@ public class TopDownViewController implements Initializable {
 //    double displacedFromCentre = obstacle.getDirFromCentre().equals("L")? (-obstacle.getDistanceFromCentre()*(minCGArea1.getHeight()/2)/PhysicalRunway.minCGArea )
 //            -obsBlockWidth/2: (obstacle.getDistanceFromCentre()*(minCGArea1.getHeight()/2)/PhysicalRunway.minCGArea)-obsBlockWidth/2;
     double displacedFromCentre = 0;
-    if (obstacle.getDirFromCentre().equals("L")) {
+    System.out.println(MainPageController.getdirFromCentre());
+    if (MainPageController.getdirFromCentre().equals("L")) {
       displacedFromCentre = -obstacle.getDistanceFromCentre() * (minCGArea1.getHeight() / 2) / PhysicalRunway.minCGArea - obsBlockWidth / 2;
-    } else if (obstacle.getDirFromCentre().equals("R")) {
+    } else if (MainPageController.getdirFromCentre().equals("R")) {
       displacedFromCentre = obstacle.getDistanceFromCentre() * (minCGArea1.getHeight() / 2) / PhysicalRunway.minCGArea - obsBlockWidth / 2;
     }
     if(ParameterCalculator.needRedeclare(obstacle, logRunway)){
