@@ -40,7 +40,7 @@
         </MenuBar>
         <HBox prefHeight="67.0" prefWidth="1400.0" styleClass="title-pane">
           <children>
-            <Label alignment="CENTER" layoutY="28.0" prefHeight="72.0" prefWidth="959.0" text="RUNWAY REDECLARATION" textAlignment="CENTER" textFill="#ffb800">
+            <Label alignment="CENTER" layoutY="28.0" prefHeight="72.0" prefWidth="1238.0" text="RUNWAY REDECLARATION" textAlignment="CENTER" textFill="#ffb800">
               <font>
                 <Font name="Verdana Bold" size="25.0" />
               </font>
@@ -48,15 +48,6 @@
                 <Insets bottom="20.0" left="350.0" right="170.0" top="20.0" />
               </padding>
             </Label>
-            <Label fx:id="identityLabel" alignment="CENTER_RIGHT" prefHeight="67.0" prefWidth="263.0" textFill="WHITE">
-              <padding>
-                <Insets bottom="15.0" right="25.0" top="15.0" />
-              </padding>
-              <font>
-                <Font name="Verdana" size="13.0" />
-              </font>
-            </Label>
-            <HBox prefHeight="67.0" prefWidth="161.0" />
           </children>
         </HBox>
         <SplitPane dividerPositions="0.20021489971346704, 0.7861747851002865" prefHeight="601.0" prefWidth="1400.0" style="-fx-border-color: rgb(244,244,244);" styleClass="pane">

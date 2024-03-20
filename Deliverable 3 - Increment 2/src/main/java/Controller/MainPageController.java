@@ -605,8 +605,10 @@ public class MainPageController implements Initializable {
     String darkModeStylesheetUrl = getClass().getResource("/CSS/darkMode.css").toExternalForm();
     if (scene.getStylesheets().contains(darkModeStylesheetUrl)) {
       scene.getStylesheets().remove(darkModeStylesheetUrl);
+      darkModeButton.setText("Dark Mode");
     } else {
       scene.getStylesheets().add(darkModeStylesheetUrl);
+      darkModeButton.setText("Light Mode");
     }
   }
 
