@@ -1,7 +1,9 @@
-.root {
+
+.pane {
   -fx-background-color: #121212;
 }
 
+/*
 .label {
   -fx-text-fill: #E0E0E0;
 }
@@ -58,3 +60,4 @@
 .AnchorPane {
   -fx-background-color: #121212;
 }
+ */
