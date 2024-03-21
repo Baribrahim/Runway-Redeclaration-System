@@ -229,14 +229,6 @@ public class MainPageController implements Initializable {
 
     applyNumericInputFilter(distanceFromThresholdInput);
     applyNumericInputFilter(distanceFromCentreLineInput);
-
-    distanceFromThresholdInput.textProperty().addListener((observable,oldValue,newVlaue) -> {
-      int distance = Integer.parseInt(distanceFromThresholdInput.getText());
-      if (distance < 1) {
-        //error handling
-        System.out.println("Error");
-      }
-    });
   }
 
   @FXML

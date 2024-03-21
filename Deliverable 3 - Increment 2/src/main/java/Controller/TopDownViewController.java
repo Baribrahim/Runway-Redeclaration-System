@@ -420,7 +420,7 @@ public class TopDownViewController implements Initializable {
     setUpLine("ASDA","Right",physicalRunway,AsdaArrow1);
     setUpLine("TODA","Right",physicalRunway,TodaArrow1);
 
-    relocateObstacle();
+    //relocateObstacle();
   }
 
   public void updateView(String runwayName, ArrayList<Float> parameters) throws SQLException {
