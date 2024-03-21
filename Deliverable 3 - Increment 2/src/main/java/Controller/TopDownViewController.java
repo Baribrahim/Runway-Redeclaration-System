@@ -419,6 +419,8 @@ public class TopDownViewController implements Initializable {
     setUpLine("LDA","Right",physicalRunway,LdaArrow1);
     setUpLine("ASDA","Right",physicalRunway,AsdaArrow1);
     setUpLine("TODA","Right",physicalRunway,TodaArrow1);
+
+    relocateObstacle();
   }
 
   public void updateView(String runwayName, ArrayList<Float> parameters) throws SQLException {
@@ -510,8 +512,8 @@ public class TopDownViewController implements Initializable {
   }
 
   public void displayResa(Obstacle obstacle, LogicalRunway logRunway, double thresholdDis){
-    if(thresholdDis < (logRunway.getLda() / 2)) {
-      //setLineToObject(ldaLength1, ldaStart1, obsPosL);
+    if(thresholdDis < (logRunway.getLda())) {
+      setLineToObject(ldaLength1, ldaStart1, obsPosL);
       double als = Obstacle.slopeRatio * obstacle.getHeight();
       double ratio = 0;
       if (als > PhysicalRunway.getResa()) {
@@ -535,29 +537,29 @@ public class TopDownViewController implements Initializable {
       blastAllowLabel1.setText("Blast Allowance =  " + PhysicalRunway.getBlastProtection() + "m");
       blastAllowLabel1.setLayoutX(obsPosL);
 
-      /***
+
       setLineToObject(todaLength1, todaStart1, obsPosL);
       setLineToObject(asdaLength1, asdaStart1, obsPosL);
       setLineToObject(toraLength1, toraStart1, obsPosL);
-       ***/
+
 
       ratio = (logRunway.getToda() - thresholdDis) / 584;
       blastAllow1.setEndY(75);
       blastAllow1.setStartX((PhysicalRunway.getBlastProtection() / ratio) + obsPosL - 100);
       blastAllow1.setEndX(blastAllow1.getStartX());
 
-      /***
+
       setLineToObject(todaLength2, todaStart2, obsPosL);
       setLineToObject(asdaLength2, asdaStart2, obsPosL);
       setLineToObject(toraLength2, toraStart2, obsPosL);
       setLineToObject(ldaLength2, ldaStart2, obsPosL);
-       ***/
+
 
       ratio = (logRunway.getLda() - thresholdDis)  / 534 ;
       setResaLine(resaEnd2,adjustedStripEnd2,ratio, PhysicalRunway.getResa(),obsPosL, 700);
       resaLabel2.setText("RESA =  " + PhysicalRunway.getResa() + "m");
 
-      /***
+
       setArrows(todaArrow2, 700);
       setLabels(todaLabel2, 700);
       setArrows(asdaArrow2, 700);
@@ -565,7 +567,10 @@ public class TopDownViewController implements Initializable {
       setArrows(toraArrow2, 700);
       setLabels(toraLabel2, 700);
       ldaArrow2.setLayoutX(adjustedStripEnd2.getEndX() + 700);
-       ***/
+      setLabels(todaLabel1, 700);
+      setLabels(asdaLabel1, 700);
+      setLabels(toraLabel1, 700);
+
 
     } else if (thresholdDis >= (logRunway.getLda() / 2)) {
 
@@ -573,7 +578,7 @@ public class TopDownViewController implements Initializable {
 
   }
   private void setLineToObject(Line hLine, Line vLine, double obsPos){
-    //setVLineToObject(vLine, obsPos);
+    setVLineToObject(vLine, obsPos);
     hLine.setStartX(obsPos - hLine.getLayoutX());
   }
   private void setVLineToObject(Line line, double obsPos){
@@ -590,6 +595,6 @@ public class TopDownViewController implements Initializable {
     arrow.setLayoutX(tallAdjustedStripEnd1.getEndX() + pos);
   }
   private void  setLabels(Label label, double pos){
-    label.setLayoutX(tallAdjustedStripEnd1.getEndX() + pos + 50);
+    label.setLayoutX(tallAdjustedStripEnd1.getEndX() + pos + 15);
   }
 }
