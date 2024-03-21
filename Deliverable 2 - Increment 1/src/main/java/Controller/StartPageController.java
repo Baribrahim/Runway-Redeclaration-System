@@ -7,6 +7,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -28,6 +29,7 @@ public class StartPageController {
     public void Login(javafx.event.ActionEvent actionEvent) {
         try {
             if (databaseModel.CorrectInfo(userIDField.getText(), passwordField.getText())) {
+                //Opens main page
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/MainPage.fxml"));
                 Parent root = loader.load();
                 Stage stage = new Stage();

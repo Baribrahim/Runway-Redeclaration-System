@@ -1,16 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.Cursor?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.shape.Line?>
-<?import javafx.scene.shape.Polygon?>
-<?import javafx.scene.shape.Polyline?>
-<?import javafx.scene.shape.Rectangle?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="606.5" prefWidth="804.0" style="-fx-background-color: rgb(244, 244,244);" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.TopDownViewController">
+<AnchorPane prefHeight="606.5" prefWidth="804.0" style="-fx-background-color: rgb(244, 244,244);" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.TopDownViewController">
    <children>
       <Rectangle fx:id="background" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="627.0" stroke="#00000008" strokeType="INSIDE" width="804.0" />
       <Pane fx:id="dragPane" layoutY="151.0" prefHeight="388.0" prefWidth="804.0">
@@ -24,7 +20,7 @@
                   <Rectangle fx:id="rightStopway" arcHeight="5.0" fill="#6964fa" height="93.0" layoutX="700.0" layoutY="159.0" stroke="#ffdd5400" strokeType="INSIDE" width="25.0" />
                   <Rectangle fx:id="leftStopway" arcHeight="5.0" fill="#6964fa" height="93.0" layoutX="75.0" layoutY="159.0" stroke="#ffff0000" strokeType="INSIDE" width="25.0" />
                   <Rectangle fx:id="runway" arcHeight="5.0" fill="#0f0f0f" height="93.0" layoutX="100.0" layoutY="159.0" stroke="TRANSPARENT" strokeType="INSIDE" width="600.0" />
-                  <Rectangle fx:id="obstacleRectangle" width="0.0" height="10.0" fill="GREEN" stroke="BLACK" strokeWidth="1.0" visible="true" />
+                  <Rectangle fx:id="obstacleRectangle" fill="GREEN" height="10.0" stroke="BLACK" strokeWidth="1.0" visible="true" width="0.0" />
                   <Polyline fx:id="minCGArea6" fill="#119000" layoutX="180.0" layoutY="357.0" points="13.000030517578125, -65.0, 13.000030517578125, -45.143157958984375, 13.000030517578125, -11.999969482421875, -40.82774353027344, -65.0" stroke="TRANSPARENT" strokeType="INSIDE" />
                   <Line endX="-100.43783569335938" layoutX="289.0" layoutY="205.0" startX="-109.85165405273438" stroke="WHITE" />
                   <Line endX="-100.43783569335938" layoutX="310.0" layoutY="205.0" startX="-109.85165405273438" stroke="WHITE" />
@@ -220,6 +216,31 @@
                         <Font name="Verdana Bold" size="20.0" />
                      </font>
                   </Label>
+                  <Line fx:id="resaEnd1" endY="25.0" layoutX="166.0" layoutY="28.0" />
+                  <Label fx:id="resaLabel1" layoutX="196.0" layoutY="10.0">
+                     <font>
+                        <Font name="Verdana Bold" size="12.0" />
+                     </font></Label>
+                  <Line fx:id="adjustedStripEnd1" endY="25.0" layoutX="166.0" layoutY="28.0" />
+                  <Line id="todaStart" fx:id="blastAllow1" endY="25.0" layoutX="100.0" layoutY="53.0" />
+                  <Label fx:id="blastAllowLabel1" layoutX="134.0" layoutY="130.0">
+                     <font>
+                        <Font name="Verdana Bold" size="12.0" />
+                     </font></Label>
+                  <Line id="ldaEnd" fx:id="resaEnd2" endY="25.0" layoutX="700.0" layoutY="358.0" />
+                  <Line id="ldaEnd" fx:id="adjustedStripEnd2" endY="25.0" layoutX="700.0" layoutY="358.0" />
+                  <Label fx:id="resaLabel2" layoutX="152.0" layoutY="390.0">
+                     <font>
+                        <Font name="Verdana Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <Line id="toraEnd" fx:id="tallResaEnd1" endY="25.0" layoutX="700.0" layoutY="282.0" />
+                  <Line id="toraEnd" fx:id="tallAdjustedStripEnd1" endY="25.0" layoutX="700.0" layoutY="282.0" />
+                  <Label fx:id="resaLabel3" layoutX="87.0" layoutY="266.0">
+                     <font>
+                        <Font name="Verdana Bold" size="12.0" />
+                     </font>
+                  </Label>
                </children>
                <cursor>
                   <Cursor fx:constant="DEFAULT" />
@@ -234,7 +255,7 @@
       <Rectangle fx:id="clearwayColour" arcHeight="5.0" arcWidth="5.0" fill="#ffc13a" height="12.0" layoutX="14.0" layoutY="80.0" stroke="BLACK" strokeType="INSIDE" width="12.0" />
       <Rectangle fx:id="obstacleColour" arcHeight="5.0" arcWidth="5.0" fill="#40f54f" height="12.0" layoutX="14.0" layoutY="102.0" stroke="BLACK" strokeType="INSIDE" width="12.0" />
       <Rectangle fx:id="displacedThresholdColour" arcHeight="5.0" arcWidth="5.0" fill="RED" height="12.0" layoutX="14.0" layoutY="124.0" stroke="BLACK" strokeType="INSIDE" width="12.0" />
-      <Label layoutX="172.0" layoutY="573.0" id="directionLabel" text="Landing/Taking Off Direction">
+      <Label id="directionLabel" layoutX="172.0" layoutY="573.0" text="Landing/Taking Off Direction">
          <font>
             <Font name="Verdana Bold" size="13.0" />
          </font>
@@ -307,7 +328,7 @@
             <Font name="Verdana" size="10.0" />
          </font>
       </Label>
-      <Label layoutX="276.0" layoutY="47.0" id="directionLabel" text="Landing/Taking Off Direction">
+      <Label id="directionLabel" layoutX="276.0" layoutY="47.0" text="Landing/Taking Off Direction">
          <font>
             <Font name="Verdana Bold" size="13.0" />
          </font>
@@ -315,5 +336,6 @@
       <Polygon fill="#0f0f0f" layoutX="530.0" layoutY="76.0" points="20.03314208984375, -12.48345947265625, 38.307861328125, -19.939178466796875, 20.03314208984375, -29.196258544921875" stroke="TRANSPARENT" strokeType="INSIDE" />
       <Line endX="499.5" endY="-70.64111328125" layoutX="58.0" layoutY="126.0" startX="450.70379638671875" startY="-70.64111328125" stroke="#0f0f0f" strokeWidth="2.0" />
       <Line endX="432.5" endY="-70.64111328125" layoutX="-172.0" layoutY="126.0" startX="379.20977783203125" startY="-70.64114379882812" stroke="#0f0f0f" strokeWidth="2.0" />
+      <Line id="ldaStart" fx:id="blastAllow2" layoutX="-269.0" layoutY="590.0" />
    </children>
 </AnchorPane>
