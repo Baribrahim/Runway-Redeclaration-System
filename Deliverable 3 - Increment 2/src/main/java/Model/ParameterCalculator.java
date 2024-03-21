@@ -289,17 +289,17 @@ public class ParameterCalculator {
 
   public static String todaBreakdown(Obstacle obstacle, LogicalRunway runway) {
     if (getFlightMethod(obstacle, runway).equals("Take-Off Away Landing Over")) {
-      return "TODA = (R) TORA + CLEARWAY\n         = " + runway.getNewTora() + " + " + runway.getClearway() + "\n         = " + runway.getNewToda() + "\n\n";
+      return "TODA = New TORA + CLEARWAY\n         = " + runway.getNewTora() + " + " + runway.getClearway() + "\n         = " + runway.getNewToda() + "\n\n";
     } else {
-      return "TODA = (R) TORA\n         = " + runway.getNewToda() + "\n\n";
+      return "TODA = New TORA\n         = " + runway.getNewToda() + "\n\n";
     }
   }
 
   public static String asdaBreakdown(Obstacle obstacle, LogicalRunway runway) {
     if (getFlightMethod(obstacle, runway).equals("Take-Off Away Landing Over")) {
-      return "ASDA = (R) TORA + STOPWAY\n         = " + runway.getNewTora() + " + " + runway.getStopway() + "\n         = " + runway.getNewAsda() + "\n\n";
+      return "ASDA = New TORA + STOPWAY\n         = " + runway.getNewTora() + " + " + runway.getStopway() + "\n         = " + runway.getNewAsda() + "\n\n";
     } else{
-      return "ASDA = (R) TORA\n         = " + runway.getNewAsda() + "\n\n";
+      return "ASDA = New TORA\n         = " + runway.getNewAsda() + "\n\n";
     }
   }
 
