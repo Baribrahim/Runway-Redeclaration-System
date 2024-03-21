@@ -12,6 +12,26 @@
   -fx-text-fill: #E0E0E0;
 }
 
+#toraLabel {
+  -fx-text-fill: #333333;
+}
+
+#todaLabel {
+  -fx-text-fill: #333333;
+}
+
+#asdaLabel {
+  -fx-text-fill: #333333;
+}
+
+#ldaLabel {
+  -fx-text-fill: #333333;
+}
+
+#directionLabel {
+  -fx-text-fill: #333333;
+}
+
 .tabButton {
   -fx-background-color: #333333;
   -fx-border-radius: 10px;

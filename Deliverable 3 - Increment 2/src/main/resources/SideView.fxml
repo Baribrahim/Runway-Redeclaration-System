@@ -76,7 +76,7 @@
             <Font name="Verdana" size="10.0" />
          </font>
       </Label>
-      <Label layoutX="436.0" layoutY="65.0" text="Landing/Taking Off Direction">
+      <Label layoutX="436.0" layoutY="65.0" id="directionLabel" text="Landing/Taking Off Direction">
          <font>
             <Font name="Verdana Bold" size="13.0" />
          </font>
@@ -84,7 +84,7 @@
       <Polygon fill="#0f0f0f" layoutX="709.0" layoutY="95.0" points="20.03314208984375, -12.48345947265625, 38.307861328125, -19.939178466796875, 20.03314208984375, -29.196258544921875" stroke="TRANSPARENT" strokeType="INSIDE" />
       <Line endX="504.5" endY="-70.64111328125" layoutX="240.0" layoutY="145.0" startX="428.35028076171875" startY="-70.64111328125" stroke="#0f0f0f" strokeWidth="2.0" />
       <Line endX="57.5" endY="-70.64114379882812" layoutX="361.0" layoutY="145.0" startY="-70.64114379882812" stroke="#0f0f0f" strokeWidth="2.0" />
-      <Label layoutX="172.0" layoutY="573.0" text="Landing/Taking Off Direction">
+      <Label layoutX="172.0" layoutY="573.0" id="directionLabel" text="Landing/Taking Off Direction">
          <font>
             <Font name="Verdana Bold" size="13.0" />
          </font>

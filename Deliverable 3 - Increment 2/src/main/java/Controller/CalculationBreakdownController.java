@@ -77,7 +77,7 @@ public class CalculationBreakdownController implements Initializable {
 
     Obstacle obstacle1 = MainPageController.getObstacleSelected();
     obstacle1.setDistFThreshold(obstacle.getDistanceFromThreshold());
-    obstacle1.setDistFThreshold(ParameterCalculator.getOppositeDistFThrehold(obstacle,runway));
+    obstacle1.setDistFThreshold(ParameterCalculator.getOppositeDistFromThreshold(obstacle,runway));
     TORABreakdownR.setText(ParameterCalculator.toraBreakdown(obstacle1, logRunway2));
     TODABreakdownR.setText(ParameterCalculator.todaBreakdown(obstacle1, logRunway2));
     LDABreakdownR.setText(ParameterCalculator.ldaBreakdown(obstacle1, logRunway2));
