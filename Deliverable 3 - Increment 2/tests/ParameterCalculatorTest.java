@@ -110,4 +110,13 @@ class ParameterCalculatorTest {
     assertEquals(560,ParameterCalculator.getDisplacedLandingThreshold(alsTocsGreaterThanResa.getAlsTocs(),ParameterCalculator.TAKE_OFF_AWAY_LANDING_OVER));
     assertEquals(300,ParameterCalculator.getDisplacedLandingThreshold(alsTocsLesserThanResa.getAlsTocs(),ParameterCalculator.TAKE_OFF_AWAY_LANDING_OVER));
   }
+
+  @Test
+  @DisplayName("Test what happens when the displaced threshold is incorrect")
+  void getDisplacedLandingThresholdFail(){
+    Obstacle alsTocsGreaterThanResa      = new Obstacle("alsTocsGreaterThanResa",10,50,0,50);
+    Obstacle alsTocsLesserThanResa      = new Obstacle("alsTocsLesserThanResa",4,50,0,50);
+    assertEquals(560,ParameterCalculator.getDisplacedLandingThreshold(alsTocsLesserThanResa.getAlsTocs(),ParameterCalculator.TAKE_OFF_AWAY_LANDING_OVER));
+    assertEquals(300,ParameterCalculator.getDisplacedLandingThreshold(alsTocsGreaterThanResa.getAlsTocs(),ParameterCalculator.TAKE_OFF_AWAY_LANDING_OVER));
+  }
 }
