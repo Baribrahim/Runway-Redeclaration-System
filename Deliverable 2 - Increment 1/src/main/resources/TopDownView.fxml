@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.shape.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.shape.Polygon?>
+<?import javafx.scene.shape.Polyline?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="606.5" prefWidth="804.0" style="-fx-background-color: rgb(244, 244,244);" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.TopDownViewController">
+<AnchorPane prefHeight="606.5" prefWidth="804.0" style="-fx-background-color: rgb(244, 244,244);" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.TopDownViewController">
    <children>
       <Rectangle fx:id="background" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="627.0" stroke="#00000008" strokeType="INSIDE" width="804.0" />
       <Pane fx:id="dragPane" layoutY="151.0" prefHeight="388.0" prefWidth="804.0">
@@ -229,7 +233,7 @@
       <Rectangle fx:id="clearwayColour" arcHeight="5.0" arcWidth="5.0" fill="#ffc13a" height="12.0" layoutX="14.0" layoutY="80.0" stroke="BLACK" strokeType="INSIDE" width="12.0" />
       <Rectangle fx:id="obstacleColour" arcHeight="5.0" arcWidth="5.0" fill="#40f54f" height="12.0" layoutX="14.0" layoutY="102.0" stroke="BLACK" strokeType="INSIDE" width="12.0" />
       <Rectangle fx:id="displacedThresholdColour" arcHeight="5.0" arcWidth="5.0" fill="RED" height="12.0" layoutX="14.0" layoutY="124.0" stroke="BLACK" strokeType="INSIDE" width="12.0" />
-      <Label layoutX="172.0" layoutY="573.0" text="Landing/Taking Off Direction">
+      <Label id="directionLabel" fx:id="direction2" layoutX="172.0" layoutY="573.0" text="Landing/Taking Off Direction">
          <font>
             <Font name="Verdana Bold" size="13.0" />
          </font>
@@ -302,7 +306,7 @@
             <Font name="Verdana" size="10.0" />
          </font>
       </Label>
-      <Label layoutX="276.0" layoutY="47.0" text="Landing/Taking Off Direction">
+      <Label id="directionLabel" fx:id="direction1" layoutX="276.0" layoutY="47.0" text="Landing/Taking Off Direction">
          <font>
             <Font name="Verdana Bold" size="13.0" />
          </font>
