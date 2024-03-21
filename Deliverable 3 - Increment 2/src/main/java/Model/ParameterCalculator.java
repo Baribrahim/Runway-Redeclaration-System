@@ -222,7 +222,6 @@ public class ParameterCalculator {
   }
 
   public static boolean needRedeclare(Obstacle obstacle, LogicalRunway logicalRunway){
-
     double stripEnd = PhysicalRunway.stripEnd;
     double minCGArea = PhysicalRunway.minCGArea;
     boolean withinStripEnd = obstacle.getDistanceFromThreshold() <= logicalRunway.getTora() + stripEnd - logicalRunway.getDisplacedThreshold() && obstacle.getDistanceFromThreshold()  >= -stripEnd - logicalRunway.getDisplacedThreshold();
@@ -241,6 +240,17 @@ public class ParameterCalculator {
     return flightMethod;
   }
 
+  public static int toraBreakdownChoice(Obstacle obstacle){
+    int choice;
+    double resa = PhysicalRunway.resa;
+    if (resa > obstacle.getAlsTocs()){
+      choice = 1;
+    }else {
+      choice = 2;
+    }
+    return choice;
+  }
+
   public static int ldaBreakdownChoice(Obstacle obstacle){
     int choice;
     double resa = PhysicalRunway.resa;
@@ -253,18 +263,6 @@ public class ParameterCalculator {
       choice = 2;
     } else {
       choice = 3;
-    }
-    return choice;
-  }
-
-
-  public static int toraBreakdownChoice(Obstacle obstacle){
-    int choice;
-    double resa = PhysicalRunway.resa;
-    if (resa > obstacle.getAlsTocs()){
-      choice = 1;
-    }else {
-      choice = 2;
     }
     return choice;
   }
