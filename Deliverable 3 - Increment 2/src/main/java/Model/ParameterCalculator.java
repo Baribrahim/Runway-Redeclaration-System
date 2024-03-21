@@ -348,7 +348,7 @@ public class ParameterCalculator {
     calculateASDA(obstacle, runway.getLogicalRunways().get(0));
 
     //obstacle distance from the other end
-    double distThreshold = getOppositeDistFThrehold(obstacle,runway);
+    double distThreshold = getOppositeDistFromThreshold(obstacle,runway);
     Obstacle tempObs = new Obstacle(obstacle.getName(), obstacle.getHeight(), obstacle.getWidth(), obstacle.getDistanceFromCentre(), distThreshold);
     calculateTORA(tempObs, runway.getLogicalRunways().get(1));
     calculateLDA(tempObs, runway.getLogicalRunways().get(1));
@@ -356,8 +356,8 @@ public class ParameterCalculator {
     calculateASDA(tempObs, runway.getLogicalRunways().get(1));
   }
 
-  public static double getOppositeDistFThrehold(Obstacle obstacle,PhysicalRunway runway){
-    return runway.getLogicalRunways().get(0).getLda()-obstacle.getDistanceFromThreshold() - runway.getLogicalRunways().get(1).getDisplacedThreshold();
+  public static double getOppositeDistFromThreshold(Obstacle obstacle,PhysicalRunway runway){
+    return runway.getLogicalRunways().get(0).getLda() - obstacle.getDistanceFromThreshold() - runway.getLogicalRunways().get(1).getDisplacedThreshold();
   }
 
   public static String toraBreakdown(Obstacle obstacle, LogicalRunway runway) {

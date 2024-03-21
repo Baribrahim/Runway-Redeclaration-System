@@ -378,9 +378,11 @@ public class MainPageController implements Initializable {
     if(leftSide.isSelected()){
       getObstacleSelected().setDirFromCentre("L");
       dirFromCentre.set("L");
+      someMethodThatGetsObstacle();
     } else if (rightSide.isSelected()){
       getObstacleSelected().setDirFromCentre("R");
       dirFromCentre.set("R");
+      someMethodThatGetsObstacle();
     }
   }
 
@@ -408,7 +410,6 @@ public class MainPageController implements Initializable {
          physRunwayItem.set(physicalRunway);
 
 
-         topDownViewController.relocateObstacle();
          //sideOnViewController.displayObstacle(obstacle);
         }
       } catch (SQLException e) {
@@ -459,10 +460,13 @@ public class MainPageController implements Initializable {
       double newAsdaL = ParameterCalculator.calculateASDA(obstacle, runwayL);
       double newTodaL = ParameterCalculator.calculateTODA(obstacle, runwayL);
 
-      double newToraR = ParameterCalculator.calculateTORA(obstacle, runwayR);
-      double newLdaR = ParameterCalculator.calculateLDA(obstacle, runwayR);
-      double newAsdaR = ParameterCalculator.calculateASDA(obstacle, runwayR);
-      double newTodaR = ParameterCalculator.calculateTODA(obstacle, runwayR);
+      double oppDistFromThreshold = ParameterCalculator.getOppositeDistFromThreshold(obstacle, getPhysRunwaySelected());
+      Obstacle obstacleOpp = new Obstacle(selectedObstacleId, height, width, distanceFromCentre, oppDistFromThreshold);
+
+      double newToraR = ParameterCalculator.calculateTORA(obstacleOpp, runwayR);
+      double newLdaR = ParameterCalculator.calculateLDA(obstacleOpp, runwayR);
+      double newAsdaR = ParameterCalculator.calculateASDA(obstacleOpp, runwayR);
+      double newTodaR = ParameterCalculator.calculateTODA(obstacleOpp, runwayR);
 
       runwayL.setNewTora(newToraL);
       runwayL.setNewToda(newTodaL);
