@@ -384,6 +384,15 @@ public class MainPageController implements Initializable {
     }
   }
 
+  public boolean isLeftSideSelected() {
+    return leftSide.isSelected();
+  }
+
+  public boolean isRightSideSelected() {
+    return rightSide.isSelected();
+  }
+
+
   public void someMethodThatGetsObstacle() {
     Platform.runLater(() -> {
       try {

@@ -1,30 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.Cursor?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.RadioButton?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.SplitPane?>
-<?import javafx.scene.control.Tab?>
-<?import javafx.scene.control.TabPane?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.effect.DisplacementMap?>
-<?import javafx.scene.effect.FloatMap?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<Pane prefWidth="1400.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MainPageController">
+<Pane prefWidth="1400.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MainPageController">
   <children>
     <VBox layoutY="1.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="780.0" prefWidth="1400.0" styleClass="pane">
       <children>
@@ -120,8 +103,7 @@
                 </Label>
                 <RadioButton fx:id="leftSide" layoutX="80.0" layoutY="602.0" mnemonicParsing="false" onAction="#setLeftRightDirection" text="Left" />
                 <RadioButton fx:id="rightSide" layoutX="144.0" layoutY="602.0" mnemonicParsing="false" onAction="#setLeftRightDirection" text="Right" />
-                <Button fx:id="calculateButton" layoutX="65.0" layoutY="635.0" mnemonicParsing="false" onAction="#calculateRunwayDistances" text="Calculate" />
-                <Button fx:id="updateView" layoutX="165.0" layoutY="635.0" mnemonicParsing="false" onAction="#someMethodThatGetsObstacle" text="UpdateView" />
+                <Button fx:id="calculateButton" layoutX="86.0" layoutY="634.0" mnemonicParsing="false" onAction="#calculateRunwayDistances" text="Calculate" />
 
                 <ComboBox fx:id="airportMenu" layoutX="35.0" layoutY="111.0" onAction="#showPhysicalRunways" prefHeight="25.0" prefWidth="207.0" />
                 <ComboBox fx:id="runwayMenu" layoutX="33.0" layoutY="237.0" onAction="#runwayMenuChanged" prefHeight="25.0" prefWidth="207.0" />
