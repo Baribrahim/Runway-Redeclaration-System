@@ -516,16 +516,16 @@ public class TopDownViewController implements Initializable {
       double ratio = 0;
       if (als > PhysicalRunway.getResa()) {
         ratio = (logRunway.getLda() - thresholdDis)  / 534 ;
-        setResaLine(resaEnd1, adjustedStripEnd1, ratio, als, obsPosL, 166);
-        setResaLine(tallResaEnd1, tallAdjustedStripEnd1,ratio,als,obsPosL, 700);
+        //setResaLine(resaEnd1, adjustedStripEnd1, ratio, als, obsPosL, 166);
+        //setResaLine(tallResaEnd1, tallAdjustedStripEnd1,ratio,als,obsPosL, 400);
         tallAdjustedStripEnd1.setEndY(75);
         tallResaEnd1.setEndY(75);
         resaLabel1.setText("ALS = " + als + "m");
         resaLabel3.setText("ALS = " + als + "m");
       } else {
         ratio = logRunway.getLda() / PhysicalRunway.getResa();
-        setResaLine(resaEnd1, adjustedStripEnd1, ratio, PhysicalRunway.getResa(), obsPosL, 166);
-        setResaLine(tallResaEnd1, tallAdjustedStripEnd1,ratio,PhysicalRunway.getResa(),obsPosL, 700);
+        //setResaLine(resaEnd1, adjustedStripEnd1, ratio, PhysicalRunway.getResa(), obsPosL, 166);
+        //setResaLine(tallResaEnd1, tallAdjustedStripEnd1,ratio,PhysicalRunway.getResa(),obsPosL, 700);
         resaLabel1.setText("RESA =  " + PhysicalRunway.getResa() + "m");
         resaLabel3.setText("RESA =  " + PhysicalRunway.getResa() + "m");
       }
@@ -554,7 +554,7 @@ public class TopDownViewController implements Initializable {
        ***/
 
       ratio = (logRunway.getLda() - thresholdDis)  / 534 ;
-      setResaLine(resaEnd2,adjustedStripEnd2,ratio, PhysicalRunway.getResa(),obsPosL, 700);
+      //setResaLine(resaEnd2,adjustedStripEnd2,ratio, PhysicalRunway.getResa(),obsPosL, 700);
       resaLabel2.setText("RESA =  " + PhysicalRunway.getResa() + "m");
 
       /***
