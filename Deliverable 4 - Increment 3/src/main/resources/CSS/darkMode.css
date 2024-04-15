@@ -1,0 +1,111 @@
+
+.pane {
+  -fx-background-color: #454444;
+}
+
+.button {
+  -fx-background-color: #333333;
+  -fx-text-fill: #E0E0E0;
+}
+
+.label {
+  -fx-text-fill: #E0E0E0;
+}
+
+#toraLabel {
+  -fx-text-fill: #333333;
+}
+
+#todaLabel {
+  -fx-text-fill: #333333;
+}
+
+#asdaLabel {
+  -fx-text-fill: #333333;
+}
+
+#ldaLabel {
+  -fx-text-fill: #333333;
+}
+
+#directionLabel {
+  -fx-text-fill: #333333;
+}
+
+.tabButton {
+  -fx-background-color: #333333;
+  -fx-border-radius: 10px;
+  -fx-background-radius: 2px;
+  -fx-text-fill: #E0E0E0;
+}
+
+.tabButton .tab-label {
+  -fx-text-fill: #E0E0E0;
+}
+
+.tabButton:hover, button:hover {
+  -fx-background-color: #1f1e1e;
+}
+
+.button:hover {
+  -fx-background-color: #1f1e1e;
+}
+
+.menu-bar {
+  -fx-background-color: #1A1A1A;
+}
+
+.menu {
+  -fx-text-fill: #454444;
+}
+
+.menu-item {
+  -fx-text-fill: #454444;
+}
+
+.table-view .column-header-background .label {
+  -fx-background-color: #333; /* Dark gray background */
+  -fx-text-fill: white; /* White text */
+}
+
+.radio-button {
+  -fx-text-fill: #E0E0E0;
+}
+
+/*
+.button {
+  -fx-background-color: #333333;
+  -fx-border-color: #E76F51;
+  -fx-text-fill: #E0E0E0;
+}
+
+.combo-box {
+  -fx-background-color: #333333;
+  -fx-text-fill: #E0E0E0;
+  -fx-arrow-button-background: #2C2C2C;
+}
+
+
+
+.radio-button {
+  -fx-text-fill: #E0E0E0;
+}
+
+.scroll-pane {
+  -fx-background: #121212;
+  -fx-border-color: #121212;
+}
+
+.split-pane {
+  -fx-background-color: #121212;
+  -fx-border-color: #121212;
+}
+
+.split-pane .split-pane-divider {
+  -fx-background-color: #333333;
+}
+
+.AnchorPane {
+  -fx-background-color: #121212;
+}
+ */
