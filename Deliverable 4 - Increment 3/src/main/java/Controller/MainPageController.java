@@ -644,5 +644,28 @@ public class MainPageController implements Initializable {
     toggleDarkMode();
   }
 
+  @FXML
+  private void handleManageAirportsButton() {
+    try {
+      // Load the obstacle definition FXML file
+      FXMLLoader loader = new FXMLLoader(getClass().getResource("/manageAirports.fxml"));
+      Parent root = loader.load();
+
+      AirportManagerController airportManagerController = loader.getController();
+      airportManagerController.setDatabaseModel(database);
+
+      // Create a new stage (window) for the obstacle definition
+      // Create a new stage
+      Stage stage = new Stage();
+      Scene scene = new Scene(root);
+      scene.getStylesheets().add(getClass().getResource("/CSS/MainPageStylesheet.css").toExternalForm());
+      stage.setScene(scene);
+      stage.setTitle("Manage Airports");
+      stage.setResizable(false);
+      stage.show();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
 }
 

@@ -1,13 +1,11 @@
 package Model;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import javafx.collections.ObservableList;
 
 public class Airport {
 
   private ArrayList<PhysicalRunway> physicalRunways;
-  private String airportName;
+  private String name;
   private String manager;
   private String airportID;
   private String city;
@@ -15,10 +13,15 @@ public class Airport {
   private Double longitude;
 
   //Constructor
+  public Airport(String name) {
+    this.name = name;
+  }
+
   public Airport(){};
+
   public Airport(String airportID, String aiportName, String manager, String city, Double latitude, Double longitude) {
     this.airportID = airportID;
-    this.airportName = aiportName;
+    this.name = aiportName;
     this.physicalRunways = new ArrayList<>();
     this.manager = manager;
     this.city = city;
@@ -30,7 +33,7 @@ public class Airport {
   @Override
   public String toString() {
     return "Airport{" +
-        "name='" + airportName + '\'' +
+        "name='" + name + '\'' +
         "\n physicalRunways=" + physicalRunways +
         '}';
   }
@@ -40,12 +43,12 @@ public class Airport {
     return airportID;
   }
 
-  public String getAirportName() {
-    return airportName;
+  public String getName() {
+    return name;
   }
 
-  public void setAirportName(String airportName) {
-    this.airportName = airportName;
+  public void setName(String name) {
+    this.name = name;
   }
 
   public ArrayList<PhysicalRunway> getPhysicalRunways() {
