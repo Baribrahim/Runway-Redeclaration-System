@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 
 public class DatabaseModel {
 
@@ -319,6 +321,23 @@ public class DatabaseModel {
       pstmt.setString(3, user.getUserID());
       pstmt.executeUpdate();
     }
+  }
+
+  public String getUserRole(String userID, String password) throws SQLException {
+    String role = null;
+    String sql = "SELECT Permission FROM LoginInfo WHERE UserID = ? AND Password = ?";
+
+    try (
+        PreparedStatement pstmt = connection.prepareStatement(sql)) {
+      pstmt.setString(1, userID);
+      pstmt.setString(2, password);  // Consider using hashed passwords
+      try (ResultSet rs = pstmt.executeQuery()) {
+        if (rs.next()) {
+          role = rs.getString("Permission");
+        }
+      }
+    }
+    return role;
   }
 
 }

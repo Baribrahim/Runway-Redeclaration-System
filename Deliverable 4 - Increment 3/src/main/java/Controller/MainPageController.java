@@ -7,6 +7,7 @@ import java.lang.reflect.Parameter;
 
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
+import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.ToggleGroup;
@@ -134,6 +135,9 @@ public class MainPageController implements Initializable {
   @FXML
   private MenuItem darkModeButton;
 
+  @FXML
+  private Menu goMenu;
+
   private ToggleGroup toggleGroup = new ToggleGroup();
 
   private XMLController xmlController = new XMLController();
@@ -179,6 +183,8 @@ public class MainPageController implements Initializable {
   public static ObservableList<String> airportNames = FXCollections.observableArrayList();
 
   private static boolean needRedeclare = true;
+
+  private String userRole;
 
   @Override
   public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -229,6 +235,29 @@ public class MainPageController implements Initializable {
 
     applyNumericInputFilter(distanceFromThresholdInput);
     applyNumericInputFilter(distanceFromCentreLineInput);
+  }
+
+  public void setUserRole(String role) {
+    this.userRole = role;
+    configureAccess();
+  }
+
+  private void configureAccess() {
+    if ("viewer".equals(userRole)) {
+      importAirportButton.setDisable(true);
+      importAirportButton.setVisible(false);
+      importObstacleButton.setDisable(true);
+      importObstacleButton.setVisible(false);
+      goMenu.setDisable(true);
+      addNewAirportButton.setDisable(true);
+      addNewObstacleButton.setDisable(true);
+      addNewRunwayButton.setDisable(true);
+      goMenu.setVisible(false);
+      addNewAirportButton.setVisible(false);
+      addNewObstacleButton.setVisible(false);
+      addNewRunwayButton.setVisible(false);
+    }
+    // Additional configuration for different roles can be added here
   }
 
   @FXML

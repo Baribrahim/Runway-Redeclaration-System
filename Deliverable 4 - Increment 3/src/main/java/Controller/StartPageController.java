@@ -25,11 +25,14 @@ public class StartPageController {
 
 
 
-    public void Login(javafx.event.ActionEvent actionEvent) {
+    public void Login(javafx.event.ActionEvent actionEvent) throws SQLException {
+        String userRole = databaseModel.getUserRole(userIDField.getText(), passwordField.getText());
         try {
             if (databaseModel.CorrectInfo(userIDField.getText(), passwordField.getText())) {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/MainPage.fxml"));
                 Parent root = loader.load();
+                MainPageController mainPageController = loader.getController();
+                mainPageController.setUserRole(userRole);
                 Stage stage = new Stage();
                 Scene scene = new Scene(root);
                 scene.getStylesheets().add(getClass().getResource("/CSS/MainPageStylesheet.css").toExternalForm());
