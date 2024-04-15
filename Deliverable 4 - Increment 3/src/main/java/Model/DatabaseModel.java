@@ -163,4 +163,92 @@ public class DatabaseModel {
     return connection;
   }
 
+  public void deleteAirport(String airportId) throws SQLException {
+    String sqlDeleteRunways = "DELETE FROM Runway WHERE Airport = ?";
+    String sqlDeleteAirport = "DELETE FROM Airport WHERE airportID = ?";
+
+    try {
+      connection.setAutoCommit(false);
+
+      // Delete associated runways
+      try (PreparedStatement pstmtRunways = connection.prepareStatement(sqlDeleteRunways)) {
+        pstmtRunways.setString(1, airportId);
+        pstmtRunways.executeUpdate();
+      }
+
+      // Delete the airport
+      try (PreparedStatement pstmtAirport = connection.prepareStatement(sqlDeleteAirport)) {
+        pstmtAirport.setString(1, airportId);
+        pstmtAirport.executeUpdate();
+      }
+
+      connection.commit();  // Commit both transactions
+    } catch (SQLException e) {
+      if (connection != null) {
+        connection.rollback();  // Roll back if there was an error
+      }
+      throw e;
+    }
+  }
+
+  public ArrayList<Runway> getAllRunways() throws SQLException {
+    ArrayList<Runway> runways = new ArrayList<>();
+    String query = "SELECT r.RunwayID, a.airportID, r.leftTORA, r.leftTODA, r.leftASDA, r.leftLDA, r.rightTODA, r.rightTORA, r.rightASDA, r.rightLDA " +
+        "FROM Runway r JOIN Airport a ON r.Airport = a.airportID";
+    try (PreparedStatement statement = connection.prepareStatement(query);
+        ResultSet resultSet = statement.executeQuery()) {
+      while (resultSet.next()) {
+        runways.add(new Runway(
+            resultSet.getString("RunwayID"),
+            resultSet.getString("airportID"),
+            resultSet.getDouble("leftTORA"),
+            resultSet.getDouble("leftTODA"),
+            resultSet.getDouble("leftASDA"),
+            resultSet.getDouble("leftLDA"),
+            resultSet.getDouble("rightTODA"),
+            resultSet.getDouble("rightTORA"),
+            resultSet.getDouble("rightASDA"),
+            resultSet.getDouble("rightLDA")
+        ));
+      }
+    }
+    return runways;
+  }
+
+  public void deleteRunway(String runwayID) throws SQLException {
+    String sql = "DELETE FROM Runway WHERE RunwayID = ?";
+    try (
+        PreparedStatement pstmt = connection.prepareStatement(sql)) {
+      pstmt.setString(1, runwayID);
+      pstmt.executeUpdate();
+    }
+  }
+
+  public void updateRunway(Runway runway) throws SQLException {
+    String sql = "UPDATE Runway SET "
+        + "AirportN = ?, "
+        + "leftTORA = ?, leftTODA = ?, leftASDA = ?, leftLDA = ?, "
+        + "rightTORA = ?, rightTODA = ?, rightASDA = ?, rightLDA = ? "
+        + "WHERE RunwayID = ?";
+
+    try ( // Replace with your actual connection method
+        PreparedStatement pstmt = connection.prepareStatement(sql)) {
+      pstmt.setString(1, runway.getAirportName());
+      pstmt.setDouble(2, runway.getLeftTORA());
+      pstmt.setDouble(3, runway.getLeftTODA());
+      pstmt.setDouble(4, runway.getLeftASDA());
+      pstmt.setDouble(5, runway.getLeftLDA());
+      pstmt.setDouble(6, runway.getRightTORA());
+      pstmt.setDouble(7, runway.getRightTODA());
+      pstmt.setDouble(8, runway.getRightASDA());
+      pstmt.setDouble(9, runway.getRightLDA());
+      pstmt.setString(10, runway.getRunwayID());
+
+      int affectedRows = pstmt.executeUpdate();
+      if (affectedRows == 0) {
+        throw new SQLException("Updating runway failed, no rows affected.");
+      }
+    }
+  }
+
 }

@@ -41,7 +41,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.AirportManagerController">
+<VBox prefHeight="400.0" prefWidth="833.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ManageRunwaysController">
   <children>
     <MenuBar VBox.vgrow="NEVER">
       <menus>
@@ -53,17 +53,26 @@
         </Menu>
       </menus>
     </MenuBar>
-    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="373.0" prefWidth="696.0" VBox.vgrow="ALWAYS">
       <children>
             <Button fx:id="goBackButton" layoutX="25.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleBackButtonClick" text="Back" />
-            <TableView fx:id="airportsTable" layoutX="202.0" layoutY="50.0" prefHeight="226.0" prefWidth="237.0">
+            <TableView fx:id="runwaysTable" layoutX="16.0" layoutY="50.0" prefHeight="226.0" prefWidth="802.0">
               <columns>
-                <TableColumn fx:id="airports" prefWidth="236.0" text="Airports" />
+                <TableColumn fx:id="colRunwayID" text="Runway ID" />
+                <TableColumn fx:id="colAirportName" text="Airport Name" />
+                <TableColumn fx:id="colLeftTORA" text="Left TORA" />
+                <TableColumn fx:id="colLeftTODA" text="Left TODA" />
+                <TableColumn fx:id="colLeftASDA" text="Left ASDA" />
+                <TableColumn fx:id="colLeftLDA" text="Left LDA" />
+                <TableColumn fx:id="colRightTORA" text="Right TORA" />
+                <TableColumn fx:id="colRightTODA" text="Right TODA" />
+                <TableColumn fx:id="colRightASDA" text="Right ASDA" />
+                <TableColumn fx:id="colRightLDA" text="Right LDA" />
               </columns>
             </TableView>
-            <Button fx:id="deleteAirportButton" layoutX="209.0" layoutY="334.0" mnemonicParsing="false" onAction="#handleDeleteButton" text="Delete Airport" />
-            <Button fx:id="manageRunwaysButton" layoutX="321.0" layoutY="334.0" mnemonicParsing="false" onAction="#handleManageRunwaysButton" text="Manage Runways" />
-            <Button fx:id="showAirportsButton" layoutX="273.0" layoutY="295.0" mnemonicParsing="false" onAction="#loadAirportNames" text="Show Airports" />
+            <Button fx:id="deleteRunwayButton" layoutX="276.0" layoutY="335.0" mnemonicParsing="false" onAction="#handleDeleteRunwayButton" text="Delete Runway" />
+            <Button fx:id="UpdateRunwaysButton" layoutX="454.0" layoutY="335.0" mnemonicParsing="false" onAction="#handleOpenUpdateWindow" text="Update Runway" />
+        <Button fx:id="showRunwaysButton" layoutX="366.0" layoutY="297.0" mnemonicParsing="false" onAction="#loadRunways" text="Show Runways" />
       </children>
     </AnchorPane>
   </children>
