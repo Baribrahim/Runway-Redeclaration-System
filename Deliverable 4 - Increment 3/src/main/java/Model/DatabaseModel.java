@@ -6,6 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public class DatabaseModel {
 
@@ -250,6 +252,72 @@ public class DatabaseModel {
       if (affectedRows == 0) {
         throw new SQLException("Updating runway failed, no rows affected.");
       }
+    }
+  }
+
+  public ObservableList<User> getLoginInfo() throws SQLException {
+    ObservableList<User> loginInfoList = FXCollections.observableArrayList();
+    String sql = "SELECT UserID, Permission FROM LoginInfo";
+
+    try (
+        PreparedStatement pstmt = connection.prepareStatement(sql);
+        ResultSet rs = pstmt.executeQuery()) {
+
+      while (rs.next()) {
+        String userID = rs.getString("UserID");
+        String permission = rs.getString("Permission");
+        User info = new User(userID, permission);
+        loginInfoList.add(info);
+      }
+    } catch (SQLException e) {
+      throw new SQLException("Error fetching users' data", e);
+    }
+    return loginInfoList;
+  }
+
+  public void addUser(String userID, String password, String permission) throws SQLException {
+    String sql = "INSERT INTO LoginInfo (UserID, Password, Permission) VALUES (?, ?, ?)";
+
+    try (
+        PreparedStatement pstmt = connection.prepareStatement(sql)) {
+      pstmt.setString(1, userID);
+      pstmt.setString(2, password);
+      pstmt.setString(3, permission);
+
+      int affectedRows = pstmt.executeUpdate();
+      if (affectedRows == 0) {
+        throw new SQLException("Inserting user failed, no rows affected.");
+      }
+    } catch (SQLException e) {
+      // Optionally, log this exception or handle it further
+      throw new SQLException("Error adding new user to the database", e);
+    }
+  }
+
+  public void deleteUser(String userID) throws SQLException {
+    String sql = "DELETE FROM LoginInfo WHERE UserID = ?";
+
+    try (Connection conn = getConnection();
+        PreparedStatement pstmt = conn.prepareStatement(sql)) {
+      pstmt.setString(1, userID);
+      int affectedRows = pstmt.executeUpdate();
+      if (affectedRows == 0) {
+        throw new SQLException("Deleting user failed, no rows affected.");
+      }
+    } catch (SQLException e) {
+      throw new SQLException("Error deleting user from the database", e);
+    }
+  }
+
+  public void updateUser(User user) throws SQLException {
+    String sql = "UPDATE LoginInfo SET Password = ?, Permission = ? WHERE UserID = ?";
+
+    try (
+        PreparedStatement pstmt = connection.prepareStatement(sql)) {
+      pstmt.setString(1, user.getPassword());
+      pstmt.setString(2, user.getPermission());
+      pstmt.setString(3, user.getUserID());
+      pstmt.executeUpdate();
     }
   }
 

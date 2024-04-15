@@ -92,7 +92,6 @@ public class ManageRunwaysController implements Initializable {
       System.out.println("Failed to delete runway with ID: " + selectedRunway.getRunwayID());
       e.printStackTrace();
     }
-
   }
 
   private void showAlert(String title, String content) {

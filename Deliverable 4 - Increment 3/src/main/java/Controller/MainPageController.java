@@ -667,5 +667,29 @@ public class MainPageController implements Initializable {
       e.printStackTrace();
     }
   }
+
+  @FXML
+  private void handleManageUsersButton() {
+    try {
+      // Load the obstacle definition FXML file
+      FXMLLoader loader = new FXMLLoader(getClass().getResource("/manageUsers.fxml"));
+      Parent root = loader.load();
+
+      ManagerUsersController managerUsersController = loader.getController();
+      managerUsersController.setDatabaseModel(database);
+
+      // Create a new stage (window) for the obstacle definition
+      // Create a new stage
+      Stage stage = new Stage();
+      Scene scene = new Scene(root);
+      scene.getStylesheets().add(getClass().getResource("/CSS/MainPageStylesheet.css").toExternalForm());
+      stage.setScene(scene);
+      stage.setTitle("Manage Users");
+      stage.setResizable(false);
+      stage.show();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
 }
 
