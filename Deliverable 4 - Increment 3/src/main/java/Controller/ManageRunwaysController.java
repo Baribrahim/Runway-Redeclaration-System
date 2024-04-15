@@ -89,6 +89,8 @@ public class ManageRunwaysController implements Initializable {
       showAlert("Success", "The runway has been successfully deleted.");
     } catch (SQLException e) {
       showAlert("Error", "Failed to delete the runway: " + e.getMessage());
+      System.out.println("Failed to delete runway with ID: " + selectedRunway.getRunwayID());
+      e.printStackTrace();
     }
 
   }
@@ -105,7 +107,7 @@ public class ManageRunwaysController implements Initializable {
   private void handleOpenUpdateWindow() throws Exception {
     Runway selectedRunway = runwaysTable.getSelectionModel().getSelectedItem();
     if (selectedRunway == null) {
-      // Show error or message to select a runway
+      showAlert("No selection", "Please select a runway to update.");
       return;
     }
 

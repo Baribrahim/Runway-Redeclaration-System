@@ -226,23 +226,25 @@ public class DatabaseModel {
 
   public void updateRunway(Runway runway) throws SQLException {
     String sql = "UPDATE Runway SET "
-        + "AirportN = ?, "
+        + "RunwayID = ?, "
+        + "Airport = ?, "
         + "leftTORA = ?, leftTODA = ?, leftASDA = ?, leftLDA = ?, "
-        + "rightTORA = ?, rightTODA = ?, rightASDA = ?, rightLDA = ? "
+        + "rightTODA = ?, rightTORA = ?, rightASDA = ?, rightLDA = ? "
         + "WHERE RunwayID = ?";
 
-    try ( // Replace with your actual connection method
+    try (
         PreparedStatement pstmt = connection.prepareStatement(sql)) {
-      pstmt.setString(1, runway.getAirportName());
-      pstmt.setDouble(2, runway.getLeftTORA());
-      pstmt.setDouble(3, runway.getLeftTODA());
-      pstmt.setDouble(4, runway.getLeftASDA());
-      pstmt.setDouble(5, runway.getLeftLDA());
-      pstmt.setDouble(6, runway.getRightTORA());
-      pstmt.setDouble(7, runway.getRightTODA());
-      pstmt.setDouble(8, runway.getRightASDA());
-      pstmt.setDouble(9, runway.getRightLDA());
-      pstmt.setString(10, runway.getRunwayID());
+      pstmt.setString(1, runway.getRunwayID());
+      pstmt.setString(2, runway.getAirportName());
+      pstmt.setString(3, String.valueOf(runway.getLeftTORA()));
+      pstmt.setString(4, String.valueOf(runway.getLeftTODA()));
+      pstmt.setString(5, String.valueOf(runway.getLeftASDA()));
+      pstmt.setString(6, String.valueOf(runway.getLeftLDA()));
+      pstmt.setString(7, String.valueOf(runway.getRightTODA()));
+      pstmt.setString(8, String.valueOf(runway.getRightTORA()));
+      pstmt.setString(9, String.valueOf(runway.getRightASDA()));
+      pstmt.setString(10, String.valueOf(runway.getRightLDA()));
+      pstmt.setString(11, runway.getRunwayID());
 
       int affectedRows = pstmt.executeUpdate();
       if (affectedRows == 0) {
