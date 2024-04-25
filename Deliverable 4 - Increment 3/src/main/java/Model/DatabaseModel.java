@@ -221,12 +221,38 @@ public class DatabaseModel {
 
   public void deleteRunway(String runwayID) throws SQLException {
     String sql = "DELETE FROM Runway WHERE RunwayID = ?";
-    try (
-        PreparedStatement pstmt = connection.prepareStatement(sql)) {
-      pstmt.setString(1, runwayID);
-      pstmt.executeUpdate();
+
+    // Get the current auto-commit mode so it can be restored later
+    boolean autoCommit = connection.getAutoCommit();
+
+    try {
+      // Disable auto-commit to manually handle transactions
+      connection.setAutoCommit(false);
+
+      try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+        pstmt.setString(1, runwayID);
+
+        int affectedRows = pstmt.executeUpdate();
+        if (affectedRows == 0) {
+          // If no rows are affected, it could mean that the runway ID doesn't exist.
+          // Roll back any non-existent changes and throw an exception.
+          connection.rollback();
+          throw new SQLException("Deleting runway failed, no rows affected.");
+        }
+
+        // Commit the transaction if the delete operation is successful
+        connection.commit();
+      } catch (SQLException e) {
+        // If there's an exception, roll back the transaction
+        connection.rollback();
+        throw new SQLException("Error deleting runway from the database", e);
+      }
+    } finally {
+      // Restore the original auto-commit mode
+      connection.setAutoCommit(autoCommit);
     }
   }
+
 
   public void updateRunway(Runway runway) throws SQLException {
     String sql = "UPDATE Runway SET "
@@ -236,26 +262,46 @@ public class DatabaseModel {
         + "rightTODA = ?, rightTORA = ?, rightASDA = ?, rightLDA = ? "
         + "WHERE RunwayID = ?";
 
-    try (
-        PreparedStatement pstmt = connection.prepareStatement(sql)) {
-      pstmt.setString(1, runway.getRunwayID());
-      pstmt.setString(2, runway.getAirportName());
-      pstmt.setString(3, String.valueOf(runway.getLeftTORA()));
-      pstmt.setString(4, String.valueOf(runway.getLeftTODA()));
-      pstmt.setString(5, String.valueOf(runway.getLeftASDA()));
-      pstmt.setString(6, String.valueOf(runway.getLeftLDA()));
-      pstmt.setString(7, String.valueOf(runway.getRightTODA()));
-      pstmt.setString(8, String.valueOf(runway.getRightTORA()));
-      pstmt.setString(9, String.valueOf(runway.getRightASDA()));
-      pstmt.setString(10, String.valueOf(runway.getRightLDA()));
-      pstmt.setString(11, runway.getRunwayID());
+    // Get the current auto-commit mode to restore it later
+    boolean autoCommit = connection.getAutoCommit();
 
-      int affectedRows = pstmt.executeUpdate();
-      if (affectedRows == 0) {
-        throw new SQLException("Updating runway failed, no rows affected.");
+    try {
+      // Disable auto-commit to manually control transactions
+      connection.setAutoCommit(false);
+
+      try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+        pstmt.setString(1, runway.getRunwayID());
+        pstmt.setString(2, runway.getAirportName());
+        pstmt.setString(3, String.valueOf(runway.getLeftTORA()));
+        pstmt.setString(4, String.valueOf(runway.getLeftTODA()));
+        pstmt.setString(5, String.valueOf(runway.getLeftASDA()));
+        pstmt.setString(6, String.valueOf(runway.getLeftLDA()));
+        pstmt.setString(7, String.valueOf(runway.getRightTODA()));
+        pstmt.setString(8, String.valueOf(runway.getRightTORA()));
+        pstmt.setString(9, String.valueOf(runway.getRightASDA()));
+        pstmt.setString(10, String.valueOf(runway.getRightLDA()));
+        pstmt.setString(11, runway.getRunwayID());
+
+        int affectedRows = pstmt.executeUpdate();
+        if (affectedRows == 0) {
+          // If no rows are affected, roll back any changes made during this transaction.
+          connection.rollback();
+          throw new SQLException("Updating runway failed, no rows affected.");
+        }
+
+        // Commit the transaction if the update operation is successful
+        connection.commit();
+      } catch (SQLException e) {
+        // On error, roll back the transaction and rethrow the exception to handle it further
+        connection.rollback();
+        throw new SQLException("Error updating runway in the database", e);
       }
+    } finally {
+      // Restore the original auto-commit mode
+      connection.setAutoCommit(autoCommit);
     }
   }
+
 
   public ObservableList<User> getLoginInfo() throws SQLException {
     ObservableList<User> loginInfoList = FXCollections.observableArrayList();
@@ -279,46 +325,106 @@ public class DatabaseModel {
   public void addUser(String userID, String password, String permission) throws SQLException {
     String sql = "INSERT INTO LoginInfo (UserID, Password, Permission) VALUES (?, ?, ?)";
 
-    try (
-        PreparedStatement pstmt = connection.prepareStatement(sql)) {
-      pstmt.setString(1, userID);
-      pstmt.setString(2, password);
-      pstmt.setString(3, permission);
+    // Start by getting the current auto-commit mode so it can be restored later.
+    boolean autoCommit = connection.getAutoCommit();
 
-      int affectedRows = pstmt.executeUpdate();
-      if (affectedRows == 0) {
-        throw new SQLException("Inserting user failed, no rows affected.");
+    try {
+      // Turn off auto-commit to manually handle transactions
+      connection.setAutoCommit(false);
+
+      try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+        pstmt.setString(1, userID);
+        pstmt.setString(2, password);
+        pstmt.setString(3, permission);
+
+        int affectedRows = pstmt.executeUpdate();
+        if (affectedRows == 0) {
+          // If no rows are affected, roll back any changes made during this transaction.
+          connection.rollback();
+          throw new SQLException("Inserting user failed, no rows affected.");
+        }
+
+        // Commit the transaction if all operations are successful
+        connection.commit();
+      } catch (SQLException e) {
+        // On error, roll back the transaction and rethrow the exception to handle it further
+        connection.rollback();
+        throw new SQLException("Error adding new user to the database", e);
       }
-    } catch (SQLException e) {
-      // Optionally, log this exception or handle it further
-      throw new SQLException("Error adding new user to the database", e);
+    } finally {
+      // Restore the original auto-commit mode
+      connection.setAutoCommit(autoCommit);
     }
   }
+
 
   public void deleteUser(String userID) throws SQLException {
-    try (
-        PreparedStatement pstmt = connection.prepareStatement("DELETE FROM LoginInfo WHERE UserID = ?")) {
-      pstmt.setString(1, userID);
-      int affectedRows = pstmt.executeUpdate();
-      if (affectedRows == 0) {
-        throw new SQLException("Deleting user failed, no rows affected.");
+    // Start by getting the current auto-commit mode so it can be restored later.
+    boolean autoCommit = connection.getAutoCommit();
+
+    try {
+      // Turn off auto-commit to manually handle transactions
+      connection.setAutoCommit(false);
+
+      try (PreparedStatement pstmt = connection.prepareStatement("DELETE FROM LoginInfo WHERE UserID = ?")) {
+        pstmt.setString(1, userID);
+        int affectedRows = pstmt.executeUpdate();
+        if (affectedRows == 0) {
+          // If no rows are affected, roll back any changes made during this transaction.
+          connection.rollback();
+          throw new SQLException("Deleting user failed, no rows affected.");
+        }
+
+        // Commit the transaction if the delete operation is successful
+        connection.commit();
+      } catch (SQLException e) {
+        // On error, roll back the transaction and rethrow the exception to handle it further
+        connection.rollback();
+        throw new SQLException("Error deleting user from the database", e);
       }
-    } catch (SQLException e) {
-      throw new SQLException("Error deleting user from the database", e);
+    } finally {
+      // Restore the original auto-commit mode
+      connection.setAutoCommit(autoCommit);
     }
   }
+
 
   public void updateUser(User user) throws SQLException {
+    // SQL command to update user details
     String sql = "UPDATE LoginInfo SET Password = ?, Permission = ? WHERE UserID = ?";
 
-    try (
-        PreparedStatement pstmt = connection.prepareStatement(sql)) {
-      pstmt.setString(1, user.getPassword());
-      pstmt.setString(2, user.getPermission());
-      pstmt.setString(3, user.getUserID());
-      pstmt.executeUpdate();
+    // Start by getting the current auto-commit mode so it can be restored later.
+    boolean autoCommit = connection.getAutoCommit();
+
+    try {
+      // Disable auto-commit to handle transactions manually
+      connection.setAutoCommit(false);
+
+      try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+        pstmt.setString(1, user.getPassword());
+        pstmt.setString(2, user.getPermission());
+        pstmt.setString(3, user.getUserID());
+
+        int affectedRows = pstmt.executeUpdate();
+        if (affectedRows == 0) {
+          // If no rows are affected, roll back any changes made during this transaction.
+          connection.rollback();
+          throw new SQLException("Updating user failed, no rows affected.");
+        }
+
+        // Commit the transaction if the update operation is successful
+        connection.commit();
+      } catch (SQLException e) {
+        // On error, roll back the transaction and rethrow the exception to handle it further
+        connection.rollback();
+        throw new SQLException("Error updating user in the database", e);
+      }
+    } finally {
+      // Restore the original auto-commit mode
+      connection.setAutoCommit(autoCommit);
     }
   }
+
 
   public String getUserRole(String userID, String password) throws SQLException {
     String role = null;
