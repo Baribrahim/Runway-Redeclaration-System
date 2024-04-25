@@ -259,10 +259,9 @@ public class DatabaseModel {
 
   public ObservableList<User> getLoginInfo() throws SQLException {
     ObservableList<User> loginInfoList = FXCollections.observableArrayList();
-    String sql = "SELECT UserID, Permission FROM LoginInfo";
 
     try (
-        PreparedStatement pstmt = connection.prepareStatement(sql);
+        PreparedStatement pstmt = connection.prepareStatement("SELECT UserID, Permission FROM LoginInfo");
         ResultSet rs = pstmt.executeQuery()) {
 
       while (rs.next()) {
@@ -297,10 +296,8 @@ public class DatabaseModel {
   }
 
   public void deleteUser(String userID) throws SQLException {
-    String sql = "DELETE FROM LoginInfo WHERE UserID = ?";
-
-    try (Connection conn = getConnection();
-        PreparedStatement pstmt = conn.prepareStatement(sql)) {
+    try (
+        PreparedStatement pstmt = connection.prepareStatement("DELETE FROM LoginInfo WHERE UserID = ?")) {
       pstmt.setString(1, userID);
       int affectedRows = pstmt.executeUpdate();
       if (affectedRows == 0) {
@@ -325,10 +322,8 @@ public class DatabaseModel {
 
   public String getUserRole(String userID, String password) throws SQLException {
     String role = null;
-    String sql = "SELECT Permission FROM LoginInfo WHERE UserID = ? AND Password = ?";
-
     try (
-        PreparedStatement pstmt = connection.prepareStatement(sql)) {
+        PreparedStatement pstmt = connection.prepareStatement("SELECT Permission FROM LoginInfo WHERE UserID = ? AND Password = ?")) {
       pstmt.setString(1, userID);
       pstmt.setString(2, password);  // Consider using hashed passwords
       try (ResultSet rs = pstmt.executeQuery()) {
