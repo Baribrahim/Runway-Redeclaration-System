@@ -283,6 +283,10 @@ public class MainPageController implements Initializable {
     if (!runwayMenu.getItems().containsAll(database.getPhysicalRunways(airportMenu.getValue()))) {
       runwayMenu.getItems().addAll(database.getPhysicalRunways(airportMenu.getValue()));
     }
+    Airport selectedAirport = new Airport(database.getAirport(airportMenu.getValue()));
+    airportItem.set(selectedAirport);
+
+    System.out.println("Current selected airport is: " + airportItem.toString());
   }
 
   private void applyNumericInputFilter(TextField textField) { // allows only numerical values to be inputted
@@ -738,7 +742,7 @@ public class MainPageController implements Initializable {
 
   // Report generator portion of the code starts here
   @FXML
-  public void printReport(ActionEvent action) throws DocumentException, IOException {
+  public void printReport() throws DocumentException, IOException {
     new PDFCreator(getAirportSelected(), getObstacleSelected(), getPhysRunwaySelected(), topViewTab.getContent(), sideViewTab.getContent(), simultaneousViewTab.getContent());
   }
 
