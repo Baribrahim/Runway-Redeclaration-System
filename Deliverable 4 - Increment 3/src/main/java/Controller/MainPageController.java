@@ -740,10 +740,10 @@ public class MainPageController implements Initializable {
     }
   }
 
-  // Report generator portion of the code starts here
+  // PDF Report Generator
   @FXML
   public void printReport() throws DocumentException, IOException {
-    new PDFCreator(getAirportSelected(), getObstacleSelected(), getPhysRunwaySelected(), topViewTab.getContent(), sideViewTab.getContent(), simultaneousViewTab.getContent());
+    new PDFCreator(getAirportSelected(), getObstacleSelected(), getPhysRunwaySelected());
   }
 
   // Export runway views as image file

@@ -33,45 +33,9 @@ public class PDFCreator {
 
   Document document;
 
-  public PDFCreator(Airport a, Obstacle o, PhysicalRunway r, Node topView, Node sideView, Node simultaneousView) throws IOException, DocumentException {
-//    takeSnapShots(topView, sideView, simultaneousView);
+  public PDFCreator(Airport a, Obstacle o, PhysicalRunway r) throws IOException, DocumentException {
     createPdf(a, o, r);
   }
-
-  private void createImage(Node contentNode, File file) throws IOException {
-    SnapshotParameters params = new SnapshotParameters();
-    params.setTransform(Transform.scale(2, 2)); // Set the device pixel ratio to 2x
-    params.setFill(Color.TRANSPARENT);
-
-    double width = contentNode.getBoundsInLocal().getWidth();
-    double height = contentNode.getBoundsInLocal().getHeight();
-
-    WritableImage snapshot = new WritableImage((int) (width * 2), (int) (height * 2));
-    snapshot = contentNode.snapshot(params, snapshot);
-
-    BufferedImage bufferedImage = SwingFXUtils.fromFXImage(snapshot, null);
-    ImageIO.write(bufferedImage, "png", file);
-  }
-
-  private void takeSnapShots(Node topNode, Node sideNode, Node simultaneousNode) throws IOException {
-    File file1 = new File(String.valueOf(Objects.requireNonNull(getClass().getResource("/Printer/TopView.png")).getPath()));
-    File file2 = new File(String.valueOf(Objects.requireNonNull(getClass().getResource("/Printer/SideView.png")).getPath()));
-    File file3 = new File(String.valueOf(Objects.requireNonNull(getClass().getResource("/Printer/SimulView.png")).getPath()));
-    createFile(file1);
-    createFile(file2);
-    createFile(file3);
-    createImage(topNode, file1);
-    createImage(sideNode, file2);
-    createImage(simultaneousNode, file3);
-  }
-
-  private void createFile(File file) throws IOException {
-    if(!file.getParentFile().exists()){
-      file.getParentFile().mkdirs();
-    }
-    file.createNewFile();
-  }
-
 
   public void createPdf(Airport a, Obstacle o, PhysicalRunway r) throws DocumentException, IOException {
     FileChooser fileChooser = new FileChooser();
@@ -97,7 +61,6 @@ public class PDFCreator {
       header.setHorizontalAlignment(Element.ALIGN_LEFT);
       header.setSpacingBefore(10);
       header.completeRow();
-//            header.setWidths(new int[] { 140, 25 });
       header.setSpacingAfter(10);
       header.getDefaultCell().setBorder(0);
       header.addCell(new Paragraph("Calculation report", headerFont));
@@ -159,7 +122,7 @@ public class PDFCreator {
       addNewlines(document, 3);
       document.add(new Paragraph("Table of original and revised values", subTitleFont));
       document.add(new Paragraph(" ", bodyFont));
-      PdfPTable table = createDeclarationTable(r);
+      PdfPTable table = createBreakdownTable(r);
       table.setHorizontalAlignment(Element.ALIGN_LEFT);
       document.add(table);
 
@@ -176,42 +139,9 @@ public class PDFCreator {
       document.add(new Paragraph(new Phrase(r.getLogicalRunways().get(1).getDesignator()+" "+flightMethodR, subTitleItalic)));
       document.add(new Paragraph(new Phrase(breakdownR, bodyFont)));
 
-      document.newPage();
-      document.add(new Paragraph("Visualisations", subTitleFont));
-
-      addNewlines(document, 1);
-
-//      PdfPTable t = new PdfPTable(1);
-//      t.getDefaultCell().setBorder(0);
-//      t.addCell(createImageCell("/Printer/SideView.png", 0.3f));
-//
-//      PdfPTable t2 = new PdfPTable(1);
-//      t2.getDefaultCell().setBorder(0);
-//      t2.addCell(createImageCell("/Printer/TopView.png", 0.3f));
-//
-//      PdfPTable t3 = new PdfPTable(1);
-//      t3.addCell(createImageCell("/Printer/SimulView.png", 0.3f));
-//
-//      document.add(new Paragraph(new Phrase("Side-On Visualisation", subTitleFontSmall)));
-//      addNewlines(document, 1);
-//      document.add(t);
-//
-//      document.newPage();
-//      document.add(new Paragraph(new Phrase("Top-Down Visualisation", subTitleFontSmall)));
-//      addNewlines(document, 1);
-//      document.add(t2);
-//
-//      document.newPage();
-//      document.add(new Paragraph("Simultaneous Visualisation", subTitleFontSmall));
-//      addNewlines(document, 1);
-//      document.add(t3);
-
       document.close();
-
-//      new Notification(Main.getStage()).sucessNotification("Successful generation", "Report downloaded to "+selectedDirectory);
     }
   }
-
 
   public void addNewlines(Document document, int lines)
       throws DocumentException {
@@ -220,67 +150,8 @@ public class PDFCreator {
     }
   }
 
-
-
-  private PdfPTable breakdownTable(LogicalRunway runway, PhysicalRunway r, Map direction) throws DocumentException {
-    PdfPTable breakdown1 = new PdfPTable(3);
-    breakdown1.setHorizontalAlignment(0);
-    breakdown1.setSpacingBefore(10);
-    breakdown1.setSpacingAfter(10);
-    breakdown1.getDefaultCell().setBorder(0);
-    breakdown1.setWidths(new float[] { 1.2f,0.4f, 12});
-
-    breakdown1.addCell(new Phrase("TORA", subTitleFontSmall));
-    breakdown1.addCell(new Phrase("=", bodyFont));
-    breakdown1.addCell(new Phrase(direction.get("TORA").toString(), bodyFont));
-    breakdown1.addCell((""));
-    breakdown1.addCell(new Phrase("=", bodyFont));
-    breakdown1.addCell(new Phrase(direction.get("TORA1").toString(), bodyFont));
-    breakdown1.addCell((""));
-    breakdown1.addCell("=");
-    breakdown1.addCell(new Phrase(direction.get("TORA2").toString(), resultFont));
-
-    PdfPCell line = new PdfPCell(new Phrase(" "));
-    line.getPhrase().getFont().setSize(4);
-    line.setBorderColor(BaseColor.WHITE);
-    line.setColspan(3);
-    breakdown1.addCell(line);
-
-    breakdown1.addCell(new Phrase("ASDA", subTitleFontSmall));
-    breakdown1.addCell(new Phrase("=", bodyFont));
-    breakdown1.addCell(new Phrase(direction.get("ASDA").toString(), bodyFont));
-    breakdown1.addCell(new Phrase("", bodyFont));
-    breakdown1.addCell(new Phrase("="));
-    breakdown1.addCell(new Phrase(direction.get("ASDA1").toString(), resultFont));
-
-    breakdown1.addCell(line);
-
-
-    breakdown1.addCell(new Phrase("TODA", subTitleFontSmall));
-    breakdown1.addCell(new Phrase("=", bodyFont));
-    breakdown1.addCell(new Phrase(direction.get("TODA").toString(), bodyFont));
-    breakdown1.addCell("");
-    breakdown1.addCell(new Phrase("=", bodyFont));
-    breakdown1.addCell(new Phrase(direction.get("TODA1").toString(), resultFont));
-
-    breakdown1.addCell(line);
-
-    breakdown1.addCell(new Phrase("LDA", subTitleFontSmall));
-    breakdown1.addCell(new Phrase("=", bodyFont));
-    breakdown1.addCell(new Phrase(direction.get("LDA").toString(),bodyFont));
-    breakdown1.addCell((""));
-    breakdown1.addCell(new Phrase("=", bodyFont));
-    breakdown1.addCell(new Phrase(direction.get("LDA1").toString(), bodyFont));
-    breakdown1.addCell((""));
-    breakdown1.addCell(new Phrase("=", bodyFont));
-    breakdown1.addCell(new Phrase(direction.get("LDA2").toString(), resultFont));
-
-    return breakdown1;
-  }
-
-  public static PdfPTable createDeclarationTable(PhysicalRunway runway) throws DocumentException {
+  public static PdfPTable createBreakdownTable(PhysicalRunway runway) throws DocumentException {
     PdfPTable table = new PdfPTable(5);
-//        table.setWidths(new float[] { 0.7f, 0.7f, 0.7f, 0.7f, 0.7f });
 
     PdfPCell runwayDes = cellWithPadding("Runway designator");
     runwayDes.setBackgroundColor(BaseColor.LIGHT_GRAY);
@@ -301,8 +172,6 @@ public class PDFCreator {
     PdfPCell lda = cellWithPadding("LDA");
     lda.setBackgroundColor(BaseColor.LIGHT_GRAY);
     table.addCell(lda);
-
-
 
     PdfPCell original = new PdfPCell(new Phrase("Original Values"));
     original.setColspan(5);
@@ -331,7 +200,7 @@ public class PDFCreator {
     table.addCell(cellWithPadding(rlogRunway.getAsda()+ "m"));
     table.addCell(cellWithPadding(rlogRunway.getLda()+ "m"));
 
-    PdfPCell recalculated = new PdfPCell(new Phrase("Recalculated Values"));
+    PdfPCell recalculated = new PdfPCell(new Phrase("Revised Values"));
     recalculated.setPaddingBottom(recalculated.getPaddingTop());
     recalculated.setColspan(5);
     recalculated.setPadding(3);
@@ -358,15 +227,6 @@ public class PDFCreator {
     return table;
   }
 
-  public PdfPCell createImageCell(String path, float scale) throws DocumentException, IOException {
-    Image img = createImage(path);
-    img.scaleAbsolute(img.getPlainWidth()*scale, img.getPlainHeight()*scale);
-    PdfPCell cell = new PdfPCell(img, true);
-    cell.setBorder(0);
-    return cell;
-  }
-
-
   public static PdfPCell cellWithPadding(String text){
     Phrase p = new Phrase(text);
     Font bold  = new Font(FontFamily.UNDEFINED,12, Font.BOLD);
@@ -375,29 +235,6 @@ public class PDFCreator {
     cell.setHorizontalAlignment(Element.ALIGN_LEFT);
     cell.setPadding(10);
     return cell;
-  }
-
-  private Image createImage(String path) throws IOException, BadElementException {
-    InputStream inputStream = Objects.requireNonNull(getClass().getResourceAsStream(path));
-    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-    byte[] buffer = new byte[1024];
-    int length;
-    while ((length = inputStream.read(buffer)) != -1) {
-      baos.write(buffer, 0, length);
-    }
-    byte[] imageData = baos.toByteArray();
-
-// Use ImageIO to read the input stream and determine the format of the image
-    ImageInputStream imageInputStream = ImageIO.createImageInputStream(new ByteArrayInputStream(imageData));
-    Iterator<ImageReader> readers = ImageIO.getImageReaders(imageInputStream);
-    if (!readers.hasNext()) {
-      throw new IllegalArgumentException("Unsupported image format");
-    }
-    ImageReader reader = readers.next();
-    reader.setInput(imageInputStream);
-
-// Create an image object from the byte array
-    return Image.getInstance(imageData);
   }
 
 }
