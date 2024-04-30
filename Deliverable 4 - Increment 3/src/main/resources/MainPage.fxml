@@ -30,6 +30,22 @@
       <children>
         <MenuBar VBox.vgrow="NEVER">
           <menus>
+                  <Menu fx:id="fileMenu" mnemonicParsing="false" text="File">
+                     <items>
+                        <Menu fx:id="fileMenu1" mnemonicParsing="false" text="Export...">
+                           <items>
+                              <Menu fx:id="fileMenu11" mnemonicParsing="false" text="View">
+                                 <items>
+                                    <MenuItem fx:id="topImage" mnemonicParsing="false" onAction="#exportTopView" text="Top-down" />
+                                    <MenuItem fx:id="sideImage" mnemonicParsing="false" onAction="#exportSideView" text="Side-on" />
+                                    <MenuItem fx:id="simulImage" mnemonicParsing="false" onAction="#exportSimultaneousView" text="Simultaneous" />
+                                 </items>
+                              </Menu>
+                              <MenuItem fx:id="generateReport" mnemonicParsing="false" onAction="#printReport" text="Generate PDF Report" />
+                           </items>
+                        </Menu>
+                     </items>
+                  </Menu>
                   <Menu fx:id="goMenu" mnemonicParsing="false" text="Go">
                      <items>
                         <MenuItem fx:id="ManageAirportsButton" mnemonicParsing="false" onAction="#handleManageAirportsButton" text="Manage Airports" />

@@ -2,6 +2,9 @@ package Controller;
 
 import Model.*;
 import Model.DatabaseModel;
+import Model.Helper.PDFCreator;
+import Model.Helper.Utility;
+import com.itextpdf.text.DocumentException;
 import java.io.File;
 import java.lang.reflect.Parameter;
 
@@ -137,6 +140,18 @@ public class MainPageController implements Initializable {
 
   @FXML
   private Menu goMenu;
+
+  @FXML
+  private Menu fileMenu;
+  @FXML
+  private MenuItem generateReport;
+  @FXML
+  private MenuItem topImage;
+  @FXML
+  private MenuItem sideImage;
+  @FXML
+  private MenuItem simulImage;
+
 
   private ToggleGroup toggleGroup = new ToggleGroup();
 
@@ -720,5 +735,34 @@ public class MainPageController implements Initializable {
       e.printStackTrace();
     }
   }
+
+  // Report generator portion of the code starts here
+  @FXML
+  public void printReport(ActionEvent action) throws DocumentException, IOException {
+    new PDFCreator(getAirportSelected(), getObstacleSelected(), getPhysRunwaySelected(), topViewTab.getContent(), sideViewTab.getContent(), simultaneousViewTab.getContent());
+  }
+
+  // Export runway views as image file
+  @FXML
+  public void exportTopView(){
+    javafx.scene.Node contentNode = topViewTab.getContent();
+    Utility.exportImage(contentNode);
+  }
+
+  @FXML
+  public void exportSideView(){
+    javafx.scene.Node contentNode = sideViewTab.getContent();
+    Utility.exportImage(contentNode);
+  }
+
+  @FXML
+  public void exportSimultaneousView(){
+    javafx.scene.Node contentNode = simultaneousViewTab.getContent();
+    Utility.exportImage(contentNode);
+  }
+
+
+
+
 }
 

@@ -2,6 +2,8 @@ package Controller;
 
 import Model.Airport;
 import Model.DatabaseModel;
+import Model.Helper.Utility;
+import View.AirportManager;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -38,6 +40,9 @@ public class AirportManagerController implements Initializable {
 
   @FXML
   private Button goBackButton;
+
+  @FXML
+  private Button printAirportButton;
 
 
 
@@ -113,6 +118,17 @@ public class AirportManagerController implements Initializable {
       stage.show();
     } catch (IOException e) {
       e.printStackTrace();
+    }
+  }
+
+  @FXML
+  public void exportAirport() throws IOException {
+    Airport currentAirport = airportsTable.getSelectionModel().getSelectedItem();
+
+    if (currentAirport == null) {
+      // put error here
+    } else {
+      Utility.exportAirport(AirportManager.getStage(), FXCollections.observableArrayList(currentAirport));
     }
   }
 }
