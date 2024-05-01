@@ -367,14 +367,15 @@ public class MainPageController implements Initializable {
 
   @FXML
   public void refreshAirports() throws SQLException {
-    ArrayList<String> allAirports = database.getAirports();
+    airportMenu.getItems().setAll(database.getAirports());
+    /*ArrayList<String> allAirports = database.getAirports();
     ObservableList<String> airportList = airportMenu.getItems();
 
     for (String airport : allAirports) {
       if (!airportList.contains(airport)) {
         airportList.add(airport);
       }
-    }
+    }*/
   }
   @FXML
   private void handleAddObstacleButtonClick() {
