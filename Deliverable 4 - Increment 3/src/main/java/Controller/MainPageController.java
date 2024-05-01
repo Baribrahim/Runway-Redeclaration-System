@@ -7,7 +7,6 @@ import Model.Helper.Utility;
 import com.itextpdf.text.DocumentException;
 import java.io.File;
 import java.lang.reflect.Parameter;
-
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.scene.control.Menu;
@@ -15,7 +14,9 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.FileChooser;
+import javafx.scene.media.Media;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import java.io.IOException;
@@ -222,6 +223,12 @@ public class MainPageController implements Initializable {
     topViewTab.setContent(root1);
     sideViewTab.setContent(root2);
     simultaneousViewTab.setContent(root3);
+
+    String musicFile = "src/main/resources/BGmusic.mp3";
+    Media sound = new Media(new File(musicFile).toURI().toString());
+    MediaPlayer mediaPlayer = new MediaPlayer(sound);
+    mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+    mediaPlayer.play();
 
     isLightMode = true;
     leftSide.setToggleGroup(toggleGroup);
