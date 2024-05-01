@@ -11,6 +11,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
@@ -243,7 +244,18 @@ public class TopDownViewController implements Initializable {
   private Line blastAllow1;
   @FXML
   private Line blastAllow2;
-
+  @FXML
+  private Button panUPBtn;
+  @FXML
+  private Button panDownBtn;
+  @FXML
+  private Button panLeftBtn;
+  @FXML
+  private Button panRightBtn;
+  @FXML
+  private Button zoomInBtn;
+  @FXML
+  private Button zoomOutBtn;
 
   private boolean isRotated = false;
   private int rotation = 0;
@@ -599,4 +611,28 @@ public class TopDownViewController implements Initializable {
   private void  setLabels(Label label, double pos){
     label.setLayoutX(tallAdjustedStripEnd1.getEndX() + pos + 15);
   }
+  @FXML
+  private void zoomIn(){
+      topDownRunwayPane.setScaleX(topDownRunwayPane.getScaleX() + 0.05);
+      topDownRunwayPane.setScaleY(topDownRunwayPane.getScaleY() + 0.05);
+  }
+  @FXML
+  private void zoomOut(){
+    if (topDownRunwayPane.getScaleX() > 0.05 ) {
+      topDownRunwayPane.setScaleX(topDownRunwayPane.getScaleX() - 0.05);
+      topDownRunwayPane.setScaleY(topDownRunwayPane.getScaleY() - 0.05);
+    }
+  }
+  @FXML
+  private void panRight(){topDownRunwayPane.setTranslateX(topDownRunwayPane.getTranslateX() - 10);}
+  @FXML
+  private void panLeft(){topDownRunwayPane.setTranslateX(topDownRunwayPane.getTranslateX() + 10);}
+  @FXML
+  private void panUp(){
+    topDownRunwayPane.setTranslateY(topDownRunwayPane.getTranslateY() + 10);}
+  @FXML
+  private void panDown(){topDownRunwayPane.setTranslateY(topDownRunwayPane.getTranslateY() - 10);}
+
 }
+
+

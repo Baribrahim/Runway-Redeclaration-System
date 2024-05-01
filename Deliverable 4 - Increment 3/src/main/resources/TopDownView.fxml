@@ -337,5 +337,11 @@
       <Line endX="499.5" endY="-70.64111328125" layoutX="58.0" layoutY="126.0" startX="450.70379638671875" startY="-70.64111328125" stroke="#0f0f0f" strokeWidth="2.0" />
       <Line endX="432.5" endY="-70.64111328125" layoutX="-172.0" layoutY="126.0" startX="379.20977783203125" startY="-70.64114379882812" stroke="#0f0f0f" strokeWidth="2.0" />
       <Line id="ldaStart" fx:id="blastAllow2" layoutX="-269.0" layoutY="590.0" />
+      <Button fx:id="panUpBtn" layoutX="28.0" layoutY="546.0" mnemonicParsing="false" onAction="#panUp" prefHeight="25.0" prefWidth="18.0" text="↑" />
+      <Button fx:id="panLeftBtn" layoutX="2.0" layoutY="573.0" mnemonicParsing="false" onAction="#panLeft" prefHeight="25.0" prefWidth="32.0" text="←" />
+      <Button fx:id="panRightBtn" layoutX="42.0" layoutY="573.0" mnemonicParsing="false" onAction="#panRight" prefHeight="25.0" prefWidth="32.0" text="→" />
+      <Button fx:id="panDownBtn" layoutX="28.0" layoutY="601.0" mnemonicParsing="false" onAction="#panDown" prefHeight="25.0" prefWidth="1.0" text="↓" />
+      <Button fx:id="zoomInBtn" layoutX="763.0" layoutY="552.0" mnemonicParsing="false" onAction="#zoomIn" prefHeight="25.0" prefWidth="25.0" text="+" />
+      <Button fx:id="zoomOutBtn" layoutX="763.0" layoutY="591.0" mnemonicParsing="false" onAction="#zoomOut" prefHeight="25.0" prefWidth="26.0" text="-" />
    </children>
 </AnchorPane>
