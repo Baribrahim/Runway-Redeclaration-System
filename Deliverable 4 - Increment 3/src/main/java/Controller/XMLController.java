@@ -107,7 +107,8 @@ public class XMLController {
 
           // Fetch runway parameters
           ArrayList<Float> parameters = database.getLogicalRunwayParameters(runwayID);
-          String[] parameterNames = {"leftTORA", "leftTODA", "leftASDA", "leftLDA", "rightTORA", "rightTODA", "rightASDA", "rightLDA"};
+          String[] parameterNames = {"leftTORA", "leftTODA", "leftASDA", "leftLDA", "rightTORA",
+              "rightTODA", "rightASDA", "rightLDA"};
 
           for (int i = 0; i < parameters.size(); i++) {
             Element parameterElement = doc.createElement(parameterNames[i]);
@@ -130,6 +131,7 @@ public class XMLController {
       e.printStackTrace();
       new Notification(AlertType.ERROR, "Error", "Airports not exported!");
     }
+  }
 
   public void importObstacles(File xmlFile) {
     try {
