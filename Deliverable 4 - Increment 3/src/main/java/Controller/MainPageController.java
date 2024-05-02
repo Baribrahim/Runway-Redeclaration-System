@@ -102,7 +102,7 @@ public class MainPageController implements Initializable {
   @FXML
   private TableColumn<Parameter, Double> revisedColR;
   @FXML
-  private TableView<Parameter> notificationsTable;
+  private TableView<Parameter> notificationTableView;
   @FXML
   private TextField rightOriginalTORATextField;
   @FXML
@@ -248,7 +248,7 @@ public class MainPageController implements Initializable {
     runwayMenu.setDisable(true);
     obstacleMenu.setDisable(true);
 
-
+    notificationTableView.setVisible(false);
     try {
       obstacleMenu.getItems().addAll(database.getObstacles());
     } catch (SQLException e) {
