@@ -53,11 +53,7 @@ public class AirportDefinitionController implements Initializable {
       ((Stage) newAirportSubmitButton.getScene().getWindow()).close();
     } else {
       // Handle empty input error
-      Alert alert = new Alert(AlertType.ERROR);
-      alert.setTitle("Error");
-      alert.setHeaderText("Empty Input");
-      alert.setContentText("Please enter a name for the airport.");
-      alert.showAndWait();
+      showAlert(Alert.AlertType.ERROR, "Error", "Empty Input\nPlease enter a name for the airport.");
     }
   }
 
@@ -70,5 +66,13 @@ public class AirportDefinitionController implements Initializable {
 
   public static AirportDefinitionController getInstance() {
     return instance;
+  }
+
+  private void showAlert(Alert.AlertType alertType, String title, String message) {
+    Alert alert = new Alert(alertType);
+    alert.setTitle(title);
+    alert.setHeaderText(null);
+    alert.setContentText(message);
+    alert.showAndWait();
   }
 }
