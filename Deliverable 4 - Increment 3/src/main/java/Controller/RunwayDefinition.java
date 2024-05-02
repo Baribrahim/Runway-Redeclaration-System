@@ -6,6 +6,8 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 import java.util.function.UnaryOperator;
+
+import Controller.Helper.Notification;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -107,6 +109,7 @@ public class RunwayDefinition implements Initializable {
 
       // Close the window
       ((Stage) submitButton.getScene().getWindow()).close();
+      new Notification(AlertType.CONFIRMATION, "Success", "Runway added successfully!");
     }
   }
 

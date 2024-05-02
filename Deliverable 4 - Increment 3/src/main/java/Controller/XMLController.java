@@ -1,10 +1,14 @@
 package Controller;
 
 import Model.DatabaseModel;
+import javafx.scene.control.Alert.AlertType;
+
 import javax.xml.transform.OutputKeys;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.w3c.dom.*;
+
+import Controller.Helper.Notification;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -64,8 +68,10 @@ public class XMLController {
           }
         }
       }
+      new Notification(AlertType.INFORMATION, "Import", "Airports imported successfully!");
     } catch (Exception e) {
       e.printStackTrace();
+      new Notification(AlertType.ERROR, "Error", "Airports not imported!");
     }
   }
 
@@ -119,10 +125,11 @@ public class XMLController {
       DOMSource source = new DOMSource(doc);
       StreamResult result = new StreamResult(xmlFile);
       transformer.transform(source, result);
+      new Notification(AlertType.CONFIRMATION, "Export", "Airports exported successfully!");
     } catch (Exception e) {
       e.printStackTrace();
+      new Notification(AlertType.ERROR, "Error", "Airports not exported!");
     }
-  }
 
   public void importObstacles(File xmlFile) {
     try {
@@ -144,8 +151,10 @@ public class XMLController {
           database.insertObstacle(obstacleName, obstacleHeight, obstacleWidht);
         }
       }
+      new Notification(AlertType.INFORMATION,"Import", "Obstacles imported successfully!");
     } catch (Exception e) {
       e.printStackTrace();
+      new Notification(AlertType.ERROR,"Error", "Obstacles not imported!");
     }
   }
 
@@ -185,8 +194,10 @@ public class XMLController {
       DOMSource source = new DOMSource(doc);
       StreamResult result = new StreamResult(xmlFile);
       transformer.transform(source, result);
+      new Notification(AlertType.CONFIRMATION, "Export", "Obstacles exported successfully!");
     } catch (Exception e) {
       e.printStackTrace();
+      new Notification(AlertType.ERROR,"Error", "Obstacles not exported!");
     }
   }
   }

@@ -416,6 +416,7 @@ public class MainPageController implements Initializable {
         obstacleList.add(obstacle);
       }
     }
+    new Notification(AlertType.INFORMATION, "Refresh", "Obstacles refreshed successfully!");
   }
 
   @FXML
@@ -506,7 +507,7 @@ public class MainPageController implements Initializable {
       float width = database.getObstacleWidth(selectedObstacleId);
 
       if (height == -1 || width == -1) {
-        System.out.println("Obstacle information not completed");
+        new Notification(AlertType.WARNING, "Warning", "Obstacle information not completed");
         return;
       }
       Obstacle obstacle = new Obstacle(selectedObstacleId, height, width, distanceFromCentre, distanceFromThreshold);

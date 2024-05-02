@@ -6,6 +6,8 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+
+import Controller.Helper.Notification;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -13,6 +15,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Line;
@@ -475,11 +478,7 @@ public class TopDownViewController implements Initializable {
     Rotate rotate = new Rotate();
     try {
       if (Integer.parseInt(leftDesignator.getText().substring(0, 2)) == 9 || Integer.parseInt(leftDesignator.getText().substring(0, 2)) == 27 ) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Heads up");
-        alert.setHeaderText("Already Rotated");
-        alert.setContentText("This runway faces east and therefore is already rotated correctly.");
-        alert.showAndWait();
+        new Notification(AlertType.ERROR, "Error", "Heads Up\nAlready Rotated\nThis runway faces east and therefore is already rotated correctly.");
       }else if(Integer.parseInt(leftDesignator.getText().substring(0, 2)) < 18) {
         rotation = Integer.parseInt(leftDesignator.getText().substring(0, 2)) * 10 - 90;
 
@@ -492,11 +491,7 @@ public class TopDownViewController implements Initializable {
       }
     } catch (NumberFormatException e){
       // Handle empty runway error
-      Alert alert = new Alert(Alert.AlertType.ERROR);
-      alert.setTitle("Error");
-      alert.setHeaderText("No Runway");
-      alert.setContentText("Please select a runway.");
-      alert.showAndWait();
+      new Notification(AlertType.ERROR, "Error", "No Runway\nPlease select a runway.");
     }
     rotate.setAngle(rotation);
     rotate.setPivotX(topDownRunwayPane.getWidth() / 2);

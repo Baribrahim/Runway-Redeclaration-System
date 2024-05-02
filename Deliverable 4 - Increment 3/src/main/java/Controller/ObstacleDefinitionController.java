@@ -16,6 +16,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.function.UnaryOperator;
 
+import Controller.Helper.Notification;
+
 public class ObstacleDefinitionController implements Initializable {
 
     @FXML
@@ -79,6 +81,7 @@ public class ObstacleDefinitionController implements Initializable {
             // Close the window
             ((Stage) submitButton.getScene().getWindow()).close();
         }
+      new Notification(AlertType.CONFIRMATION, "Success", "Obstacle added successfully!");
     }
 
     @FXML
