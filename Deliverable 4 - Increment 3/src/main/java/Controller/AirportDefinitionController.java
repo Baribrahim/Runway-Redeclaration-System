@@ -54,9 +54,10 @@ public class AirportDefinitionController implements Initializable {
     if (!airportName.isEmpty()) {
       database.insertAirport(airportName);
       ((Stage) newAirportSubmitButton.getScene().getWindow()).close();
+      new Notification(AlertType.CONFIRMATION, "Success", "Airport added successfully");
     } else {
       // Handle empty input error
-      new Notification(Alert.AlertType.ERROR, "Error", "Empty Input\nPlease enter a name for the airport.");
+      new Notification(AlertType.ERROR, "Error", "Empty Input\nPlease enter a name for the airport.");
     }
   }
 

@@ -9,6 +9,7 @@ import Controller.Helper.Notification;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -55,10 +56,10 @@ public class AddUserController implements Initializable {
 
     try {
       database.addUser(userID, password, permission);
-      new Notification(Alert.AlertType.INFORMATION, "Success", "User added successfully");
+      new Notification(AlertType.INFORMATION, "Success", "User added successfully");
       ((Stage) submitButton.getScene().getWindow()).close();
     } catch (SQLException e) {
-      new Notification(Alert.AlertType.ERROR, "Error", "Failed to add user: " + e.getMessage());
+      new Notification(AlertType.ERROR, "Error", "Failed to add user: " + e.getMessage());
     }
   }
 }

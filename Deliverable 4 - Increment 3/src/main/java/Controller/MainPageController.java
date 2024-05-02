@@ -374,6 +374,7 @@ public class MainPageController implements Initializable {
   @FXML
   public void refreshAirports() throws SQLException {
     airportMenu.getItems().setAll(database.getAirports());
+    new Notification(AlertType.INFORMATION, "Refresh", "Airports refreshed successfully!");
     /*ArrayList<String> allAirports = database.getAirports();
     ObservableList<String> airportList = airportMenu.getItems();
 
@@ -768,21 +769,21 @@ public class MainPageController implements Initializable {
   public void exportTopView(){
     javafx.scene.Node contentNode = topViewTab.getContent();
     Utility.exportImage(contentNode);
-    new Notification(Alert.AlertType.INFORMATION, "Export", "Top view exported successfully!");
+    new Notification(AlertType.INFORMATION, "Export", "Top view exported successfully!");
   }
 
   @FXML
   public void exportSideView(){
     javafx.scene.Node contentNode = sideViewTab.getContent();
     Utility.exportImage(contentNode);
-    new Notification(Alert.AlertType.INFORMATION, "Export", "Side view exported successfully!");
+    new Notification(AlertType.INFORMATION, "Export", "Side view exported successfully!");
   }
 
   @FXML
   public void exportSimultaneousView(){
     javafx.scene.Node contentNode = simultaneousViewTab.getContent();
     Utility.exportImage(contentNode);
-    new Notification(Alert.AlertType.INFORMATION, "Export", "Simultaneous view exported successfully!");
+    new Notification(AlertType.INFORMATION, "Export", "Simultaneous view exported successfully!");
   }
 
 }

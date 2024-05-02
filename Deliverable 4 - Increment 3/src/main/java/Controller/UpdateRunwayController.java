@@ -5,6 +5,8 @@ import Model.Runway;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import Controller.Helper.Notification;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -94,7 +96,7 @@ public class UpdateRunwayController implements Initializable {
       Stage stage = (Stage) airportNameInput.getScene().getWindow();
       stage.close();
     } catch (Exception e) {
-      showAlert("Error", "Failed to update the runway: " + e.getMessage());
+      new Notification(AlertType.ERROR, "Error", "Failed to update the runway!" + e.getMessage());
       System.out.println("Failed to update runway with ID: " + currentRunway.getRunwayID());
       e.printStackTrace();
     }
@@ -105,13 +107,5 @@ public class UpdateRunwayController implements Initializable {
     // Close the current stage (NewAirportController)
     Stage stage = (Stage) backButton.getScene().getWindow();
     stage.close();
-  }
-
-  private void showAlert(String title, String content) {
-    Alert alert = new Alert(AlertType.INFORMATION);
-    alert.setTitle(title);
-    alert.setHeaderText(null);
-    alert.setContentText(content);
-    alert.showAndWait();
   }
 }

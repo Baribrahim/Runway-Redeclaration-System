@@ -65,11 +65,7 @@ public class ObstacleDefinitionController implements Initializable {
 
         // Check if any of the input fields are empty
         if (obstacleName.isEmpty() || obstacleHeight.isEmpty() || obstacleWidth.isEmpty()) {
-            Alert alert = new Alert(AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("Empty Input");
-            alert.setContentText("Please do not leave any empty inputs!");
-            alert.showAndWait();
+            new Notification(AlertType.ERROR, "Error", "Please do not leave any empty inputs!");
         } else {
             // Convert height and width to float
             Float height = Float.valueOf(obstacleHeight);

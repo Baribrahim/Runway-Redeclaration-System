@@ -88,11 +88,7 @@ public class RunwayDefinition implements Initializable {
         rightASDAInput.getText().isEmpty() || rightLDAInput.getText().isEmpty()) {
 
       // Display an error alert if any input field is empty
-      Alert alert = new Alert(AlertType.ERROR);
-      alert.setTitle("Error");
-      alert.setHeaderText("Empty Input");
-      alert.setContentText("Please do not leave any empty inputs!");
-      alert.showAndWait();
+      new Notification(AlertType.ERROR,"Error", "Please do not leave any empty inputs!");
     } else {
       // Convert input to appropriate data types
       Float leftTODA = Float.valueOf(leftTODAInput.getText().trim());

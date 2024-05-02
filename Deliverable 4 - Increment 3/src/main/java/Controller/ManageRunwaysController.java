@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
+
+import Controller.Helper.Notification;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -79,34 +81,26 @@ public class ManageRunwaysController implements Initializable {
   private void handleDeleteRunwayButton() {
     Runway selectedRunway = runwaysTable.getSelectionModel().getSelectedItem();
     if (selectedRunway == null) {
-      showAlert("No selection", "Please select a runway to delete.");
+      new Notification(AlertType.INFORMATION, "No selection", "Please select a runway to delete.");
       return;
     }
 
     try {
       database.deleteRunway(selectedRunway.getRunwayID());
       runwaysTable.getItems().remove(selectedRunway);
-      showAlert("Success", "The runway has been successfully deleted.");
+      new Notification(AlertType.CONFIRMATION, "Success", "Runway deleted successfully");
     } catch (SQLException e) {
-      showAlert("Error", "Failed to delete the runway: " + e.getMessage());
+      new Notification(AlertType.ERROR, "Error", "Failed to delete runway: " + e.getMessage());
       System.out.println("Failed to delete runway with ID: " + selectedRunway.getRunwayID());
       e.printStackTrace();
     }
-  }
-
-  private void showAlert(String title, String content) {
-    Alert alert = new Alert(AlertType.INFORMATION);
-    alert.setTitle(title);
-    alert.setHeaderText(null);
-    alert.setContentText(content);
-    alert.showAndWait();
   }
 
   @FXML
   private void handleOpenUpdateWindow() throws Exception {
     Runway selectedRunway = runwaysTable.getSelectionModel().getSelectedItem();
     if (selectedRunway == null) {
-      showAlert("No selection", "Please select a runway to update.");
+      new Notification(AlertType.INFORMATION, "No selection", "Please select a runway to update.");
       return;
     }
 

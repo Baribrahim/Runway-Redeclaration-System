@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
+
+import Controller.Helper.Notification;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -83,16 +85,16 @@ public class ManagerUsersController implements Initializable {
   private void handleDeleteUserButton() {
     User selectedUser = usersTable.getSelectionModel().getSelectedItem();
     if (selectedUser == null) {
-      showAlert("No selection", "Please select a user to delete.");
+      new Notification(AlertType.INFORMATION, "No selection", "Please select a user to delete.");
       return;
     }
 
     try {
       database.deleteUser(selectedUser.getUserID());
       usersTable.getItems().remove(selectedUser); // Remove from ObservableList, updating the TableView
-      showAlert("Success", "The user was successfully deleted.");
+      new Notification(AlertType.CONFIRMATION, "Success", "User deleted successfully");
     } catch (SQLException e) {
-      showAlert("Error", "Failed to delete the user: " + e.getMessage());
+      new Notification(AlertType.ERROR, "Error", "Failed to delete user!" + e.getMessage());
     }
   }
 
@@ -100,7 +102,7 @@ public class ManagerUsersController implements Initializable {
   private void handleUpdateUserButton() throws SQLException {
     User selectedUser = usersTable.getSelectionModel().getSelectedItem();
     if (selectedUser == null) {
-      showAlert("No selection", "Please select a user to update.");
+      new Notification(AlertType.INFORMATION, "No selection", "Please select a user to update.");
       return;
     }
     try {
@@ -127,11 +129,4 @@ public class ManagerUsersController implements Initializable {
     usersTable.setItems(database.getLoginInfo());
   }
 
-  private void showAlert(String title, String message) {
-    Alert alert = new Alert(AlertType.INFORMATION);
-    alert.setTitle(title);
-    alert.setHeaderText(null);
-    alert.setContentText(message);
-    alert.showAndWait();
-  }
 }

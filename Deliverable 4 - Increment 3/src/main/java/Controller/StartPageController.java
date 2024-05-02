@@ -10,11 +10,14 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 
 import java.awt.*;
 import java.io.IOException;
 import java.sql.SQLException;
+
+import Controller.Helper.Notification;
 
 public class StartPageController {
     public DatabaseModel databaseModel = new DatabaseModel();
@@ -50,17 +53,9 @@ public class StartPageController {
                 currentStage.close();
             } else if (userIDField.getText() == "" || passwordField.getText() == ""  ) {
                     // Handle empty input error
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("Error");
-                    alert.setHeaderText("Empty Input");
-                    alert.setContentText("Please enter a UserId and Password.");
-                    alert.showAndWait();
+                    new Notification(AlertType.ERROR, "Error", "Empty Input\nPlease enter a UserId and Password.");
                 } else {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setHeaderText("Incorrect Input");
-                alert.setContentText("Incorrect UserID or Password.");
-                alert.showAndWait();
+                new Notification(AlertType.ERROR, "Error", "Incorrect UserID or Password.");
             }
         } catch (SQLException e) {
             e.printStackTrace();
