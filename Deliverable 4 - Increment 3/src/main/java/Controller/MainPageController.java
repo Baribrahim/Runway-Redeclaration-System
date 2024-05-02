@@ -550,7 +550,9 @@ public class MainPageController implements Initializable {
       updateUI(runwayL.getTora(), newToraL, runwayL.getToda(), newTodaL, runwayL.getAsda(), newAsdaL, runwayL.getLda(), newLdaL,
           runwayR.getTora(), newToraR, runwayR.getToda(), newTodaR, runwayR.getAsda(), newAsdaR, runwayR.getLda(), newLdaR);
 
+    new Notification(AlertType.CONFIRMATION, "Success", "Calculation successful!");
     } catch (SQLException e) {
+      new Notification(AlertType.ERROR, "Error", "Calculation unsuccessful!");
       e.printStackTrace();
     }
   }
