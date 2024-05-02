@@ -5,6 +5,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
+import Controller.Helper.Notification;
+import javafx.animation.FadeTransition;
+import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -53,7 +56,7 @@ public class AirportDefinitionController implements Initializable {
       ((Stage) newAirportSubmitButton.getScene().getWindow()).close();
     } else {
       // Handle empty input error
-      showAlert(Alert.AlertType.ERROR, "Error", "Empty Input\nPlease enter a name for the airport.");
+      new Notification(Alert.AlertType.ERROR, "Error", "Empty Input\nPlease enter a name for the airport.");
     }
   }
 
@@ -68,11 +71,4 @@ public class AirportDefinitionController implements Initializable {
     return instance;
   }
 
-  private void showAlert(Alert.AlertType alertType, String title, String message) {
-    Alert alert = new Alert(alertType);
-    alert.setTitle(title);
-    alert.setHeaderText(null);
-    alert.setContentText(message);
-    alert.showAndWait();
-  }
 }

@@ -1,13 +1,17 @@
 package Controller;
 
+
 import Model.*;
 import Model.DatabaseModel;
 import Model.Helper.PDFCreator;
 import Model.Helper.Utility;
 import com.itextpdf.text.DocumentException;
+import Controller.Helper.Notification;
 import java.io.File;
 import java.lang.reflect.Parameter;
 import javafx.beans.property.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.collections.FXCollections;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
@@ -42,6 +46,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.control.TextFormatter.Change;
 import javafx.stage.Stage;
+import javafx.animation.FadeTransition;
+import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 
 public class MainPageController implements Initializable {
@@ -224,11 +230,11 @@ public class MainPageController implements Initializable {
     sideViewTab.setContent(root2);
     simultaneousViewTab.setContent(root3);
 
-    String musicFile = "src/main/resources/BGmusic.mp3";
-    Media sound = new Media(new File(musicFile).toURI().toString());
-    MediaPlayer mediaPlayer = new MediaPlayer(sound);
-    mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
-    mediaPlayer.play();
+    // String musicFile = "src/main/resources/BGmusic.mp3";
+    // Media sound = new Media(new File(musicFile).toURI().toString());
+    // MediaPlayer mediaPlayer = new MediaPlayer(sound);
+    // mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+    // mediaPlayer.play();
 
     isLightMode = true;
     leftSide.setToggleGroup(toggleGroup);
@@ -759,22 +765,23 @@ public class MainPageController implements Initializable {
   public void exportTopView(){
     javafx.scene.Node contentNode = topViewTab.getContent();
     Utility.exportImage(contentNode);
+    new Notification(Alert.AlertType.INFORMATION, "Export", "Top view exported successfully!");
   }
 
   @FXML
   public void exportSideView(){
     javafx.scene.Node contentNode = sideViewTab.getContent();
     Utility.exportImage(contentNode);
+    new Notification(Alert.AlertType.INFORMATION, "Export", "Side view exported successfully!");
   }
 
   @FXML
   public void exportSimultaneousView(){
     javafx.scene.Node contentNode = simultaneousViewTab.getContent();
     Utility.exportImage(contentNode);
+    new Notification(Alert.AlertType.INFORMATION, "Export", "Simultaneous view exported successfully!");
   }
 
-
-
-
 }
+
 

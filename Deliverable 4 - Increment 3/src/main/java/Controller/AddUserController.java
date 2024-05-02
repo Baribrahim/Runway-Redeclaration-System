@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
+import Controller.Helper.Notification;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -54,18 +55,10 @@ public class AddUserController implements Initializable {
 
     try {
       database.addUser(userID, password, permission);
-      showAlert(Alert.AlertType.INFORMATION, "Success", "User added successfully");
+      new Notification(Alert.AlertType.INFORMATION, "Success", "User added successfully");
       ((Stage) submitButton.getScene().getWindow()).close();
     } catch (SQLException e) {
-      showAlert(Alert.AlertType.ERROR, "Error", "Failed to add user: " + e.getMessage());
+      new Notification(Alert.AlertType.ERROR, "Error", "Failed to add user: " + e.getMessage());
     }
-  }
-
-  private void showAlert(Alert.AlertType alertType, String title, String message) {
-    Alert alert = new Alert(alertType);
-    alert.setTitle(title);
-    alert.setHeaderText(null);
-    alert.setContentText(message);
-    alert.showAndWait();
   }
 }
