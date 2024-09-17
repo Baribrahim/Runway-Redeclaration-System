@@ -8,8 +8,8 @@ To develop a tool that provides:
 Revised runway parameters based on standard runway information and obstacle data.
 A visual representation of the obstacle.
 A summary of the calculations performed.
-Features:
 
+## Features:
 - [ ] Input: Standard runway information and obstacle details.
 - [ ] Output: Revised runway parameters, visualisation of the obstacle, and a summary of the calculations.
 - [ ] Purpose: To offer a rapid indication of the impact of an obstruction on runway parameters. This will help in making informed decisions on whether to continue operations and - [ ] evaluate the necessity of performing the official calculations as per the CAA guidelines.
