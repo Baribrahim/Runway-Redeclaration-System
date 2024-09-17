@@ -5,9 +5,9 @@ The Runway Parameter Calculation Tool is designed to simplify the process of det
 
 ## Objective:
 To develop a tool that provides:
-Revised runway parameters based on standard runway information and obstacle data.
-A visual representation of the obstacle.
-A summary of the calculations performed.
+- [ ] Revised runway parameters based on standard runway information and obstacle data.
+- [ ] A visual representation of the obstacle.
+- [ ] A summary of the calculations performed.
 
 ## Features:
 - [ ] Input: Standard runway information and obstacle details.
