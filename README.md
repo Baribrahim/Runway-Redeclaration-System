@@ -19,6 +19,7 @@ The **Runway Redeclaration Tool** is an application designed to assist airport a
 - **XML**: Used for data import/export (obstacle, runway details).
 - **JavaFX**: For the GUI, enabling 2D visualizations of runways and obstacles.
 - **JUnit**: For unit testing and ensuring software robustness.
+- **SQLite**: For managing the database.
 
 ## How It Works
 
