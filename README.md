@@ -2,7 +2,7 @@
 
 ## Overview
 
-The **Runway Redeclaration Tool** is a powerful application designed to assist airport authorities in recalculating runway parameters when an obstacle is present. This tool provides visualizations and calculations to help quickly determine if limited operations can continue on the runway under reduced distances for take-offs and landings. While it does not replace the official process, it serves as a valuable decision-making aid.
+The **Runway Redeclaration Tool** is an application designed to assist airport authorities in recalculating runway parameters when an obstacle is present. This tool provides visualisations and calculations to help quickly determine if limited operations can continue on the runway under reduced distances for take-offs and landings. While it does not replace the official process, it serves as a valuable decision-making aid.
 
 ## Key Features
 
